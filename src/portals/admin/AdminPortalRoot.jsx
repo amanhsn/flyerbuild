@@ -1,0 +1,83 @@
+import { useState } from "react";
+import { useLang } from "../../i18n/LangContext";
+import { Sidebar } from "../../components/shell/Sidebar";
+import { BottomNav } from "../../components/shell/BottomNav";
+import { useIsMobile } from "../../hooks/useIsMobile";
+
+import { ExecutiveDashboard } from "./dashboards/ExecutiveDashboard";
+import { ProjectDashboard } from "./dashboards/ProjectDashboard";
+import { PerformanceDashboard } from "./dashboards/PerformanceDashboard";
+import { GisMapView } from "./map/GisMapView";
+import { ApprovalFlow } from "./workflow/ApprovalFlow";
+import { EngineeringGate } from "./engineering/EngineeringGate";
+import { SubcoMonitor } from "./monitoring/SubcoMonitor";
+import { DisputeManager } from "./monitoring/DisputeManager";
+import { MeetstaaReview } from "./financials/MeetstaaReview";
+import { AddressImport } from "./admin/AddressImport";
+
+const ADMIN_NAV = [
+  ["executive",   "dashboard",  "Executive"],
+  ["project",     "clipboard",  "Project"],
+  ["performance", "star",       "Performance"],
+  ["map",         "map",        "Map & Table"],
+  ["approval",    "check",      "Approvals"],
+  ["engineering", "settings",   "Engineering"],
+  ["monitoring",  "eye",        "Subco Monitor"],
+  ["disputes",    "alert",      "Disputes"],
+  ["financials",  "file",       "Financials"],
+  ["admin",       "shield",     "Admin"],
+];
+
+const ADMIN_MOBILE_NAV = [
+  { id: "executive",   icon: "dashboard", label: "Executive" },
+  { id: "map",         icon: "map",       label: "Map" },
+  { id: "approval",    icon: "check",     label: "Approvals" },
+  { id: "engineering", icon: "settings",  label: "Engineering" },
+  { id: "more",        icon: "list",      label: "More" },
+];
+
+export const AdminPortalRoot = ({ sidebarOpen, onSidebarClose, onMenuToggle }) => {
+  const { t } = useLang();
+  const [activeTab, setActiveTab] = useState("executive");
+  const isMobile = useIsMobile();
+
+  const handleMobileNav = (id) => {
+    if (id === "more") {
+      onMenuToggle?.();
+    } else {
+      setActiveTab(id);
+    }
+  };
+
+  return (
+    <>
+      <Sidebar
+        active={activeTab}
+        setActive={setActiveTab}
+        items={ADMIN_NAV}
+        roleLabel="Admin Console"
+        open={sidebarOpen}
+        onClose={onSidebarClose}
+      />
+      <main style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column", paddingBottom: isMobile ? 60 : 0 }}>
+        {activeTab === "executive" && <ExecutiveDashboard />}
+        {activeTab === "project" && <ProjectDashboard />}
+        {activeTab === "performance" && <PerformanceDashboard />}
+        {activeTab === "map" && <GisMapView />}
+        {activeTab === "approval" && <ApprovalFlow />}
+        {activeTab === "engineering" && <EngineeringGate />}
+        {activeTab === "monitoring" && <SubcoMonitor />}
+        {activeTab === "disputes" && <DisputeManager />}
+        {activeTab === "financials" && <MeetstaaReview />}
+        {activeTab === "admin" && <AddressImport />}
+      </main>
+      {isMobile && (
+        <BottomNav
+          active={activeTab}
+          setActive={handleMobileNav}
+          items={ADMIN_MOBILE_NAV}
+        />
+      )}
+    </>
+  );
+};

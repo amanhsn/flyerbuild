@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(cp:*)",
+      "Bash(npm install:*)",
+      "Bash(npx vite:*)",
+      "Bash(npm run:*)",
+      "Bash(grep:*)",
+      "Bash(do if:*)",
+      "Bash(brew install:*)",
+      "Bash(python3:*)",
+      "Bash(xargs basename:*)",
+      "Bash(xargs sed:*)",
+      "Bash(lsof -i :5173)"
+    ]
+  }
+}
