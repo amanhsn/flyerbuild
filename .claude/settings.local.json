@@ -12,7 +12,9 @@
       "Bash(python3:*)",
       "Bash(xargs basename:*)",
       "Bash(xargs sed:*)",
-      "Bash(lsof -i :5173)"
+      "Bash(lsof -i :5173)",
+      "Bash(npm i:*)",
+      "Bash(npx vercel:*)"
     ]
   }
 }

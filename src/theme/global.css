@@ -10,10 +10,32 @@ body { background: var(--bg-base); color: var(--text-primary); font-family: var(
 @keyframes fadeIn    { from { opacity:0; } to { opacity:1; } }
 @keyframes pulseDot  { 0%,100% { opacity:1; } 50% { opacity:.35; } }
 @keyframes langFlip  { from { opacity:0; transform:scale(.9); } to { opacity:1; transform:scale(1); } }
+@keyframes shimmer   { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-elevated) 25%, var(--bg-overlay) 50%, var(--bg-elevated) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s ease infinite;
+  border-radius: var(--radius-md);
+}
 
 .fade-up { animation: fadeUp .28s ease both; }
 .fade-in { animation: fadeIn .2s ease both; }
 .lang-flip { animation: langFlip .2s ease both; }
+
+/* Focus-visible for keyboard accessibility */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.survey-card:focus-visible,
+.section-card:focus-visible {
+  outline-offset: -2px;
+}
+.field-input:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+}
 
 /* ── LAYOUT ── */
 .app-shell {
@@ -119,12 +141,18 @@ body { background: var(--bg-base); color: var(--text-primary); font-family: var(
 .survey-card {
   background: var(--bg-raised); border-radius: var(--radius-lg);
   border: 1px solid var(--border); padding: 16px; cursor: pointer;
-  transition: border-color .15s, background .15s; margin-bottom: 8px;
+  transition: border-color .15s, background .15s, transform .15s ease, box-shadow .15s ease;
+  margin-bottom: 8px;
 }
-.survey-card:hover { background: var(--bg-elevated); }
+.survey-card:hover {
+  background: var(--bg-elevated);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px var(--card-shadow);
+}
+.survey-card:active { transform: translateY(0); }
 .survey-card.conflict { border-color: var(--red-dim); }
 .survey-card.priority { border-color: var(--primary-dim); }
-.survey-card.selected { border-color: var(--primary); background: var(--primary-glow); }
+.survey-card.selected { border-color: var(--primary); background: var(--primary-glow); box-shadow: 0 2px 12px var(--primary-glow); }
 
 .toggle-btn {
   padding: 12px 20px; border-radius: var(--radius-md);

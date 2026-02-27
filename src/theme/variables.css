@@ -7,6 +7,12 @@
   --radius-md:    8px;
   --radius-lg:    12px;
   --radius-xl:    16px;
+  --space-xs:     4px;
+  --space-sm:     8px;
+  --space-md:     12px;
+  --space-lg:     16px;
+  --space-xl:     24px;
+  --space-2xl:    32px;
   --sidebar-w:    260px;
   --topbar-h:     56px;
 
@@ -34,6 +40,7 @@
   --text-primary-accent: #c0392b;
   --text-green:          #059669;
   --text-red:            #dc2626;
+  --card-shadow:         rgba(0,0,0,.06);
 }
 
 /* Dark mode */
@@ -61,4 +68,5 @@
   --text-primary-accent: #e74c3c;
   --text-green:          #34d399;
   --text-red:            #f87171;
+  --card-shadow:         rgba(0,0,0,.2);
 }

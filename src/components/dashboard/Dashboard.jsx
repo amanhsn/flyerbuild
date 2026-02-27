@@ -6,10 +6,26 @@ import { KpiRow } from "./KpiRow";
 import { SurveyCard } from "./SurveyCard";
 import { FilterBar } from "./FilterBar";
 import { Icon } from "../../icons/Icon";
+import { SkeletonKpiCard, SkeletonSurveyCard } from "../shared/Skeleton";
 import { disp, mono } from "../../styles/helpers";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
-export const Dashboard = ({ onSelectSurvey }) => {
+const DashboardSkeleton = ({ isMobile }) => (
+  <>
+    <div style={{
+      display: "grid",
+      gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))",
+      gap: 12, marginBottom: 20,
+    }}>
+      {Array.from({ length: 5 }, (_, i) => <SkeletonKpiCard key={i} />)}
+    </div>
+    <div style={{ marginTop: 12 }}>
+      {Array.from({ length: 4 }, (_, i) => <SkeletonSurveyCard key={i} delay={i * 60} />)}
+    </div>
+  </>
+);
+
+export const Dashboard = ({ onSelectSurvey, loading = false }) => {
   const { t } = useLang();
   const isMobile = useIsMobile();
   const [filter, setFilter] = useState("all");
@@ -38,56 +54,60 @@ export const Dashboard = ({ onSelectSurvey }) => {
         </span>
       </div>
       <p style={mono(14, "var(--text-secondary)", { marginTop: 5, marginBottom: 20 })}>
-        {t("queueSurveyor")} · {t("queueCount")(surveys.length)}
+        {t("queueSurveyor")} · {loading ? "..." : t("queueCount")(surveys.length)}
       </p>
 
-      {/* KPI Row */}
-      <KpiRow surveys={surveys} />
+      {loading ? <DashboardSkeleton isMobile={isMobile} /> : (
+        <>
+          {/* KPI Row */}
+          <KpiRow surveys={surveys} />
 
-      {/* Download tomorrow card */}
-      <div style={{
-        marginBottom: 16, padding: "12px 16px", borderRadius: "var(--radius-md)",
-        background: "var(--bg-elevated)", border: "1px solid var(--border)",
-        display: "flex", alignItems: "center", gap: 12, cursor: "pointer",
-      }}>
-        <Icon n="download" size={15} color="var(--text-primary-accent)" />
-        <div style={{ flex: 1 }}>
-          <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 14 }}>{t("downloadTomorrow")}</div>
-          <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>{t("downloadSub")}</div>
-        </div>
-        <span style={{
-          ...mono(12, "var(--text-primary-accent)"),
-          background: "var(--primary-glow)",
-          padding: "4px 10px",
-          borderRadius: "var(--radius-sm)",
-          border: "1px solid var(--primary-dim)",
-        }}>
-          {t("downloadFetch")}
-        </span>
-      </div>
-
-      {/* Filters */}
-      <FilterBar filter={filter} setFilter={setFilter} />
-
-      {/* Survey cards */}
-      <div style={{ marginTop: 12 }}>
-        {filtered.map((s, i) => (
-          <SurveyCard
-            key={s.id}
-            survey={s}
-            selected={false}
-            onClick={() => onSelectSurvey(s)}
-          />
-        ))}
-        {filtered.length === 0 && (
+          {/* Download tomorrow card */}
           <div style={{
-            padding: 40, textAlign: "center",
-            ...mono(13, "var(--text-muted)"),
+            marginBottom: 16, padding: "12px 16px", borderRadius: "var(--radius-md)",
+            background: "var(--bg-elevated)", border: "1px solid var(--border)",
+            display: "flex", alignItems: "center", gap: 12, cursor: "pointer",
           }}>
-            No surveys match this filter.
+            <Icon n="download" size={15} color="var(--text-primary-accent)" />
+            <div style={{ flex: 1 }}>
+              <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 14 }}>{t("downloadTomorrow")}</div>
+              <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>{t("downloadSub")}</div>
+            </div>
+            <span style={{
+              ...mono(12, "var(--text-primary-accent)"),
+              background: "var(--primary-glow)",
+              padding: "4px 10px",
+              borderRadius: "var(--radius-sm)",
+              border: "1px solid var(--primary-dim)",
+            }}>
+              {t("downloadFetch")}
+            </span>
           </div>
-        )}
-      </div>
+
+          {/* Filters */}
+          <FilterBar filter={filter} setFilter={setFilter} />
+
+          {/* Survey cards */}
+          <div style={{ marginTop: 12 }}>
+            {filtered.map((s, i) => (
+              <SurveyCard
+                key={s.id}
+                survey={s}
+                selected={false}
+                onClick={() => onSelectSurvey(s)}
+              />
+            ))}
+            {filtered.length === 0 && (
+              <div style={{
+                padding: 40, textAlign: "center",
+                ...mono(13, "var(--text-muted)"),
+              }}>
+                No surveys match this filter.
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
