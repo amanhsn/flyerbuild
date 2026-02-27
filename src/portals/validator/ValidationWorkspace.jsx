@@ -5,9 +5,11 @@ import { Icon } from "../../icons/Icon";
 import { useLang } from "../../i18n/LangContext";
 import { mono, disp } from "../../styles/helpers";
 import { getMissingSectionFields, SECTIONS } from "../../data/sectionRegistry";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const ValidationWorkspace = ({ survey, onBack }) => {
   const { t } = useLang();
+  const isMobile = useIsMobile();
   const [showRejectDialog, setShowRejectDialog] = useState(false);
   const [actionTaken, setActionTaken] = useState(null); // "approved" | "rejected"
 
@@ -37,7 +39,7 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
   const actionBar = (
     <div style={{
       position: "sticky", bottom: 0,
-      padding: "12px 24px", borderTop: "1px solid var(--border)",
+      padding: isMobile ? "12px 16px" : "12px 24px", borderTop: "1px solid var(--border)",
       background: "var(--bg-base)", display: "flex", flexDirection: "column", gap: 8,
     }}>
       {/* Pre-validation flags */}
@@ -84,7 +86,7 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
 
       {/* Action buttons */}
       {!actionTaken && (
-        <div style={{ display: "flex", gap: 10 }}>
+        <div style={{ display: "flex", gap: isMobile ? 6 : 10, flexWrap: "wrap" }}>
           <button
             className="cta-btn secondary"
             onClick={onBack}

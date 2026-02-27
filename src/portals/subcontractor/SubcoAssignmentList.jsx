@@ -40,13 +40,13 @@ export const SubcoAssignmentList = ({ assignments, filter, setFilter, onSelect }
 
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 style={disp(28, 800)}>My Assignments</h1>
+      <h1 style={disp(isMobile ? 22 : 28, 800)}>My Assignments</h1>
       <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 20 })}>
         FiberCo BVBA — {assigned} assignments
       </p>
 
       {/* KPIs */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: 12, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(130px, 1fr))", gap: isMobile ? 8 : 12, marginBottom: 20 }}>
         <KpiCard label="Assigned" value={assigned} color="var(--primary)" />
         <KpiCard label="In Progress" value={inProgress} color="var(--blue)" total={assigned} />
         <KpiCard label="Completed" value={completed} color="var(--green)" total={assigned} />

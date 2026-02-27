@@ -213,4 +213,13 @@ textarea.field-input { resize: vertical; }
   .topbar-online-label { display: none; }
   .app-topbar { padding: 0 12px; gap: 8px; }
   .app-syncbar:not(.bottom-nav) { display: none; }
+  .toggle-btn { font-size: 14px; padding: 10px 14px; }
+  .cta-btn { font-size: 15px; padding: 12px 14px; }
+  .survey-card { padding: 12px; }
+  .lang-toggle-label { display: none; }
+}
+
+@media (max-width: 399px) {
+  .app-topbar { gap: 6px; }
+  .lang-toggle { padding: 5px 7px; gap: 0; }
 }

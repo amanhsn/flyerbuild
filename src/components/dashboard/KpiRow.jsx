@@ -1,9 +1,11 @@
 import { useMemo } from "react";
 import { useLang } from "../../i18n/LangContext";
 import { KpiCard } from "../shared/KpiCard";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const KpiRow = ({ surveys }) => {
   const { t } = useLang();
+  const isMobile = useIsMobile();
 
   const kpis = useMemo(() => {
     const total = surveys.length;
@@ -23,7 +25,7 @@ export const KpiRow = ({ surveys }) => {
   return (
     <div style={{
       display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+      gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))",
       gap: 12,
       marginBottom: 20,
     }}>

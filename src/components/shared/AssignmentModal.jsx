@@ -3,8 +3,10 @@ import { getUsersByRole } from "../../data/mockUsers";
 import { TextArea } from "./Field";
 import { Icon } from "../../icons/Icon";
 import { mono, disp } from "../../styles/helpers";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const AssignmentModal = ({ title, subtitle, role, currentValue, onSubmit, onCancel }) => {
+  const isMobile = useIsMobile();
   const users = getUsersByRole(role);
   const [selectedUser, setSelectedUser] = useState(currentValue || "");
   const [notes, setNotes] = useState("");
@@ -28,8 +30,9 @@ export const AssignmentModal = ({ title, subtitle, role, currentValue, onSubmit,
         onClick={(e) => e.stopPropagation()}
         style={{
           background: "var(--bg-base)", border: "1px solid var(--border)",
-          borderRadius: "var(--radius-xl)", padding: 24, width: "100%",
-          maxWidth: 460, boxShadow: "0 8px 32px rgba(0,0,0,.4)",
+          borderRadius: "var(--radius-xl)", padding: isMobile ? 16 : 24, width: "100%",
+          maxWidth: 460, margin: isMobile ? "0 16px" : 0,
+          boxShadow: "0 8px 32px rgba(0,0,0,.4)",
         }}
       >
         {/* Header */}

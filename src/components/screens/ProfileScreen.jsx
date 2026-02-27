@@ -1,8 +1,10 @@
 import { useLang } from "../../i18n/LangContext";
 import { disp, mono } from "../../styles/helpers";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const ProfileScreen = () => {
   const { t } = useLang();
+  const isMobile = useIsMobile();
   const rows = [
     [t("region"), "WERK / MEN"],
     [t("todayDone"), "2/5"],
@@ -11,7 +13,7 @@ export const ProfileScreen = () => {
   ];
 
   return (
-    <div style={{ flex: 1, padding: 24, maxWidth: 480 }}>
+    <div style={{ flex: 1, padding: isMobile ? 16 : 24, maxWidth: 480 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
         <div style={{
           width: 56, height: 56, borderRadius: "50%", background: "var(--primary)",

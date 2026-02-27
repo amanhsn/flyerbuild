@@ -29,7 +29,7 @@ export const MeetstaaReview = () => {
 
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 style={disp(28, 800)}>Meetstaat & Financials</h1>
+      <h1 style={disp(isMobile ? 22 : 28, 800)}>Meetstaat & Financials</h1>
       <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Review subcontractor return PDFs and reconcile payment items
       </p>
@@ -90,10 +90,11 @@ export const MeetstaaReview = () => {
                 padding: "12px 16px", background: "var(--bg-raised)",
                 border: "1px solid var(--border)", borderRadius: "var(--radius-md)",
                 display: "flex", alignItems: "center", gap: 10,
+                flexWrap: "wrap",
               }}>
                 <Icon n="file" size={18} color="var(--primary)" />
-                <span style={mono(12, "var(--text-primary)")}>{selected.files[0].name}</span>
-                <button className="toggle-btn primary" style={{ marginLeft: "auto", padding: "4px 10px" }}>
+                <span style={{ ...mono(12, "var(--text-primary)"), flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{selected.files[0].name}</span>
+                <button className="toggle-btn primary" style={{ padding: "4px 10px" }}>
                   View PDF
                 </button>
               </div>
@@ -143,7 +144,7 @@ export const MeetstaaReview = () => {
                 </div>
               </div>
 
-              <div style={{ display: "flex", gap: 8 }}>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                 <button className="toggle-btn green active" style={{ padding: "8px 16px" }}>
                   Approve Meetstaat
                 </button>

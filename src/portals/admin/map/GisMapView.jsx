@@ -74,8 +74,8 @@ export const GisMapView = () => {
   return (
     <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
       {/* Header + filter */}
-      <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", gap: 12 }}>
-        <h2 style={disp(22, 700)}>GIS Map & Table</h2>
+      <div style={{ padding: isMobile ? "12px 16px 8px" : "16px 20px 12px", display: "flex", alignItems: "center", gap: isMobile ? 8 : 12, flexWrap: "wrap" }}>
+        <h2 style={disp(isMobile ? 18 : 22, 700)}>GIS Map & Table</h2>
         <select
           value={statusFilter}
           onChange={e => setStatusFilter(e.target.value)}

@@ -35,7 +35,7 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
           {isMobile && "Back"}
         </button>
         <div>
-          <div style={disp(24, 800)}>{assignment.address.street} {assignment.address.number}</div>
+          <div style={disp(isMobile ? 20 : 24, 800)}>{assignment.address.street} {assignment.address.number}</div>
           <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>
             {assignment.tsg_id} · {buildType.label} · {assignment.address.postal_code} {assignment.address.city}
           </div>
@@ -56,7 +56,7 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
           <div style={mono(12, "var(--text-secondary)", { marginBottom: 16 })}>
             Accept this package to begin build execution
           </div>
-          <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
+          <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
             <button className="toggle-btn green active" onClick={handleAccept} style={{ padding: "8px 20px" }}>
               Accept Package
             </button>

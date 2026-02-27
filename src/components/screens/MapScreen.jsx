@@ -5,6 +5,7 @@ import { MOCK_SURVEYS } from "../../data/mockSurveys";
 import { STATUSES } from "../../data/statusConfig";
 import { StatusBadge } from "../shared";
 import { disp, mono } from "../../styles/helpers";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 function getHex(status) {
   return STATUSES[status]?.hex || "#64748b";
@@ -12,14 +13,15 @@ function getHex(status) {
 
 export const MapScreen = ({ onSelectSurvey }) => {
   const { t } = useLang();
+  const isMobile = useIsMobile();
   const surveys = MOCK_SURVEYS;
   const [hoveredId, setHoveredId] = useState(null);
 
   return (
     <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
       {/* Header */}
-      <div style={{ padding: "20px 24px 12px" }}>
-        <h1 style={disp(26, 800)}>{t("mapTitle")}</h1>
+      <div style={{ padding: isMobile ? "12px 16px 8px" : "20px 24px 12px" }}>
+        <h1 style={disp(isMobile ? 22 : 26, 800)}>{t("mapTitle")}</h1>
         <p style={mono(12, "var(--text-secondary)", { marginTop: 4 })}>
           {surveys.length} addresses — {t("mapSub")}
         </p>

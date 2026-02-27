@@ -33,7 +33,7 @@ export const PerformanceDashboard = () => {
 
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "20px 16px" : "24px 28px" }}>
-      <h1 style={disp(28, 800)}>Performance Dashboard</h1>
+      <h1 style={disp(isMobile ? 22 : 28, 800)}>Performance Dashboard</h1>
       <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Surveyor and subcontractor performance metrics
       </p>
@@ -79,7 +79,7 @@ export const PerformanceDashboard = () => {
       <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
         Subcontractor Performance
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))", gap: isMobile ? 8 : 12 }}>
         <KpiCard label="FiberCo — Avg Build Time" value="4.2d" color="var(--blue)" />
         <KpiCard label="FiberCo — Issues" value={0} color="var(--green)" />
         <KpiCard label="TelNet — Avg Build Time" value="5.1d" color="var(--primary)" />

@@ -2,9 +2,11 @@ import { Icon } from "../../icons/Icon";
 import { useLang } from "../../i18n/LangContext";
 import { LangToggle } from "../../i18n/LangContext";
 import { mono, disp } from "../../styles/helpers";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const TopBar = ({ lang, setLang, online = true, theme, setTheme, onMenuToggle, children }) => {
   const { t, currentUser } = useLang();
+  const isMobile = useIsMobile();
 
   const initials = (currentUser?.name || "U").split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
 
@@ -33,7 +35,7 @@ export const TopBar = ({ lang, setLang, online = true, theme, setTheme, onMenuTo
         {children}
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 6 : 12, flexShrink: 0 }}>
         {/* Theme toggle */}
         <button
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}

@@ -30,12 +30,12 @@ export const ProjectDashboard = () => {
 
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "20px 16px" : "24px 28px" }}>
-      <h1 style={disp(28, 800)}>Project Dashboard</h1>
+      <h1 style={disp(isMobile ? 22 : 28, 800)}>Project Dashboard</h1>
       <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Project health and forecasting
       </p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12, marginBottom: 24 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))", gap: isMobile ? 8 : 12, marginBottom: 24 }}>
         <KpiCard label="Completion" value={`${stats.completionPct}%`} color="var(--green)" />
         <KpiCard label="Completed" value={stats.completed} color="var(--green)" total={stats.total} />
         <KpiCard label="Remaining" value={stats.total - stats.completed} color="var(--primary)" total={stats.total} />

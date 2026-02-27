@@ -7,9 +7,11 @@ import { SurveyCard } from "./SurveyCard";
 import { FilterBar } from "./FilterBar";
 import { Icon } from "../../icons/Icon";
 import { disp, mono } from "../../styles/helpers";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const Dashboard = ({ onSelectSurvey }) => {
   const { t } = useLang();
+  const isMobile = useIsMobile();
   const [filter, setFilter] = useState("all");
   const surveys = MOCK_SURVEYS;
 
@@ -21,10 +23,10 @@ export const Dashboard = ({ onSelectSurvey }) => {
   }, [surveys, filter]);
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: "24px 28px" }}>
+    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 4 }}>
-        <h1 style={disp(30, 800)}>{t("navDashboard")}</h1>
+      <div style={{ display: "flex", alignItems: "baseline", gap: isMobile ? 8 : 12, marginBottom: 4, flexWrap: "wrap" }}>
+        <h1 style={disp(isMobile ? 24 : 30, 800)}>{t("navDashboard")}</h1>
         <span style={{
           ...mono(11, "var(--text-muted)"),
           background: "var(--bg-elevated)",

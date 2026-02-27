@@ -31,13 +31,13 @@ export const ExecutiveDashboard = () => {
 
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "20px 16px" : "24px 28px" }}>
-      <h1 style={disp(28, 800)}>Executive Dashboard</h1>
+      <h1 style={disp(isMobile ? 22 : 28, 800)}>Executive Dashboard</h1>
       <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Overall platform metrics — {stats.total} total addresses
       </p>
 
       {/* KPI Row */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 24 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(140px, 1fr))", gap: isMobile ? 8 : 12, marginBottom: 24 }}>
         <KpiCard label="Total Addresses" value={stats.total} color="var(--primary)" />
         <KpiCard label="Completed" value={stats.completed} color="var(--green)" total={stats.total} />
         <KpiCard label="In Progress" value={stats.inProgress} color="var(--blue)" total={stats.total} />

@@ -32,13 +32,13 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
 
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 style={disp(28, 800)}>Validation Queue</h1>
+      <h1 style={disp(isMobile ? 22 : 28, 800)}>Validation Queue</h1>
       <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 20 })}>
         Review completed surveys · {surveys.length} in queue
       </p>
 
       {/* KPIs */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(140px, 1fr))", gap: isMobile ? 8 : 12, marginBottom: 20 }}>
         <KpiCard label="Queue Depth" value={queueDepth} color="var(--primary)" total={total} />
         <KpiCard label="Approved" value={approved} color="var(--green)" total={total} />
         <KpiCard label="Rejected" value={rejected} color="var(--red)" total={total} />

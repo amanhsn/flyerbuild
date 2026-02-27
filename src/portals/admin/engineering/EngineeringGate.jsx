@@ -24,7 +24,7 @@ export const EngineeringGate = () => {
 
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 style={disp(28, 800)}>Engineering Gate</h1>
+      <h1 style={disp(isMobile ? 22 : 28, 800)}>Engineering Gate</h1>
       <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Upload splicing plans, define build types — {eligibleSurveys.length} addresses ready
       </p>

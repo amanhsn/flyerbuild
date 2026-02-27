@@ -11,7 +11,7 @@ export const LangToggle = ({ lang, setLang }) => {
   return (
     <button className="lang-toggle" title={t.langTitle} onClick={() => setLang(next)}>
       <span className="lang-flag">{flags[next]}</span>
-      <span>{t.langLabel}</span>
+      <span className="lang-toggle-label">{t.langLabel}</span>
     </button>
   );
 };

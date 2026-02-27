@@ -22,7 +22,7 @@ export const ApprovalFlow = () => {
 
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 style={disp(28, 800)}>Approval Flow</h1>
+      <h1 style={disp(isMobile ? 22 : 28, 800)}>Approval Flow</h1>
       <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Multi-level approval gates — {approvalSurveys.length} addresses in pipeline
       </p>
@@ -96,7 +96,7 @@ export const ApprovalFlow = () => {
                   ]}
                 />
 
-                <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                <div style={{ display: "flex", gap: 8, marginTop: 8, flexWrap: "wrap" }}>
                   <button className="toggle-btn green active" style={{ padding: "8px 16px", display: "flex", alignItems: "center", gap: 6 }}>
                     <Icon n="file" size={14} color="#fff" /> Generate PDF
                   </button>
