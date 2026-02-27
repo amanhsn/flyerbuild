@@ -21,7 +21,7 @@ export const ExecutionQuantities = ({ survey, setField, disabled }) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
         {t("executionQuantities")}
       </div>
 

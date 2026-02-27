@@ -22,7 +22,7 @@ export const VisitInfo = ({ survey, setField, disabled, addVisit, deleteVisit })
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
       {/* Entry Status */}
       <div>
-        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
           {t("entryStatus")}
         </div>
         <div style={{ display: "flex", gap: 8 }}>
@@ -85,7 +85,7 @@ export const VisitInfo = ({ survey, setField, disabled, addVisit, deleteVisit })
               borderBottom: "1px solid var(--border)",
             }}>
               {["Date", "Surveyor", "Status", "Remark", ""].map((col) => (
-                <div key={col} style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
+                <div key={col} style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
                   {col}
                 </div>
               ))}
@@ -105,15 +105,15 @@ export const VisitInfo = ({ survey, setField, disabled, addVisit, deleteVisit })
                   alignItems: "center",
                 }}
               >
-                <div style={mono(11, "var(--text-secondary)")}>
+                <div style={mono(12, "var(--text-secondary)")}>
                   {visit.timestamp ? new Date(visit.timestamp).toLocaleDateString() : "--"}
                 </div>
-                <div style={mono(11, "var(--text-secondary)")}>
+                <div style={mono(12, "var(--text-secondary)")}>
                   {visit.surveyor || "--"}
                 </div>
                 <div>
                   <span style={{
-                    ...mono(11, visit.entry_status === "ok" ? "var(--green)" : "var(--red)"),
+                    ...mono(12, visit.entry_status === "ok" ? "var(--green)" : "var(--red)"),
                     padding: "2px 8px",
                     borderRadius: "var(--radius-sm)",
                     background: visit.entry_status === "ok"
@@ -123,7 +123,7 @@ export const VisitInfo = ({ survey, setField, disabled, addVisit, deleteVisit })
                     {visit.entry_status === "ok" ? "OK" : "No Entry"}
                   </span>
                 </div>
-                <div style={mono(11, "var(--text-muted)")}>
+                <div style={mono(12, "var(--text-muted)")}>
                   {visit.visit_remark || "--"}
                 </div>
                 <div style={{ display: "flex", justifyContent: "center" }}>
@@ -150,7 +150,7 @@ export const VisitInfo = ({ survey, setField, disabled, addVisit, deleteVisit })
 
       {visits.length === 0 && (
         <div style={{
-          ...mono(11, "var(--text-muted)"),
+          ...mono(12, "var(--text-muted)"),
           padding: 20,
           textAlign: "center",
           background: "var(--bg-raised)",

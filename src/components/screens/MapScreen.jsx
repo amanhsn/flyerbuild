@@ -22,7 +22,7 @@ export const MapScreen = ({ onSelectSurvey }) => {
       {/* Header */}
       <div style={{ padding: isMobile ? "12px 16px 8px" : "20px 24px 12px" }}>
         <h1 style={disp(isMobile ? 22 : 26, 800)}>{t("mapTitle")}</h1>
-        <p style={mono(12, "var(--text-secondary)", { marginTop: 4 })}>
+        <p style={mono(14, "var(--text-secondary)", { marginTop: 4 })}>
           {surveys.length} addresses — {t("mapSub")}
         </p>
       </div>
@@ -62,12 +62,12 @@ export const MapScreen = ({ onSelectSurvey }) => {
                 <Tooltip>
                   <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
                     <StatusBadge status={s.status} />
-                    <span style={mono(11, "var(--text-muted)")}>{s.tsg_id}</span>
+                    <span style={mono(12, "var(--text-muted)")}>{s.tsg_id}</span>
                   </div>
-                  <div style={mono(11, "var(--text-primary)")}>
+                  <div style={mono(12, "var(--text-primary)")}>
                     {s.address.street} {s.address.number}
                   </div>
-                  <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>
+                  <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
                     {s.address.postal_code} {s.address.city}
                   </div>
                 </Tooltip>

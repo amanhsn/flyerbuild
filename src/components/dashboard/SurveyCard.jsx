@@ -20,10 +20,10 @@ export const SurveyCard = ({ survey, selected, onClick }) => {
           <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 6, flexWrap: "wrap" }}>
             {survey.priority && <Icon n="star" size={12} color="var(--text-primary-accent)" />}
             <StatusBadge status={survey.status} />
-            <span style={mono(11, "var(--text-muted)")}>{survey.tsg_id}</span>
+            <span style={mono(12, "var(--text-muted)")}>{survey.tsg_id}</span>
           </div>
           <div style={disp(19, 700)}>{addr.street} {addr.number}</div>
-          <div style={mono(12, "var(--text-secondary)", { marginTop: 3 })}>{addr.postal_code} {addr.city}</div>
+          <div style={mono(14, "var(--text-secondary)", { marginTop: 3 })}>{addr.postal_code} {addr.city}</div>
         </div>
         <Icon n="chevR" size={16} color="var(--text-muted)" style={{ flexShrink: 0, marginTop: 4 }} />
       </div>
@@ -33,11 +33,11 @@ export const SurveyCard = ({ survey, selected, onClick }) => {
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
           <Icon n="clock" size={12} color="var(--text-muted)" />
-          <span style={mono(11, "var(--text-secondary)")}>{survey.scheduled_time}</span>
+          <span style={mono(12, "var(--text-secondary)")}>{survey.scheduled_time}</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
           <Icon n="nav" size={12} color="var(--text-muted)" />
-          <span style={mono(11, "var(--text-secondary)")}>{survey.distance_km} km</span>
+          <span style={mono(12, "var(--text-secondary)")}>{survey.distance_km} km</span>
         </div>
         <MiniProgress
           val={completedCount}

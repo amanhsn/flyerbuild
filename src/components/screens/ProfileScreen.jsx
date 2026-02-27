@@ -22,7 +22,7 @@ export const ProfileScreen = () => {
         }}>JJ</div>
         <div>
           <div style={disp(22, 800)}>Jonas Jacobs</div>
-          <div style={mono(11, "var(--text-secondary)", { marginTop: 3 })}>Surveyor · Fyber v2.4.0</div>
+          <div style={mono(12, "var(--text-secondary)", { marginTop: 3 })}>Surveyor · Fyber v2.4.0</div>
         </div>
       </div>
       {rows.map(([k, v]) => (

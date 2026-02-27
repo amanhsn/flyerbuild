@@ -76,7 +76,7 @@ export const SurveyView = ({ initialSurvey, onBack }) => {
           borderRadius: "var(--radius-md)",
         }}>
           <Icon n="alert" size={16} color="var(--primary)" />
-          <div style={{ flex: 1, ...mono(11, "var(--text-primary-accent)") }}>
+          <div style={{ flex: 1, ...mono(12, "var(--text-primary-accent)") }}>
             {t("buildingWarning")} — {t("buildingWarnSub")(survey.mdu_group.linked_surveys?.[0]?.tsg_id || "main building")}
           </div>
           <button
@@ -121,7 +121,7 @@ export const SurveyView = ({ initialSurvey, onBack }) => {
           {autoSaveStatus && (
             <div style={{
               position: "fixed", top: 60, right: 16, zIndex: 100,
-              ...mono(11, autoSaveStatus === "saving" ? "var(--text-primary-accent)" : "var(--text-green)"),
+              ...mono(12, autoSaveStatus === "saving" ? "var(--text-primary-accent)" : "var(--text-green)"),
               background: autoSaveStatus === "saving" ? "var(--primary-glow)" : "var(--green-glow)",
               border: `1px solid ${autoSaveStatus === "saving" ? "var(--primary-dim)" : "var(--green-dim)"}`,
               borderRadius: "var(--radius-sm)", padding: "4px 10px",

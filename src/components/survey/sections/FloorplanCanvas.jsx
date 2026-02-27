@@ -42,7 +42,7 @@ export const FloorplanCanvas = ({ survey, setField, disabled }) => {
             title={label}
           >
             <Icon n={icon} size={14} color="var(--text-secondary)" />
-            <span style={mono(11, "var(--text-secondary)")}>{label}</span>
+            <span style={mono(12, "var(--text-secondary)")}>{label}</span>
           </button>
         ))}
       </div>
@@ -78,7 +78,7 @@ export const FloorplanCanvas = ({ survey, setField, disabled }) => {
         <span style={disp(16, 600, "var(--text-muted)")}>
           {t("drawFloorPlan")}
         </span>
-        <span style={mono(11, "var(--text-muted)")}>
+        <span style={mono(12, "var(--text-muted)")}>
           {t("canvasPlaceholder")}
         </span>
       </div>

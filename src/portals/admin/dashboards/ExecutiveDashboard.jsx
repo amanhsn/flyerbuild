@@ -32,7 +32,7 @@ export const ExecutiveDashboard = () => {
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "20px 16px" : "24px 28px" }}>
       <h1 style={disp(isMobile ? 22 : 28, 800)}>Executive Dashboard</h1>
-      <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
+      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Overall platform metrics — {stats.total} total addresses
       </p>
 
@@ -63,7 +63,7 @@ export const ExecutiveDashboard = () => {
 
       {/* Completion funnel */}
       <div style={{ marginTop: 24 }}>
-        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
           Workflow Funnel
         </div>
         <div style={{ display: isMobile ? "grid" : "flex", gridTemplateColumns: "1fr 1fr", gap: isMobile ? 8 : 4, alignItems: "flex-end" }}>
@@ -79,7 +79,7 @@ export const ExecutiveDashboard = () => {
               borderRadius: "var(--radius-md)",
             }}>
               <div style={disp(24, 800, stage.color)}>{stage.count}</div>
-              <div style={mono(11, "var(--text-secondary)", { marginTop: 4 })}>{stage.label}</div>
+              <div style={mono(12, "var(--text-secondary)", { marginTop: 4 })}>{stage.label}</div>
             </div>
           ))}
         </div>

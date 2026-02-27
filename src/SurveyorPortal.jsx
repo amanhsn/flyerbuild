@@ -581,7 +581,7 @@ const StatusBadge = ({ status }) => {
   };
   const s = m[status] || m.pending;
   return (
-    <span style={{ ...mono(11, s.text), fontWeight:600, letterSpacing:".08em", textTransform:"uppercase",
+    <span style={{ ...mono(12, s.text), fontWeight:600, letterSpacing:".08em", textTransform:"uppercase",
       padding:"3px 8px", borderRadius:"var(--radius-sm)", background:s.bg, border:`1px solid ${s.border}` }}>
       {s.label}
     </span>
@@ -594,7 +594,7 @@ const MiniProgress = ({ val, total, status }) => (
       <div style={{ width:`${(val/total)*100}%`, height:"100%", borderRadius:2, transition:"width .4s ease",
         background: status==="done"?"var(--green)":status==="conflict"?"var(--red)":"var(--primary)" }} />
     </div>
-    <span style={mono(11,"var(--text-muted)",{flexShrink:0})}>{val}/{total}</span>
+    <span style={mono(12,"var(--text-muted)",{flexShrink:0})}>{val}/{total}</span>
   </div>
 );
 
@@ -607,7 +607,7 @@ const SyncBar = ({ online }) => {
       borderTop:`1px solid ${online?"var(--green-dim)":"var(--primary-dim)"}`,
     }}>
       <Icon n={online?"wifi":"wifiOff"} size={13} color={online?"var(--text-green)":"var(--text-primary-accent)"} />
-      <span style={mono(11, online?"var(--text-green)":"var(--text-primary-accent)")}>{online?t("syncOnline"):t("syncOffline")}</span>
+      <span style={mono(12, online?"var(--text-green)":"var(--text-primary-accent)")}>{online?t("syncOnline"):t("syncOffline")}</span>
       <span style={{ ...mono(10), marginLeft:"auto" }}>{online?t("syncDone"):t("syncPending")}</span>
       <div style={{ width:7, height:7, borderRadius:"50%",
         background:online?"var(--green)":"var(--primary)",
@@ -668,12 +668,12 @@ const QueuePanel = ({ selectedId, onSelect, mobileHidden }) => {
       <div style={{ padding:"20px 20px 0", flexShrink:0 }}>
         <div style={{ display:"flex", alignItems:"baseline", gap:10, marginBottom:4 }}>
           <h1 style={disp(30,800)}>{t("queueTitle")}</h1>
-          <span style={{ ...mono(11,"var(--text-muted)"), background:"var(--bg-elevated)",
+          <span style={{ ...mono(12,"var(--text-muted)"), background:"var(--bg-elevated)",
             padding:"3px 8px", borderRadius:"var(--radius-sm)", border:"1px solid var(--border)" }}>
             {t("queueDate")}
           </span>
         </div>
-        <p style={mono(12,"var(--text-secondary)",{marginTop:5})}>
+        <p style={mono(14,"var(--text-secondary)",{marginTop:5})}>
           {t("queueSurveyor")} · {t("queueCount")(SURVEYS.length)}
         </p>
       </div>
@@ -685,9 +685,9 @@ const QueuePanel = ({ selectedId, onSelect, mobileHidden }) => {
         <Icon n="download" size={15} color="var(--text-primary-accent)" />
         <div style={{ flex:1 }}>
           <div style={{ fontFamily:"var(--font-body)", fontWeight:600, fontSize:14 }}>{t("downloadTomorrow")}</div>
-          <div style={mono(11,"var(--text-secondary)",{marginTop:2})}>{t("downloadSub")}</div>
+          <div style={mono(12,"var(--text-secondary)",{marginTop:2})}>{t("downloadSub")}</div>
         </div>
-        <span style={{ ...mono(11,"var(--text-primary-accent)"), background:"var(--primary-glow)",
+        <span style={{ ...mono(12,"var(--text-primary-accent)"), background:"var(--primary-glow)",
           padding:"4px 10px", borderRadius:"var(--radius-sm)", border:"1px solid var(--primary-dim)" }}>
           {t("downloadFetch")}
         </span>
@@ -712,10 +712,10 @@ const QueuePanel = ({ selectedId, onSelect, mobileHidden }) => {
                 <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:6, flexWrap:"wrap" }}>
                   {s.priority && <Icon n="star" size={12} color="var(--text-primary-accent)" />}
                   <StatusBadge status={s.status} />
-                  <span style={mono(11,"var(--text-muted)")}>{s.code}</span>
+                  <span style={mono(12,"var(--text-muted)")}>{s.code}</span>
                 </div>
                 <div style={disp(19,700)}>{s.address}</div>
-                <div style={mono(12,"var(--text-secondary)",{marginTop:3})}>{s.city}</div>
+                <div style={mono(14,"var(--text-secondary)",{marginTop:3})}>{s.city}</div>
               </div>
               <Icon n="chevR" size={16} color="var(--text-muted)" style={{ flexShrink:0, marginTop:4 }} />
             </div>
@@ -723,11 +723,11 @@ const QueuePanel = ({ selectedId, onSelect, mobileHidden }) => {
               paddingTop:11, borderTop:"1px solid var(--border)" }}>
               <div style={{ display:"flex", alignItems:"center", gap:5 }}>
                 <Icon n="clock" size={12} color="var(--text-muted)" />
-                <span style={mono(11,"var(--text-secondary)")}>{s.time}</span>
+                <span style={mono(12,"var(--text-secondary)")}>{s.time}</span>
               </div>
               <div style={{ display:"flex", alignItems:"center", gap:5 }}>
                 <Icon n="nav" size={12} color="var(--text-muted)" />
-                <span style={mono(11,"var(--text-secondary)")}>{s.dist}</span>
+                <span style={mono(12,"var(--text-secondary)")}>{s.dist}</span>
               </div>
               <MiniProgress val={s.sections} total={s.total} status={s.status} />
             </div>
@@ -766,7 +766,7 @@ const TBtn = ({ label, variant="primary", active, onClick, disabled }) => (
 // ─── FIELD ────────────────────────────────────────────────────────────────────
 const Field = ({ label, value, disabled, flex }) => (
   <div style={{ flex:flex||1 }}>
-    <div style={mono(11,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".08em",marginBottom:5})}>{label}</div>
+    <div style={mono(12,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".08em",marginBottom:5})}>{label}</div>
     <input className="field-input" defaultValue={value} disabled={disabled} />
   </div>
 );
@@ -785,7 +785,7 @@ const SectionCard = ({ title, sectionKey, completed, editing, setEditing, client
           {isDone && !isEditing && (
             <div style={{ display:"flex", alignItems:"center", gap:5, marginTop:3 }}>
               <Icon n="check" size={11} color="var(--text-green)" />
-              <span style={mono(11,"var(--text-green)")}>{t("savedLabel")}</span>
+              <span style={mono(12,"var(--text-green)")}>{t("savedLabel")}</span>
             </div>
           )}
         </div>
@@ -802,13 +802,13 @@ const SectionCard = ({ title, sectionKey, completed, editing, setEditing, client
       </div>
       <div style={{ padding:"9px 16px", background:"var(--bg-overlay)", borderBottom:"1px solid var(--border)",
         display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
-        <span style={mono(11,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".08em"})}>{t("client")}</span>
-        <span style={{ ...mono(12,"var(--text-secondary)"), padding:"2px 8px",
+        <span style={mono(12,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".08em"})}>{t("client")}</span>
+        <span style={{ ...mono(14,"var(--text-secondary)"), padding:"2px 8px",
           background:"var(--bg-elevated)", borderRadius:"var(--radius-sm)", border:"1px solid var(--border)" }}>
           {clientValue}
         </span>
-        <span style={mono(11,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".08em",marginLeft:8})}>{t("fyber")}</span>
-        <span style={{ ...mono(12, isDone?"var(--text-green)":"var(--text-muted)"),
+        <span style={mono(12,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".08em",marginLeft:8})}>{t("fyber")}</span>
+        <span style={{ ...mono(14, isDone?"var(--text-green)":"var(--text-muted)"),
           padding:"2px 8px", borderRadius:"var(--radius-sm)",
           background:isDone?"var(--green-glow)":"transparent",
           border:`1px solid ${isDone?"var(--green-dim)":"var(--border)"}` }}>
@@ -828,7 +828,7 @@ const UnitsSection = () => {
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
         <div>
           <div style={disp(22,800)}>{t("unitsTitle")}</div>
-          <div style={mono(11,"var(--text-secondary)",{marginTop:3})}>{t("unitsSub")}</div>
+          <div style={mono(12,"var(--text-secondary)",{marginTop:3})}>{t("unitsSub")}</div>
         </div>
         <button style={{ display:"flex", alignItems:"center", gap:8, padding:"9px 14px",
           borderRadius:"var(--radius-md)", background:"var(--bg-elevated)", border:"1px solid var(--border)",
@@ -841,16 +841,16 @@ const UnitsSection = () => {
         <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between" }}>
           <div>
             <div style={disp(17,700)}>Geluwesesteenweg 158</div>
-            <div style={mono(11,"var(--text-secondary)",{marginTop:3})}>8940 Wervik</div>
+            <div style={mono(12,"var(--text-secondary)",{marginTop:3})}>8940 Wervik</div>
           </div>
-          <span style={{ ...mono(11,"var(--text-primary-accent)"), background:"var(--primary-glow)",
+          <span style={{ ...mono(12,"var(--text-primary-accent)"), background:"var(--primary-glow)",
             padding:"3px 8px", borderRadius:"var(--radius-sm)", border:"1px solid var(--primary-dim)" }}>
             {t("currentUnit")}
           </span>
         </div>
         <div style={{ display:"flex", gap:8, marginTop:10 }}>
           {["Residential","Underground"].map(tag => (
-            <span key={tag} style={{ ...mono(11,"var(--text-muted)"), background:"var(--bg-overlay)",
+            <span key={tag} style={{ ...mono(12,"var(--text-muted)"), background:"var(--bg-overlay)",
               padding:"3px 8px", borderRadius:"var(--radius-sm)", border:"1px solid var(--border)" }}>{tag}</span>
           ))}
         </div>
@@ -874,7 +874,7 @@ const RemarksSection = () => {
           <div style={{ fontFamily:"var(--font-body)", fontWeight:600, fontSize:13, color:"var(--text-red)" }}>
             {t("refusalTitle")}
           </div>
-          <div style={mono(11,"var(--text-secondary)",{marginTop:2})}>{t("refusalSub")}</div>
+          <div style={mono(12,"var(--text-secondary)",{marginTop:2})}>{t("refusalSub")}</div>
         </div>
         <button style={{ padding:"7px 12px", background:"var(--bg-elevated)", border:"1px solid var(--red-dim)",
           borderRadius:"var(--radius-sm)", color:"var(--text-red)", ...mono(11), cursor:"pointer" }}>
@@ -897,7 +897,7 @@ const PhotosSection = () => {
     <div className="fade-up">
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:14 }}>
         <div style={disp(22,800)}>{t("photosTitle")}</div>
-        <span style={mono(11,"var(--text-secondary)")}>{t("photosUploaded")}</span>
+        <span style={mono(12,"var(--text-secondary)")}>{t("photosUploaded")}</span>
       </div>
       <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))", gap:10, marginBottom:20 }}>
         {slots.map((sl,i) => (
@@ -909,7 +909,7 @@ const PhotosSection = () => {
                   <Icon n="camera" size={26} color="var(--text-muted)" />
                 </div>
                 <div style={{ padding:"7px 10px", background:"var(--bg-overlay)",
-                  display:"flex", justifyContent:"space-between", ...mono(11,"var(--text-secondary)") }}>
+                  display:"flex", justifyContent:"space-between", ...mono(12,"var(--text-secondary)") }}>
                   <span>{sl.label}</span>
                   <span style={{ color:"var(--text-green)" }}>✓</span>
                 </div>
@@ -920,7 +920,7 @@ const PhotosSection = () => {
                 border:`2px dashed ${sl.req?"var(--red-dim)":"var(--border)"}`,
                 borderRadius:"var(--radius-lg)" }}>
                 <Icon n="plus" size={20} color={sl.req?"var(--text-red)":"var(--text-muted)"} />
-                <span style={{ ...mono(11,sl.req?"var(--text-red)":"var(--text-muted)"), textAlign:"center" }}>
+                <span style={{ ...mono(12,sl.req?"var(--text-red)":"var(--text-muted)"), textAlign:"center" }}>
                   {sl.label}{sl.req&&" *"}
                 </span>
               </div>
@@ -938,7 +938,7 @@ const PhotosSection = () => {
         {[t("sigSurveyor"), t("sigClient")].map((lbl,i) => (
           <div key={i} style={{ marginBottom:i===0?12:0, padding:"12px 14px",
             borderRadius:"var(--radius-md)", background:"var(--bg-overlay)", border:"1px solid var(--border)" }}>
-            <div style={mono(11,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".08em",marginBottom:8})}>{lbl}</div>
+            <div style={mono(12,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".08em",marginBottom:8})}>{lbl}</div>
             <div style={{ height:60, borderRadius:"var(--radius-sm)", border:"1px dashed var(--border-bright)",
               display:"flex", alignItems:"center", justifyContent:"center", ...mono(11) }}>
               {t("signHere")}
@@ -988,15 +988,15 @@ const SurveyDetail = ({ survey, onBack }) => {
           <div style={{ flex:1, minWidth:0 }}>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:5, flexWrap:"wrap" }}>
               <StatusBadge status="inprogress" />
-              <span style={mono(11,"var(--text-muted)")}>{survey.code}</span>
+              <span style={mono(12,"var(--text-muted)")}>{survey.code}</span>
             </div>
             <h2 style={disp(26,800)}>{survey.address}</h2>
-            <div style={mono(12,"var(--text-secondary)",{marginTop:3})}>{survey.city}</div>
+            <div style={mono(14,"var(--text-secondary)",{marginTop:3})}>{survey.city}</div>
             <div style={{ display:"flex", gap:16, marginTop:10, flexWrap:"wrap" }}>
               {[["nav",survey.dist],["clock",survey.time],["nav","50.7972, 3.0592"]].map(([icon,val],i) => (
                 <div key={i} style={{ display:"flex", alignItems:"center", gap:5 }}>
                   <Icon n={icon} size={12} color="var(--text-muted)" />
-                  <span style={mono(11,"var(--text-secondary)")}>{val}</span>
+                  <span style={mono(12,"var(--text-secondary)")}>{val}</span>
                 </div>
               ))}
             </div>
@@ -1004,7 +1004,7 @@ const SurveyDetail = ({ survey, onBack }) => {
           <div style={{ textAlign:"right", flexShrink:0 }}>
             <div style={{ fontFamily:"var(--font-display)", fontSize:40, fontWeight:800,
               color:"var(--text-primary-accent)", lineHeight:1 }}>{completedCount}/{SECTIONS.length}</div>
-            <div style={mono(11,"var(--text-muted)")}>{t("completed")}</div>
+            <div style={mono(12,"var(--text-muted)")}>{t("completed")}</div>
           </div>
         </div>
 
@@ -1021,7 +1021,7 @@ const SurveyDetail = ({ survey, onBack }) => {
             return (
               <button key={s.key} onClick={() => setActiveSection(i)} style={{
                 flexShrink:0, padding:"10px 13px", background:"none", border:"none", cursor:"pointer",
-                ...mono(11, isAct?"var(--text-primary-accent)":isDone?"var(--text-green)":"var(--text-muted)",
+                ...mono(12, isAct?"var(--text-primary-accent)":isDone?"var(--text-green)":"var(--text-muted)",
                   {fontWeight:600, letterSpacing:".04em", textTransform:"uppercase"}),
                 borderBottom:isAct?"2px solid var(--primary)":"2px solid transparent",
                 display:"flex", alignItems:"center", gap:5, transition:"all .15s",
@@ -1045,7 +1045,7 @@ const SurveyDetail = ({ survey, onBack }) => {
               <div style={{ fontFamily:"var(--font-body)", fontWeight:600, fontSize:13, color:"var(--text-primary-accent)" }}>
                 {t("buildingWarning")}
               </div>
-              <div style={mono(11,"var(--text-secondary)",{marginTop:3})}>
+              <div style={mono(12,"var(--text-secondary)",{marginTop:3})}>
                 {t("buildingWarnSub")(<span style={{ color:"var(--text-primary)", textDecoration:"underline", cursor:"pointer" }}>Geluwesesteenweg 158-A</span>)}
               </div>
             </div>
@@ -1094,7 +1094,7 @@ const SurveyDetail = ({ survey, onBack }) => {
             {answers.conntype==="pole" && (
               <div style={{ marginTop:12, padding:"10px 14px", borderRadius:"var(--radius-md)",
                 background:"var(--bg-overlay)", border:"1px solid var(--border)",
-                display:"flex", alignItems:"center", gap:8, ...mono(12,"var(--text-secondary)") }}>
+                display:"flex", alignItems:"center", gap:8, ...mono(14,"var(--text-secondary)") }}>
                 <Icon n="info" size={13} color="var(--text-primary-accent)" />
                 {t("poleNote")}
               </div>
@@ -1170,7 +1170,7 @@ const SidebarNav = ({ active, setActive }) => {
             <div style={disp(14,800,undefined,{letterSpacing:".06em",textTransform:"uppercase",lineHeight:1})}>
               {t("appName")}
             </div>
-            <div style={mono(11,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".1em"})}>
+            <div style={mono(12,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".1em"})}>
               Surveyor
             </div>
           </div>
@@ -1191,7 +1191,7 @@ const SidebarNav = ({ active, setActive }) => {
             fontFamily:"var(--font-display)", fontWeight:800, fontSize:13, color:"#fff", flexShrink:0 }}>JJ</div>
           <div className="sidebar-user-info">
             <div style={{ fontFamily:"var(--font-body)", fontWeight:600, fontSize:13 }}>Jonas Jacobs</div>
-            <div style={mono(11,"var(--text-muted)",{marginTop:1})}>v2.4.0</div>
+            <div style={mono(12,"var(--text-muted)",{marginTop:1})}>v2.4.0</div>
           </div>
         </div>
       </div>
@@ -1223,7 +1223,7 @@ const HistoryScreen = () => {
         <div key={i} style={{ padding:"14px 16px", marginBottom:8, borderRadius:"var(--radius-lg)",
           background:"var(--bg-raised)", border:"1px solid var(--border)",
           display:"flex", alignItems:"center", gap:14 }}>
-          <div style={mono(11,"var(--text-muted)",{flexShrink:0, width:52})}>{d}</div>
+          <div style={mono(12,"var(--text-muted)",{flexShrink:0, width:52})}>{d}</div>
           <div style={{ flex:1, ...disp(17,600) }}>{a}</div>
           <StatusBadge status={s} />
         </div>
@@ -1242,7 +1242,7 @@ const ProfileScreen = () => {
           fontFamily:"var(--font-display)", fontSize:22, fontWeight:800, color:"#fff" }}>JJ</div>
         <div>
           <div style={disp(22,800)}>Jonas Jacobs</div>
-          <div style={mono(11,"var(--text-secondary)",{marginTop:3})}>Surveyor · Fyber v2.4.0</div>
+          <div style={mono(12,"var(--text-secondary)",{marginTop:3})}>Surveyor · Fyber v2.4.0</div>
         </div>
       </div>
       {[[t("region"),"WERK / MEN"],[t("todayDone"),"2/5"],[t("syncStatus"),"Online"],[t("offlineCache"),"47 MB"]].map(([k,v]) => (
@@ -1296,7 +1296,7 @@ export default function SurveyorPortal() {
               <div style={disp(14,800,undefined,{letterSpacing:".06em",textTransform:"uppercase",lineHeight:1})}>
                 {t("appName")}
               </div>
-              <div style={mono(11,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".1em"})}>
+              <div style={mono(12,"var(--text-muted)",{textTransform:"uppercase",letterSpacing:".1em"})}>
                 {t("appRole")}
               </div>
             </div>
@@ -1306,7 +1306,7 @@ export default function SurveyorPortal() {
             {/* Language toggle */}
             <LangToggle lang={lang} setLang={setLang} />
 
-            <div style={{ display:"flex", alignItems:"center", gap:6, ...mono(11,"var(--text-green)") }}>
+            <div style={{ display:"flex", alignItems:"center", gap:6, ...mono(12,"var(--text-green)") }}>
               <div style={{ width:6, height:6, borderRadius:"50%", background:"var(--green)" }} />
               {t("online")}
             </div>

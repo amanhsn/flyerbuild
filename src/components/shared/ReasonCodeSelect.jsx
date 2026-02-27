@@ -11,7 +11,7 @@ export const ReasonCodeSelect = ({ value, onChange, disabled = false, label = "R
 
   return (
     <div>
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 6 })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 6 })}>
         {label}
       </div>
       <select

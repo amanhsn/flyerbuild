@@ -44,7 +44,7 @@ export const Sidebar = ({ active, setActive, items, roleLabel = "Surveyor", user
               <div style={disp(14, 800, undefined, { letterSpacing: ".06em", textTransform: "uppercase", lineHeight: 1 })}>
                 {t("appName")}
               </div>
-              <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
+              <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
                 {roleLabel}
               </div>
             </div>
@@ -67,7 +67,7 @@ export const Sidebar = ({ active, setActive, items, roleLabel = "Surveyor", user
             }}>{u.initials}</div>
             <div className="sidebar-user-info">
               <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 13 }}>{u.name}</div>
-              <div style={mono(11, "var(--text-muted)", { marginTop: 1 })}>v2.4.0</div>
+              <div style={mono(12, "var(--text-muted)", { marginTop: 1 })}>v2.4.0</div>
             </div>
           </div>
         </div>

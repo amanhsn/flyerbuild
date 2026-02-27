@@ -22,7 +22,7 @@ export const SurveySidebar = ({ survey, visibleSections }) => {
         padding: "12px 14px", borderRadius: "var(--radius-md)",
         background: "var(--bg-elevated)", border: "1px solid var(--border)",
       }}>
-        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
           Status
         </div>
         <StatusBadge status={survey.status} />
@@ -32,27 +32,27 @@ export const SurveySidebar = ({ survey, visibleSections }) => {
       <Accordion title={t("sidebarDetails")} defaultOpen={true}>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           <div>
-            <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+            <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
               {t("sidebarTsgId")}
             </div>
-            <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>{survey.tsg_id}</div>
+            <div style={mono(14, "var(--text-secondary)", { marginTop: 2 })}>{survey.tsg_id}</div>
           </div>
 
           {survey.rework_remarks && (
             <div>
-              <div style={mono(11, "var(--text-red)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+              <div style={mono(12, "var(--text-red)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
                 {t("sidebarReworkRemarks")}
               </div>
-              <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>{survey.rework_remarks}</div>
+              <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>{survey.rework_remarks}</div>
             </div>
           )}
 
           {survey.validated_by && (
             <div>
-              <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+              <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
                 {t("sidebarValidatedBy")}
               </div>
-              <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>
+              <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
                 {survey.validated_by} · {survey.validated_at}
               </div>
             </div>
@@ -60,10 +60,10 @@ export const SurveySidebar = ({ survey, visibleSections }) => {
 
           {survey.completed_by && (
             <div>
-              <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+              <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
                 {t("sidebarCompletedBy")}
               </div>
-              <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>
+              <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
                 {survey.completed_by} · {survey.completed_at}
               </div>
             </div>
@@ -86,7 +86,7 @@ export const SurveySidebar = ({ survey, visibleSections }) => {
                   border: `1px solid ${done ? "var(--green)" : "var(--border-bright)"}`,
                   flexShrink: 0,
                 }} />
-                <span style={mono(11, done ? "var(--text-green)" : "var(--text-secondary)")}>
+                <span style={mono(12, done ? "var(--text-green)" : "var(--text-secondary)")}>
                   {t(`sec_${sec.key}`)}
                 </span>
               </div>
@@ -103,7 +103,7 @@ export const SurveySidebar = ({ survey, visibleSections }) => {
       }}>
         <Icon n="nav" size={14} color="var(--text-primary-accent)" />
         <div>
-          <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
             {t("sidebarDistance")}
           </div>
           <div style={mono(13, "var(--text-primary)", { marginTop: 2 })}>{survey.distance_km} km</div>

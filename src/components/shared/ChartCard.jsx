@@ -13,13 +13,13 @@ export const ChartCard = ({ title, data = [], height = 120 }) => {
       background: "var(--bg-raised)", border: "1px solid var(--border)",
       borderRadius: "var(--radius-lg)", padding: 16,
     }}>
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
         {title}
       </div>
       <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height }}>
         {data.map((d, i) => (
           <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-            <div style={mono(11, "var(--text-secondary)")}>{d.value}</div>
+            <div style={mono(12, "var(--text-secondary)")}>{d.value}</div>
             <div style={{
               width: "100%", maxWidth: 40,
               height: `${(d.value / maxVal) * (height - 30)}px`,

@@ -47,7 +47,7 @@ export const SectionNav = ({ sections, activeIndex, completedSections, onSelect 
             style={{
               flexShrink: 0, padding: "10px 13px",
               background: "none", border: "none", cursor: "pointer",
-              ...mono(11,
+              ...mono(12,
                 isActive ? "var(--text-primary-accent)" : isDone ? "var(--text-green)" : "var(--text-muted)",
                 { fontWeight: 600, letterSpacing: ".04em", textTransform: "uppercase" },
               ),

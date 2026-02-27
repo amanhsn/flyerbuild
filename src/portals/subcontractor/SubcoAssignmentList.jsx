@@ -41,7 +41,7 @@ export const SubcoAssignmentList = ({ assignments, filter, setFilter, onSelect }
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
       <h1 style={disp(isMobile ? 22 : 28, 800)}>My Assignments</h1>
-      <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 20 })}>
+      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 20 })}>
         FiberCo BVBA — {assigned} assignments
       </p>
 
@@ -81,26 +81,26 @@ export const SubcoAssignmentList = ({ assignments, filter, setFilter, onSelect }
           >
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{
-                ...mono(11, statusColors[a.status]),
+                ...mono(12, statusColors[a.status]),
                 padding: "2px 8px", borderRadius: "var(--radius-sm)",
                 background: "var(--bg-overlay)", border: `1px solid ${statusColors[a.status]}40`,
                 textTransform: "uppercase",
               }}>
                 {a.status.replace(/_/g, " ")}
               </div>
-              <span style={mono(11, "var(--text-muted)")}>{a.tsg_id}</span>
+              <span style={mono(12, "var(--text-muted)")}>{a.tsg_id}</span>
               {a.dispute && <Icon n="alert" size={12} color="var(--red)" />}
             </div>
             <div style={disp(17, 700, undefined, { marginTop: 6 })}>
               {a.address.street} {a.address.number}
             </div>
-            <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>
+            <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
               {a.address.postal_code} {a.address.city}
             </div>
 
             {a.phase && (
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 10, paddingTop: 10, borderTop: "1px solid var(--border)" }}>
-                <span style={mono(11, "var(--text-muted)")}>
+                <span style={mono(12, "var(--text-muted)")}>
                   {BUILD_PHASE_LABELS[a.phase] || a.phase}
                 </span>
                 <div style={{ flex: 1, height: 4, background: "var(--bg-overlay)", borderRadius: 2 }}>
@@ -109,7 +109,7 @@ export const SubcoAssignmentList = ({ assignments, filter, setFilter, onSelect }
                     background: statusColors[a.status] || "var(--primary)",
                   }} />
                 </div>
-                <span style={mono(11, "var(--text-muted)")}>{a.progress}%</span>
+                <span style={mono(12, "var(--text-muted)")}>{a.progress}%</span>
               </div>
             )}
           </div>

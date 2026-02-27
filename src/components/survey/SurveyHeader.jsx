@@ -30,13 +30,13 @@ export const SurveyHeader = ({ survey, completedCount, onBack }) => {
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5, flexWrap: "wrap" }}>
             <StatusBadge status={survey.status} />
-            <span style={mono(11, "var(--text-muted)")}>{survey.tsg_id}</span>
+            <span style={mono(12, "var(--text-muted)")}>{survey.tsg_id}</span>
             {survey.building_id && (
-              <span style={mono(11, "var(--text-muted)")}>· {survey.building_id}</span>
+              <span style={mono(12, "var(--text-muted)")}>· {survey.building_id}</span>
             )}
           </div>
           <h2 style={disp(26, 800)}>{addr.street} {addr.number}</h2>
-          <div style={mono(12, "var(--text-secondary)", { marginTop: 3 })}>{addr.postal_code} {addr.city}</div>
+          <div style={mono(14, "var(--text-secondary)", { marginTop: 3 })}>{addr.postal_code} {addr.city}</div>
           <div style={{ display: "flex", gap: 16, marginTop: 10, flexWrap: "wrap" }}>
             {[
               ["nav", `${survey.distance_km} km`],
@@ -45,7 +45,7 @@ export const SurveyHeader = ({ survey, completedCount, onBack }) => {
             ].map(([icon, val], i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 5 }}>
                 <Icon n={icon} size={12} color="var(--text-muted)" />
-                <span style={mono(11, "var(--text-secondary)")}>{val}</span>
+                <span style={mono(12, "var(--text-secondary)")}>{val}</span>
               </div>
             ))}
           </div>
@@ -57,7 +57,7 @@ export const SurveyHeader = ({ survey, completedCount, onBack }) => {
           }}>
             {completedCount}/{totalSections}
           </div>
-          <div style={mono(11, "var(--text-muted)")}>{t("completed")}</div>
+          <div style={mono(12, "var(--text-muted)")}>{t("completed")}</div>
         </div>
       </div>
 

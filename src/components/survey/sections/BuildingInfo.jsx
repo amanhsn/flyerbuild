@@ -48,7 +48,7 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
       </div>
 
       {/* Unit Counts */}
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
         {t("unitCounts")}
       </div>
       <div style={{ display: "flex", gap: 12 }}>
@@ -78,7 +78,7 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
       {/* Total Units (display-only) */}
       <div style={{ display: "flex", gap: 12 }}>
         <div style={{ flex: 1 }}>
-          <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
             {t("totalUnits")}
           </div>
           <div style={{
@@ -103,11 +103,11 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
 
       {/* Building Type (auto-calculated) */}
       <div>
-        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
           {t("buildingType")}
         </div>
         <div style={{
-          ...mono(12, "var(--text-secondary)"),
+          ...mono(14, "var(--text-secondary)"),
           padding: "10px 14px",
           background: "var(--bg-overlay)",
           borderRadius: "var(--radius-sm)",
@@ -119,7 +119,7 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
           <Icon n="building" size={16} color="var(--primary)" />
           <span>{buildingType}</span>
           {totalUnits > 0 && (
-            <span style={mono(11, "var(--text-muted)", { marginLeft: "auto" })}>
+            <span style={mono(12, "var(--text-muted)", { marginLeft: "auto" })}>
               ({totalUnits} units)
             </span>
           )}
@@ -129,7 +129,7 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
       {/* Secondary Addresses */}
       {secondaryAddresses.length > 0 && (
         <div>
-          <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
             {t("secondaryAddresses")}
           </div>
           <div style={{
@@ -143,7 +143,7 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
           }}>
             {secondaryAddresses.map((addr, idx) => (
               <div key={idx} style={{
-                ...mono(11, "var(--text-secondary)"),
+                ...mono(12, "var(--text-secondary)"),
                 padding: "10px 14px",
                 borderBottom: idx < secondaryAddresses.length - 1 ? "1px solid var(--border)" : "none",
                 display: "flex",

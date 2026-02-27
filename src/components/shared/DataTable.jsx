@@ -48,7 +48,7 @@ export const DataTable = ({ columns, rows, onRowClick, selectedId, emptyMessage 
               key={col.key}
               onClick={() => handleSort(col.key)}
               style={{
-                ...mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" }),
+                ...mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" }),
                 padding: "10px 6px", cursor: "pointer", userSelect: "none",
                 flex: col.width ? `0 0 ${col.width}` : 1,
               }}
@@ -60,7 +60,7 @@ export const DataTable = ({ columns, rows, onRowClick, selectedId, emptyMessage 
 
         {/* Rows */}
         {sorted.length === 0 ? (
-          <div style={{ padding: 24, textAlign: "center", ...mono(12, "var(--text-muted)") }}>
+          <div style={{ padding: 24, textAlign: "center", ...mono(14, "var(--text-muted)") }}>
             {emptyMessage}
           </div>
         ) : (
@@ -80,7 +80,7 @@ export const DataTable = ({ columns, rows, onRowClick, selectedId, emptyMessage 
                 <div
                   key={col.key}
                   style={{
-                    ...mono(11, "var(--text-secondary)"),
+                    ...mono(12, "var(--text-secondary)"),
                     padding: "10px 6px", overflow: "hidden", textOverflow: "ellipsis",
                     whiteSpace: "nowrap", flex: col.width ? `0 0 ${col.width}` : 1,
                   }}

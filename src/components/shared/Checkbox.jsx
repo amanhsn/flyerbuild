@@ -18,6 +18,6 @@ export const Checkbox = ({ label, checked, onChange, disabled }) => (
         </svg>
       )}
     </div>
-    <span style={mono(12, "var(--text-secondary)")}>{label}</span>
+    <span style={mono(14, "var(--text-secondary)")}>{label}</span>
   </label>
 );

@@ -84,7 +84,7 @@ export const PhotoSection = ({ survey, setField, disabled, sectionKey }) => {
 
   if (!config) {
     return (
-      <div style={mono(11, "var(--red)")}>
+      <div style={mono(12, "var(--red)")}>
         Unknown photo section: {sectionKey}
       </div>
     );
@@ -94,7 +94,7 @@ export const PhotoSection = ({ survey, setField, disabled, sectionKey }) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
         {t(`sec_${sectionKey}`)}
       </div>
 

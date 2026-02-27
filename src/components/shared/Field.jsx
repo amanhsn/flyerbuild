@@ -3,7 +3,7 @@ import { mono } from "../../styles/helpers";
 export const Field = ({ label, value, onChange, disabled, flex, type = "text", placeholder }) => (
   <div style={{ flex: flex || 1 }}>
     {label && (
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
         {label}
       </div>
     )}
@@ -22,7 +22,7 @@ export const Field = ({ label, value, onChange, disabled, flex, type = "text", p
 export const TextArea = ({ label, value, onChange, disabled, placeholder, rows = 4 }) => (
   <div style={{ flex: 1 }}>
     {label && (
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
         {label}
       </div>
     )}

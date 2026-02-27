@@ -30,7 +30,7 @@ export const MeetstaaReview = () => {
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
       <h1 style={disp(isMobile ? 22 : 28, 800)}>Meetstaat & Financials</h1>
-      <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
+      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Review subcontractor return PDFs and reconcile payment items
       </p>
 
@@ -54,9 +54,9 @@ export const MeetstaaReview = () => {
                   width: 8, height: 8, borderRadius: "50%",
                   background: m.status === "approved" ? "var(--green)" : "var(--primary)",
                 }} />
-                <span style={mono(12, "var(--text-primary)")}>{m.tsg_id}</span>
+                <span style={mono(14, "var(--text-primary)")}>{m.tsg_id}</span>
               </div>
-              <div style={mono(11, "var(--text-secondary)", { marginTop: 4 })}>
+              <div style={mono(12, "var(--text-secondary)", { marginTop: 4 })}>
                 {m.subco} · {m.status === "approved" ? "Approved" : "Pending Review"}
               </div>
             </div>
@@ -72,7 +72,7 @@ export const MeetstaaReview = () => {
               {isMobile && (
                 <button
                   onClick={() => setSelectedId(null)}
-                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, padding: 0, ...mono(12, "var(--text-primary-accent)") }}
+                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, padding: 0, ...mono(14, "var(--text-primary-accent)") }}
                 >
                   <Icon n="chevR" size={12} color="var(--text-primary-accent)" style={{ transform: "rotate(180deg)" }} />
                   Back to list
@@ -80,7 +80,7 @@ export const MeetstaaReview = () => {
               )}
               <div>
                 <div style={disp(18, 700)}>{selected.tsg_id}</div>
-                <div style={mono(11, "var(--text-secondary)", { marginTop: 4 })}>
+                <div style={mono(12, "var(--text-secondary)", { marginTop: 4 })}>
                   {selected.subco} · Uploaded {selected.uploadedAt}
                 </div>
               </div>
@@ -93,7 +93,7 @@ export const MeetstaaReview = () => {
                 flexWrap: "wrap",
               }}>
                 <Icon n="file" size={18} color="var(--primary)" />
-                <span style={{ ...mono(12, "var(--text-primary)"), flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{selected.files[0].name}</span>
+                <span style={{ ...mono(14, "var(--text-primary)"), flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{selected.files[0].name}</span>
                 <button className="toggle-btn primary" style={{ padding: "4px 10px" }}>
                   View PDF
                 </button>
@@ -101,7 +101,7 @@ export const MeetstaaReview = () => {
 
               {/* Payment code line items */}
               <div>
-                <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+                <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
                   Payment Code Line Items
                 </div>
                 <div style={{
@@ -117,9 +117,9 @@ export const MeetstaaReview = () => {
                         background: "var(--bg-raised)",
                         flexWrap: isMobile ? "wrap" : "nowrap",
                       }}>
-                        <span style={mono(11, "var(--primary)", { width: 60 })}>{pc.code}</span>
-                        <span style={{ ...mono(11, "var(--text-secondary)"), flex: isMobile ? "1 1 100%" : 1 }}>{pc.description}</span>
-                        <span style={mono(11, "var(--text-muted)")}>€{pc.unitPrice.toFixed(2)}</span>
+                        <span style={mono(12, "var(--primary)", { width: 60 })}>{pc.code}</span>
+                        <span style={{ ...mono(12, "var(--text-secondary)"), flex: isMobile ? "1 1 100%" : 1 }}>{pc.description}</span>
+                        <span style={mono(12, "var(--text-muted)")}>€{pc.unitPrice.toFixed(2)}</span>
                         <input
                           type="number"
                           min="0"
@@ -135,7 +135,7 @@ export const MeetstaaReview = () => {
                             fontFamily: "var(--font-mono)", fontSize: 11,
                           }}
                         />
-                        <span style={mono(11, "var(--text-primary)", { width: 70, textAlign: "right" })}>
+                        <span style={mono(12, "var(--text-primary)", { width: 70, textAlign: "right" })}>
                           €{(qty * pc.unitPrice).toFixed(2)}
                         </span>
                       </div>

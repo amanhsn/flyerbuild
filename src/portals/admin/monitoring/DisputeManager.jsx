@@ -53,7 +53,7 @@ export const DisputeManager = () => {
           padding: 16, marginBottom: 20, background: "var(--bg-raised)",
           border: "1px solid var(--border)", borderRadius: "var(--radius-lg)",
         }}>
-          <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
             New Dispute
           </div>
           <TextArea
@@ -75,7 +75,7 @@ export const DisputeManager = () => {
       )}
 
       {/* Open disputes */}
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
         Open Disputes ({open.length})
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>
@@ -86,13 +86,13 @@ export const DisputeManager = () => {
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
               <Icon n="alert" size={14} color="var(--red)" />
-              <span style={mono(12, "var(--text-primary)", { fontWeight: 600 })}>{d.tsg_id}</span>
-              <span style={mono(11, "var(--text-muted)")}>{d.subco}</span>
-              <span style={mono(11, "var(--text-muted)", { marginLeft: "auto" })}>Raised {d.raisedAt}</span>
+              <span style={mono(14, "var(--text-primary)", { fontWeight: 600 })}>{d.tsg_id}</span>
+              <span style={mono(12, "var(--text-muted)")}>{d.subco}</span>
+              <span style={mono(12, "var(--text-muted)", { marginLeft: "auto" })}>Raised {d.raisedAt}</span>
             </div>
-            <div style={mono(11, "var(--text-secondary)", { marginBottom: 6 })}>{d.comment}</div>
+            <div style={mono(12, "var(--text-secondary)", { marginBottom: 6 })}>{d.comment}</div>
             <div style={{
-              ...mono(11, "var(--text-primary)"), padding: "8px 10px",
+              ...mono(12, "var(--text-primary)"), padding: "8px 10px",
               background: "var(--bg-overlay)", borderRadius: "var(--radius-sm)",
               border: "1px solid var(--border)", marginBottom: 10,
             }}>
@@ -108,14 +108,14 @@ export const DisputeManager = () => {
           </div>
         ))}
         {open.length === 0 && (
-          <div style={{ padding: 20, textAlign: "center", ...mono(12, "var(--text-muted)") }}>
+          <div style={{ padding: 20, textAlign: "center", ...mono(14, "var(--text-muted)") }}>
             No open disputes
           </div>
         )}
       </div>
 
       {/* Resolved disputes */}
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
         Resolved ({resolved.length})
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -126,9 +126,9 @@ export const DisputeManager = () => {
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <Icon n="check" size={14} color="var(--green)" />
-              <span style={mono(12, "var(--text-primary)")}>{d.tsg_id}</span>
-              <span style={mono(11, "var(--text-muted)")}>{d.subco}</span>
-              <span style={mono(11, "var(--text-green)", { marginLeft: "auto" })}>Resolved {d.resolvedAt}</span>
+              <span style={mono(14, "var(--text-primary)")}>{d.tsg_id}</span>
+              <span style={mono(12, "var(--text-muted)")}>{d.subco}</span>
+              <span style={mono(12, "var(--text-green)", { marginLeft: "auto" })}>Resolved {d.resolvedAt}</span>
             </div>
           </div>
         ))}

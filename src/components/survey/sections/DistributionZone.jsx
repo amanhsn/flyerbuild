@@ -42,7 +42,7 @@ export const DistributionZone = ({ survey, setField, disabled }) => {
 
       {/* Planned Distribution */}
       <div>
-        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
           {t("plannedDistribution")}
         </div>
         <div style={{ display: "flex", gap: 8 }}>
@@ -65,7 +65,7 @@ export const DistributionZone = ({ survey, setField, disabled }) => {
 
       {/* Planned Introduction */}
       <div>
-        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
           {t("plannedIntroduction")}
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -95,7 +95,7 @@ export const DistributionZone = ({ survey, setField, disabled }) => {
 
       {/* Vertical Solution (multi-select) */}
       <div>
-        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
           {t("verticalSolution")}
         </div>
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>

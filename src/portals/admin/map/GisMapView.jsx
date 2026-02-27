@@ -80,7 +80,7 @@ export const GisMapView = () => {
           value={statusFilter}
           onChange={e => setStatusFilter(e.target.value)}
           style={{
-            ...mono(11, "var(--text-secondary)"),
+            ...mono(12, "var(--text-secondary)"),
             padding: "4px 8px", background: "var(--bg-overlay)",
             border: "1px solid var(--border)", borderRadius: "var(--radius-sm)",
           }}
@@ -89,7 +89,7 @@ export const GisMapView = () => {
             <option key={s} value={s}>{s === "all" ? "All Statuses" : STATUSES[s]?.label || s}</option>
           ))}
         </select>
-        <span style={mono(11, "var(--text-muted)")}>{filtered.length} addresses</span>
+        <span style={mono(12, "var(--text-muted)")}>{filtered.length} addresses</span>
       </div>
 
       {/* Mobile toggle */}
@@ -143,12 +143,12 @@ export const GisMapView = () => {
                     <Tooltip>
                       <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
                         <StatusBadge status={s.status} />
-                        <span style={mono(11, "var(--text-muted)")}>{s.tsg_id}</span>
+                        <span style={mono(12, "var(--text-muted)")}>{s.tsg_id}</span>
                       </div>
-                      <div style={mono(11, "var(--text-primary)")}>
+                      <div style={mono(12, "var(--text-primary)")}>
                         {s.address.street} {s.address.number}
                       </div>
-                      <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>
+                      <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
                         {s.address.postal_code} {s.address.city}
                       </div>
                     </Tooltip>

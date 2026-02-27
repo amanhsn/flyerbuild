@@ -13,7 +13,7 @@ export const KpiCard = ({ label, value, color = "var(--primary)", total, icon })
       display: "flex", flexDirection: "column", gap: isMobile ? 4 : 8,
       flex: 1, minWidth: 0,
     }}>
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
         {label}
       </div>
       <div style={disp(isMobile ? 26 : 36, 800, color)}>{value}</div>

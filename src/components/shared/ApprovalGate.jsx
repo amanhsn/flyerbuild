@@ -42,11 +42,11 @@ export const ApprovalGate = ({ title, gates = [] }) => {
               {g.cleared && <Icon n="check" size={12} color="#fff" />}
             </div>
             <div style={{ flex: 1 }}>
-              <div style={mono(11, g.cleared ? "var(--text-green)" : "var(--text-secondary)")}>
+              <div style={mono(12, g.cleared ? "var(--text-green)" : "var(--text-secondary)")}>
                 {g.label}
               </div>
               {g.cleared && g.clearedBy && (
-                <div style={mono(11, "var(--text-muted)", { marginTop: 2 })}>
+                <div style={mono(12, "var(--text-muted)", { marginTop: 2 })}>
                   {g.clearedBy} · {g.clearedAt || ""}
                 </div>
               )}

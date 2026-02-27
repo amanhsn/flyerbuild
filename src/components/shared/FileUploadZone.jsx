@@ -34,7 +34,7 @@ export const FileUploadZone = ({
   return (
     <div>
       {label && (
-        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
           {label}
         </div>
       )}
@@ -57,10 +57,10 @@ export const FileUploadZone = ({
         }}
       >
         <Icon n="upload" size={24} color="var(--text-muted)" />
-        <div style={mono(12, "var(--text-secondary)", { marginTop: 8 })}>
+        <div style={mono(14, "var(--text-secondary)", { marginTop: 8 })}>
           {t("dropFiles")}
         </div>
-        <div style={mono(11, "var(--text-muted)", { marginTop: 4 })}>
+        <div style={mono(12, "var(--text-muted)", { marginTop: 4 })}>
           {files.length} / {maxFiles} files
         </div>
         <input
@@ -84,7 +84,7 @@ export const FileUploadZone = ({
               border: "1px solid var(--border)", borderRadius: "var(--radius-sm)",
             }}>
               <Icon n="file" size={14} color="var(--text-muted)" />
-              <span style={{ ...mono(11, "var(--text-secondary)"), flex: 1 }}>{f.name}</span>
+              <span style={{ ...mono(12, "var(--text-secondary)"), flex: 1 }}>{f.name}</span>
               {!disabled && onDelete && (
                 <button
                   onClick={(e) => { e.stopPropagation(); onDelete(i); }}

@@ -56,7 +56,7 @@ export default function App() {
               className="field-input"
               value={userRole}
               onChange={(e) => setUserRole(e.target.value)}
-              style={{ width: "auto", marginLeft: 8, padding: "4px 8px", ...mono(11, "var(--text-primary)") }}
+              style={{ width: "auto", marginLeft: 8, padding: "4px 8px", ...mono(12, "var(--text-primary)") }}
             >
               {Object.keys(ROLES).map(role => (
                 <option key={role} value={role}>
@@ -71,7 +71,7 @@ export default function App() {
                   key={role}
                   onClick={() => setUserRole(role)}
                   style={{
-                    ...mono(11, userRole === role ? "#fff" : "var(--text-muted)"),
+                    ...mono(12, userRole === role ? "#fff" : "var(--text-muted)"),
                     padding: "3px 8px", borderRadius: "var(--radius-sm)",
                     border: userRole === role ? "1px solid var(--primary)" : "1px solid var(--border)",
                     background: userRole === role ? "var(--primary)" : "var(--bg-overlay)",

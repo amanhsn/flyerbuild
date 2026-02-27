@@ -28,7 +28,7 @@ export const Dashboard = ({ onSelectSurvey }) => {
       <div style={{ display: "flex", alignItems: "baseline", gap: isMobile ? 8 : 12, marginBottom: 4, flexWrap: "wrap" }}>
         <h1 style={disp(isMobile ? 24 : 30, 800)}>{t("navDashboard")}</h1>
         <span style={{
-          ...mono(11, "var(--text-muted)"),
+          ...mono(12, "var(--text-muted)"),
           background: "var(--bg-elevated)",
           padding: "3px 8px",
           borderRadius: "var(--radius-sm)",
@@ -37,7 +37,7 @@ export const Dashboard = ({ onSelectSurvey }) => {
           {t("queueDate")}
         </span>
       </div>
-      <p style={mono(12, "var(--text-secondary)", { marginTop: 5, marginBottom: 20 })}>
+      <p style={mono(14, "var(--text-secondary)", { marginTop: 5, marginBottom: 20 })}>
         {t("queueSurveyor")} · {t("queueCount")(surveys.length)}
       </p>
 
@@ -53,10 +53,10 @@ export const Dashboard = ({ onSelectSurvey }) => {
         <Icon n="download" size={15} color="var(--text-primary-accent)" />
         <div style={{ flex: 1 }}>
           <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 14 }}>{t("downloadTomorrow")}</div>
-          <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>{t("downloadSub")}</div>
+          <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>{t("downloadSub")}</div>
         </div>
         <span style={{
-          ...mono(11, "var(--text-primary-accent)"),
+          ...mono(12, "var(--text-primary-accent)"),
           background: "var(--primary-glow)",
           padding: "4px 10px",
           borderRadius: "var(--radius-sm)",

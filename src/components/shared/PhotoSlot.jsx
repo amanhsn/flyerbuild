@@ -19,7 +19,7 @@ export const PhotoSlot = ({ label, required = false, filled = false, onClick }) 
           padding: "7px 10px",
           background: "var(--bg-overlay)",
           display: "flex", justifyContent: "space-between",
-          ...mono(11, "var(--text-secondary)"),
+          ...mono(12, "var(--text-secondary)"),
         }}>
           <span>{label}</span>
           <span style={{ color: "var(--text-green)" }}>✓</span>
@@ -33,7 +33,7 @@ export const PhotoSlot = ({ label, required = false, filled = false, onClick }) 
         borderRadius: "var(--radius-lg)",
       }}>
         <Icon n="plus" size={20} color={required ? "var(--text-red)" : "var(--text-muted)"} />
-        <span style={{ ...mono(11, required ? "var(--text-red)" : "var(--text-muted)"), textAlign: "center" }}>
+        <span style={{ ...mono(12, required ? "var(--text-red)" : "var(--text-muted)"), textAlign: "center" }}>
           {label}{required && " *"}
         </span>
       </div>

@@ -46,7 +46,7 @@ export const Legend = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
         {t("annotationLegend")}
       </div>
 
@@ -73,7 +73,7 @@ export const Legend = () => {
             }}
           >
             <LegendSymbol type={type} color={color} dashed={dashed} />
-            <span style={mono(11, "var(--text-secondary)")}>
+            <span style={mono(12, "var(--text-secondary)")}>
               {label}
             </span>
           </div>
@@ -81,7 +81,7 @@ export const Legend = () => {
       </div>
 
       <div style={{
-        ...mono(11, "var(--text-muted)"),
+        ...mono(12, "var(--text-muted)"),
         padding: "10px 14px",
         background: "var(--bg-overlay)",
         borderRadius: "var(--radius-sm)",

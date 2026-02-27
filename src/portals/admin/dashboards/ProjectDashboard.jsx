@@ -31,7 +31,7 @@ export const ProjectDashboard = () => {
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "20px 16px" : "24px 28px" }}>
       <h1 style={disp(isMobile ? 22 : 28, 800)}>Project Dashboard</h1>
-      <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
+      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Project health and forecasting
       </p>
 
@@ -47,7 +47,7 @@ export const ProjectDashboard = () => {
           padding: "14px 18px", background: "var(--primary-glow)",
           border: "1px solid var(--primary-dim)", borderRadius: "var(--radius-md)", marginBottom: 20,
         }}>
-          <div style={mono(11, "var(--text-primary-accent)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 })}>
+          <div style={mono(12, "var(--text-primary-accent)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 })}>
             Bottleneck
           </div>
           <div style={mono(13, "var(--text-primary)")}>

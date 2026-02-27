@@ -23,7 +23,7 @@ export const ApprovalFlow = () => {
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
       <h1 style={disp(isMobile ? 22 : 28, 800)}>Approval Flow</h1>
-      <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
+      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Multi-level approval gates — {approvalSurveys.length} addresses in pipeline
       </p>
 
@@ -45,8 +45,8 @@ export const ApprovalFlow = () => {
               >
                 <StatusBadge status={s.status} />
                 <div style={{ flex: 1 }}>
-                  <div style={mono(12, "var(--text-primary)")}>{s.address.street} {s.address.number}</div>
-                  <div style={mono(11, "var(--text-muted)")}>{s.tsg_id}</div>
+                  <div style={mono(14, "var(--text-primary)")}>{s.address.street} {s.address.number}</div>
+                  <div style={mono(12, "var(--text-muted)")}>{s.tsg_id}</div>
                 </div>
                 <Icon n="chevR" size={12} color="var(--text-muted)" />
               </div>
@@ -62,7 +62,7 @@ export const ApprovalFlow = () => {
                 {isMobile && (
                   <button
                     onClick={() => setSelectedSurvey(null)}
-                    style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, padding: 0, ...mono(12, "var(--text-primary-accent)") }}
+                    style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, padding: 0, ...mono(14, "var(--text-primary-accent)") }}
                   >
                     <Icon n="chevR" size={12} color="var(--text-primary-accent)" style={{ transform: "rotate(180deg)" }} />
                     Back to list

@@ -1,4 +1,4 @@
-export const mono = (sz = 12, col = "var(--text-muted)", extra = {}) => ({
+export const mono = (sz = 14, col = "var(--text-muted)", extra = {}) => ({
   fontFamily: "var(--font-body)", fontSize: sz, color: col, ...extra,
 });
 

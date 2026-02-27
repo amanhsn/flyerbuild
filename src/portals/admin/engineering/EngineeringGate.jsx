@@ -25,7 +25,7 @@ export const EngineeringGate = () => {
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
       <h1 style={disp(isMobile ? 22 : 28, 800)}>Engineering Gate</h1>
-      <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
+      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Upload splicing plans, define build types — {eligibleSurveys.length} addresses ready
       </p>
 
@@ -52,9 +52,9 @@ export const EngineeringGate = () => {
                     width: 8, height: 8, borderRadius: "50%",
                     background: hasPlan && hasBuildType ? "var(--green)" : "var(--primary)",
                   }} />
-                  <span style={mono(11, "var(--text-primary)")}>{s.tsg_id}</span>
+                  <span style={mono(12, "var(--text-primary)")}>{s.tsg_id}</span>
                 </div>
-                <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>
+                <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
                   {s.address.street} {s.address.number}
                 </div>
               </div>
@@ -71,7 +71,7 @@ export const EngineeringGate = () => {
               {isMobile && (
                 <button
                   onClick={() => setSelectedId(null)}
-                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, padding: 0, ...mono(12, "var(--text-primary-accent)") }}
+                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, padding: 0, ...mono(14, "var(--text-primary-accent)") }}
                 >
                   <Icon n="chevR" size={12} color="var(--text-primary-accent)" style={{ transform: "rotate(180deg)" }} />
                   Back to list
@@ -79,14 +79,14 @@ export const EngineeringGate = () => {
               )}
               <div>
                 <div style={disp(18, 700)}>{selected.address.street} {selected.address.number}</div>
-                <div style={mono(11, "var(--text-secondary)", { marginTop: 4 })}>
+                <div style={mono(12, "var(--text-secondary)", { marginTop: 4 })}>
                   {selected.tsg_id} · {selected.address.postal_code} {selected.address.city}
                 </div>
               </div>
 
               {/* Build Type Selection */}
               <div>
-                <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+                <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
                   Build Type
                 </div>
                 <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
@@ -102,7 +102,7 @@ export const EngineeringGate = () => {
                   ))}
                 </div>
                 {buildTypeMap[selected.id] && (
-                  <div style={mono(11, "var(--text-secondary)", { marginTop: 6 })}>
+                  <div style={mono(12, "var(--text-secondary)", { marginTop: 6 })}>
                     {BUILD_TYPES[buildTypeMap[selected.id]].description}
                   </div>
                 )}
@@ -137,7 +137,7 @@ export const EngineeringGate = () => {
                   ? "var(--green-glow)" : "var(--primary-glow)",
                 border: `1px solid ${(buildTypeMap[selected.id] && uploadedPlans[selected.id]?.length) ? "var(--green-dim)" : "var(--primary-dim)"}`,
               }}>
-                <div style={mono(11, (buildTypeMap[selected.id] && uploadedPlans[selected.id]?.length) ? "var(--text-green)" : "var(--text-primary-accent)")}>
+                <div style={mono(12, (buildTypeMap[selected.id] && uploadedPlans[selected.id]?.length) ? "var(--text-green)" : "var(--text-primary-accent)")}>
                   {(buildTypeMap[selected.id] && uploadedPlans[selected.id]?.length)
                     ? "✓ Engineering gate cleared — ready for subcontractor assignment"
                     : "⏳ Engineering gate not cleared — assign build type and upload plans"}
@@ -154,7 +154,7 @@ export const EngineeringGate = () => {
                       display: "flex", alignItems: "center", justifyContent: "space-between",
                     }}>
                       <div>
-                        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 })}>
+                        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 })}>
                           Assigned Subcontractor
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>

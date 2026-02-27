@@ -50,7 +50,7 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
           borderRadius: "var(--radius-sm)",
         }}>
           <Icon n="alert" size={14} color="var(--primary)" />
-          <span style={mono(11, "var(--text-primary-accent)")}>
+          <span style={mono(12, "var(--text-primary-accent)")}>
             {preValidationFlags.length} pre-validation flag(s) detected
           </span>
         </div>
@@ -62,11 +62,11 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
           padding: "8px 12px", background: "var(--bg-raised)",
           border: "1px solid var(--border)", borderRadius: "var(--radius-sm)",
         }}>
-          <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 })}>
+          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 })}>
             Rework History
           </div>
           {reworkHistory.map((r, i) => (
-            <div key={i} style={mono(11, "var(--text-secondary)")}>{r.remarks}</div>
+            <div key={i} style={mono(12, "var(--text-secondary)")}>{r.remarks}</div>
           ))}
         </div>
       )}
@@ -78,7 +78,7 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
           borderRadius: "var(--radius-md)",
           background: actionTaken === "approved" ? "var(--green-glow)" : "var(--red-glow)",
           border: `1px solid ${actionTaken === "approved" ? "var(--green-dim)" : "var(--red-dim)"}`,
-          ...mono(12, actionTaken === "approved" ? "var(--text-green)" : "var(--text-red)"),
+          ...mono(14, actionTaken === "approved" ? "var(--text-green)" : "var(--text-red)"),
         }}>
           Survey {actionTaken === "approved" ? "Approved" : "Rejected"} ✓
         </div>

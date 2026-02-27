@@ -77,35 +77,35 @@ export const AppointmentInfo = ({ survey, setField, disabled, addAppointment, de
                 style={{ display: "flex", alignItems: "center", gap: 5, padding: "4px 10px" }}
               >
                 <Icon n="trash" size={12} color="var(--red)" />
-                <span style={mono(11, "var(--red)")}>{t("delete")}</span>
+                <span style={mono(12, "var(--red)")}>{t("delete")}</span>
               </button>
             )}
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <div style={{ display: "flex", gap: 16 }}>
               <div style={{ flex: 1 }}>
-                <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 4 })}>
+                <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 4 })}>
                   Surveyor
                 </div>
-                <div style={mono(12, "var(--text-secondary)")}>
+                <div style={mono(14, "var(--text-secondary)")}>
                   {appointment.surveyor_name || "Jonas Jacobs"}
                 </div>
               </div>
               <div style={{ flex: 1 }}>
-                <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 4 })}>
+                <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 4 })}>
                   Date
                 </div>
-                <div style={mono(12, "var(--text-secondary)")}>
+                <div style={mono(14, "var(--text-secondary)")}>
                   {appointment.date || "--"}
                 </div>
               </div>
             </div>
             {appointment.remark && (
               <div>
-                <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 4 })}>
+                <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 4 })}>
                   Remark
                 </div>
-                <div style={mono(12, "var(--text-secondary)")}>
+                <div style={mono(14, "var(--text-secondary)")}>
                   {appointment.remark}
                 </div>
               </div>
@@ -116,7 +116,7 @@ export const AppointmentInfo = ({ survey, setField, disabled, addAppointment, de
 
       {!appointment && (
         <div style={{
-          ...mono(11, "var(--text-muted)"),
+          ...mono(12, "var(--text-muted)"),
           padding: 20,
           textAlign: "center",
           background: "var(--bg-raised)",

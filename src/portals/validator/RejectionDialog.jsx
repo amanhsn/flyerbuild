@@ -31,7 +31,7 @@ export const RejectionDialog = ({ onSubmit, onCancel }) => {
           </div>
           <div>
             <div style={disp(16, 700)}>Reject Survey</div>
-            <div style={mono(11, "var(--text-secondary)")}>Select a reason and add notes</div>
+            <div style={mono(12, "var(--text-secondary)")}>Select a reason and add notes</div>
           </div>
         </div>
 

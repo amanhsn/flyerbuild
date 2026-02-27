@@ -34,12 +34,12 @@ export const PerformanceDashboard = () => {
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "20px 16px" : "24px 28px" }}>
       <h1 style={disp(isMobile ? 22 : 28, 800)}>Performance Dashboard</h1>
-      <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
+      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
         Surveyor and subcontractor performance metrics
       </p>
 
       {/* Surveyor Performance Table */}
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
         Surveyor Performance
       </div>
       <div style={{
@@ -52,7 +52,7 @@ export const PerformanceDashboard = () => {
             background: "var(--bg-elevated)", padding: "10px 14px",
             borderBottom: "1px solid var(--border)",
             minWidth: isMobile ? undefined : undefined,
-            ...mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".06em" }),
+            ...mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".06em" }),
           }}>
             <div>Surveyor</div>
             <div>Assigned</div>
@@ -65,18 +65,18 @@ export const PerformanceDashboard = () => {
               display: "grid", gridTemplateColumns: isMobile ? "2fr 1fr 1fr" : "2fr 1fr 1fr 1fr 1fr",
               padding: "10px 14px", borderBottom: "1px solid var(--border)",
             }}>
-              <div style={mono(12, "var(--text-primary)")}>{s.name}</div>
-              <div style={mono(12, "var(--text-secondary)")}>{s.total}</div>
-              <div style={mono(12, "var(--text-green)")}>{s.completed}</div>
-              {!isMobile && <div style={mono(12, s.rework > 0 ? "var(--text-red)" : "var(--text-secondary)")}>{s.rework}</div>}
-              {!isMobile && <div style={mono(12, "var(--text-secondary)")}>{s.reworkRate}</div>}
+              <div style={mono(14, "var(--text-primary)")}>{s.name}</div>
+              <div style={mono(14, "var(--text-secondary)")}>{s.total}</div>
+              <div style={mono(14, "var(--text-green)")}>{s.completed}</div>
+              {!isMobile && <div style={mono(14, s.rework > 0 ? "var(--text-red)" : "var(--text-secondary)")}>{s.rework}</div>}
+              {!isMobile && <div style={mono(14, "var(--text-secondary)")}>{s.reworkRate}</div>}
             </div>
           ))}
         </div>
       </div>
 
       {/* Subcontractor metrics (mock) */}
-      <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
         Subcontractor Performance
       </div>
       <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))", gap: isMobile ? 8 : 12 }}>

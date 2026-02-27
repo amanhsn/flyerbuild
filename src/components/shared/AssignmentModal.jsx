@@ -46,14 +46,14 @@ export const AssignmentModal = ({ title, subtitle, role, currentValue, onSubmit,
           </div>
           <div>
             <div style={disp(16, 700)}>{title}</div>
-            {subtitle && <div style={mono(11, "var(--text-secondary)")}>{subtitle}</div>}
+            {subtitle && <div style={mono(12, "var(--text-secondary)")}>{subtitle}</div>}
           </div>
         </div>
 
         {/* Form */}
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div>
-            <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+            <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
               {role === "subcontractor" ? "Subcontractor" : "Surveyor"}
             </div>
             <select

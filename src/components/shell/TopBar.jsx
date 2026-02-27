@@ -28,7 +28,7 @@ export const TopBar = ({ lang, setLang, online = true, theme, setTheme, onMenuTo
           <div style={disp(14, 800, undefined, { letterSpacing: ".06em", textTransform: "uppercase", lineHeight: 1 })}>
             {t("appName")}
           </div>
-          <div className="topbar-appname-sub" style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
+          <div className="topbar-appname-sub" style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
             {t("appRole")}
           </div>
         </div>
@@ -48,7 +48,7 @@ export const TopBar = ({ lang, setLang, online = true, theme, setTheme, onMenuTo
           <Icon n={theme === "light" ? "moon" : "sun"} size={14} color="var(--text-secondary)" />
         </button>
         <LangToggle lang={lang} setLang={setLang} />
-        <div style={{ display: "flex", alignItems: "center", gap: 6, ...mono(11, "var(--text-green)") }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, ...mono(12, "var(--text-green)") }}>
           <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--green)" }} />
           <span className="topbar-online-label">{t("online")}</span>
         </div>

@@ -13,7 +13,7 @@ export const MiniProgress = ({ val, total, color }) => {
           background: barColor,
         }} />
       </div>
-      <span style={mono(11, "var(--text-muted)", { flexShrink: 0 })}>{val}/{total}</span>
+      <span style={mono(12, "var(--text-muted)", { flexShrink: 0 })}>{val}/{total}</span>
     </div>
   );
 };

@@ -25,7 +25,7 @@ export const StatementOfAgreement = ({ survey, setField, disabled }) => {
         <div style={disp(13, 600, "var(--text-primary)", { marginBottom: 10 })}>
           {t("agreementTitle")}
         </div>
-        <div style={mono(11, "var(--text-muted)", { lineHeight: 1.6 })}>
+        <div style={mono(12, "var(--text-muted)", { lineHeight: 1.6 })}>
           Agreement text... By signing this document, the undersigned confirms that the survey has been
           conducted in accordance with the applicable standards and regulations. The information provided
           herein is accurate to the best knowledge of the surveyor. The building owner or representative
@@ -46,11 +46,11 @@ export const StatementOfAgreement = ({ survey, setField, disabled }) => {
 
       {/* Signature Date */}
       <div>
-        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
           {t("signatureDate")}
         </div>
         <div style={{
-          ...mono(12, "var(--text-secondary)"),
+          ...mono(14, "var(--text-secondary)"),
           padding: "10px 14px",
           background: "var(--bg-overlay)",
           borderRadius: "var(--radius-sm)",
@@ -68,7 +68,7 @@ export const StatementOfAgreement = ({ survey, setField, disabled }) => {
       <div style={{ display: "flex", gap: 16 }}>
         {/* Owner Signature */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
-          <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
             {t("ownerSignature")}
           </div>
           <div style={{
@@ -82,9 +82,9 @@ export const StatementOfAgreement = ({ survey, setField, disabled }) => {
             cursor: disabled ? "default" : "pointer",
           }}>
             {agreement.ownerSignature ? (
-              <span style={mono(11, "var(--green)")}>Signed</span>
+              <span style={mono(12, "var(--green)")}>Signed</span>
             ) : (
-              <span style={mono(11, "var(--text-muted)")}>
+              <span style={mono(12, "var(--text-muted)")}>
                 {t("signHere")}
               </span>
             )}
@@ -94,7 +94,7 @@ export const StatementOfAgreement = ({ survey, setField, disabled }) => {
           <button
             disabled={disabled}
             style={{
-              ...mono(11, "var(--red)"),
+              ...mono(12, "var(--red)"),
               padding: "8px 16px",
               background: "transparent",
               border: "1px solid var(--red)",
@@ -114,7 +114,7 @@ export const StatementOfAgreement = ({ survey, setField, disabled }) => {
 
         {/* Subco Signature */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
-          <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
             {t("subcoSignature")}
           </div>
           <div style={{
@@ -128,9 +128,9 @@ export const StatementOfAgreement = ({ survey, setField, disabled }) => {
             cursor: disabled ? "default" : "pointer",
           }}>
             {agreement.subcoSignature ? (
-              <span style={mono(11, "var(--green)")}>Signed</span>
+              <span style={mono(12, "var(--green)")}>Signed</span>
             ) : (
-              <span style={mono(11, "var(--text-muted)")}>
+              <span style={mono(12, "var(--text-muted)")}>
                 {t("signHere")}
               </span>
             )}

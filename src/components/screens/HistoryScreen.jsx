@@ -42,7 +42,7 @@ export const HistoryScreen = () => {
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? 16 : 24 }}>
       <h2 style={{ ...disp(isMobile ? 22 : 28, 800), marginBottom: 4 }}>{t("historyTitle")}</h2>
-      <p style={mono(12, "var(--text-secondary)", { marginBottom: 16 })}>
+      <p style={mono(14, "var(--text-secondary)", { marginBottom: 16 })}>
         {history.length} visits across {MOCK_SURVEYS.filter(s => s.visits?.length > 0).length} addresses
       </p>
 
@@ -62,7 +62,7 @@ export const HistoryScreen = () => {
               {/* Top row: date/time + status */}
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                 <Icon n="clock" size={13} color="var(--text-muted)" />
-                <span style={mono(11, "var(--text-muted)")}>
+                <span style={mono(12, "var(--text-muted)")}>
                   {fmtDate(v.timestamp)} · {fmtTime(v.timestamp)}
                 </span>
                 <div style={{ flex: 1 }} />
@@ -74,9 +74,9 @@ export const HistoryScreen = () => {
                 <span style={disp(isMobile ? 15 : 17, 700)}>
                   {s.address.street} {s.address.number}{s.address.bus ? ` ${s.address.bus}` : ""}
                 </span>
-                <span style={mono(10, "var(--text-muted)")}>{s.tsg_id}</span>
+                <span style={mono(11, "var(--text-muted)")}>{s.tsg_id}</span>
               </div>
-              <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>
+              <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
                 {s.address.postal_code} {s.address.city}
               </div>
 
@@ -93,7 +93,7 @@ export const HistoryScreen = () => {
                   border: `1px solid ${isNoEntry ? "var(--red-dim)" : "var(--green-dim)"}`,
                 }}>
                   <Icon n={isNoEntry ? "x" : "check"} size={11} color={isNoEntry ? "var(--red)" : "var(--green)"} />
-                  <span style={mono(10, isNoEntry ? "var(--text-red)" : "var(--text-green)")}>
+                  <span style={mono(11, isNoEntry ? "var(--text-red)" : "var(--text-green)")}>
                     {isNoEntry ? "No Entry" : "Entry Granted"}
                   </span>
                 </div>
@@ -102,7 +102,7 @@ export const HistoryScreen = () => {
                 {bType && (
                   <div style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
                     <Icon n="building" size={12} color="var(--text-muted)" />
-                    <span style={mono(10, "var(--text-secondary)")}>
+                    <span style={mono(11, "var(--text-secondary)")}>
                       {bType}{floors ? ` · ${floors}F` : ""}
                     </span>
                   </div>
@@ -111,7 +111,7 @@ export const HistoryScreen = () => {
                 {/* Sections progress */}
                 <div style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
                   <Icon n="clipboard" size={12} color="var(--text-muted)" />
-                  <span style={mono(10, "var(--text-secondary)")}>
+                  <span style={mono(11, "var(--text-secondary)")}>
                     {sections}/{totalSections} sections
                   </span>
                 </div>
@@ -119,7 +119,7 @@ export const HistoryScreen = () => {
                 {/* Surveyor */}
                 <div style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
                   <Icon n="user" size={12} color="var(--text-muted)" />
-                  <span style={mono(10, "var(--text-secondary)")}>{v.surveyor}</span>
+                  <span style={mono(11, "var(--text-secondary)")}>{v.surveyor}</span>
                 </div>
               </div>
 
@@ -127,7 +127,7 @@ export const HistoryScreen = () => {
               {v.visit_remark && (
                 <div style={{
                   marginTop: 8, padding: "6px 10px", borderRadius: "var(--radius-sm)",
-                  background: "var(--bg-overlay)", ...mono(11, "var(--text-secondary)"),
+                  background: "var(--bg-overlay)", ...mono(12, "var(--text-secondary)"),
                   fontStyle: "italic", lineHeight: 1.4,
                 }}>
                   {v.visit_remark}
@@ -139,7 +139,7 @@ export const HistoryScreen = () => {
                 <div style={{
                   marginTop: 6, padding: "6px 10px", borderRadius: "var(--radius-sm)",
                   background: "var(--red-glow)", border: "1px solid var(--red-dim)",
-                  ...mono(10, "var(--text-red)"), lineHeight: 1.4,
+                  ...mono(11, "var(--text-red)"), lineHeight: 1.4,
                 }}>
                   Rework: {s.rework_remarks}
                 </div>

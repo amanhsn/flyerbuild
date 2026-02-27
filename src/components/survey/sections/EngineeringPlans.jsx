@@ -28,7 +28,7 @@ export const EngineeringPlans = ({ survey, setField, disabled }) => {
         <span style={disp(14, 600, "var(--text-secondary)")}>
           {t("uploadPlan")}
         </span>
-        <span style={mono(11, "var(--text-muted)")}>
+        <span style={mono(12, "var(--text-muted)")}>
           {t("dropFiles")}
         </span>
       </div>
@@ -60,7 +60,7 @@ export const EngineeringPlans = ({ survey, setField, disabled }) => {
             borderBottom: "1px solid var(--border)",
           }}>
             {["Filename", "Description", "Uploaded By", "Uploaded At", ""].map((col) => (
-              <div key={col} style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
+              <div key={col} style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
                 {col}
               </div>
             ))}
@@ -81,19 +81,19 @@ export const EngineeringPlans = ({ survey, setField, disabled }) => {
               }}
             >
               <div style={{
-                ...mono(11, "var(--text-secondary)"),
+                ...mono(12, "var(--text-secondary)"),
                 display: "flex", alignItems: "center", gap: 6,
               }}>
                 <Icon n="file" size={14} color="var(--text-muted)" />
                 {plan.filename || "--"}
               </div>
-              <div style={mono(11, "var(--text-muted)")}>
+              <div style={mono(12, "var(--text-muted)")}>
                 {plan.description || "--"}
               </div>
-              <div style={mono(11, "var(--text-muted)")}>
+              <div style={mono(12, "var(--text-muted)")}>
                 {plan.uploaded_by || "--"}
               </div>
-              <div style={mono(11, "var(--text-muted)")}>
+              <div style={mono(12, "var(--text-muted)")}>
                 {plan.uploaded_at || "--"}
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
@@ -118,7 +118,7 @@ export const EngineeringPlans = ({ survey, setField, disabled }) => {
 
       {plans.length === 0 && (
         <div style={{
-          ...mono(11, "var(--text-muted)"),
+          ...mono(12, "var(--text-muted)"),
           padding: 20,
           textAlign: "center",
           background: "var(--bg-raised)",

@@ -5,7 +5,7 @@ export const StatusBadge = ({ status }) => {
   const s = STATUSES[status] || STATUSES.to_do;
   return (
     <span style={{
-      ...mono(11, s.color),
+      ...mono(12, s.color),
       fontWeight: 600,
       letterSpacing: ".08em",
       textTransform: "uppercase",

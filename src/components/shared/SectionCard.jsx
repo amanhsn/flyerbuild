@@ -21,13 +21,13 @@ export const SectionCard = ({ title, sectionKey, completed, editing, setEditing,
           {isDone && !isEditing && (
             <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 3 }}>
               <Icon n="check" size={11} color="var(--text-green)" />
-              <span style={mono(11, "var(--text-green)")}>{t("saved")}</span>
+              <span style={mono(12, "var(--text-green)")}>{t("saved")}</span>
             </div>
           )}
           {readOnly && (
             <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 3 }}>
               <Icon n="info" size={11} color="var(--text-muted)" />
-              <span style={mono(11, "var(--text-muted)")}>Read-only</span>
+              <span style={mono(12, "var(--text-muted)")}>Read-only</span>
             </div>
           )}
         </div>

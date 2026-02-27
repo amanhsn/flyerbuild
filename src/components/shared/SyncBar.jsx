@@ -11,7 +11,7 @@ export const SyncBar = ({ online }) => {
       borderTop: `1px solid ${online ? "var(--green-dim)" : "var(--primary-dim)"}`,
     }}>
       <Icon n={online ? "wifi" : "wifiOff"} size={13} color={online ? "var(--text-green)" : "var(--text-primary-accent)"} />
-      <span style={mono(11, online ? "var(--text-green)" : "var(--text-primary-accent)")}>{online ? t("syncOnline") : t("syncOffline")}</span>
+      <span style={mono(12, online ? "var(--text-green)" : "var(--text-primary-accent)")}>{online ? t("syncOnline") : t("syncOffline")}</span>
       <span style={{ ...mono(10), marginLeft: "auto" }}>{online ? t("syncDone") : t("syncPending")}</span>
       <div style={{
         width: 7, height: 7, borderRadius: "50%",

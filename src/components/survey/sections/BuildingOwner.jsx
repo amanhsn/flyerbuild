@@ -12,7 +12,7 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
       {/* Owner Found Toggle */}
       <div>
-        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
           {t("ownerFound")}
         </div>
         <div style={{ display: "flex", gap: 8 }}>
@@ -49,7 +49,7 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
               key={key}
               onClick={() => setActiveTab(key)}
               style={{
-                ...mono(11, activeTab === key ? "var(--primary)" : "var(--text-muted)"),
+                ...mono(12, activeTab === key ? "var(--primary)" : "var(--text-muted)"),
                 padding: "10px 20px",
                 background: "transparent",
                 border: "none",
@@ -158,7 +158,7 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
         flexDirection: "column",
         gap: 14,
       }}>
-        <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
           {t("address")}
         </div>
         <Field

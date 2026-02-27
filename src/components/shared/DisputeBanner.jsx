@@ -16,15 +16,15 @@ export const DisputeBanner = ({ dispute, onDismiss }) => {
     }}>
       <Icon n="alert" size={18} color="var(--red)" style={{ flexShrink: 0, marginTop: 2 }} />
       <div style={{ flex: 1 }}>
-        <div style={{ ...mono(12, "var(--text-red)"), fontWeight: 600, marginBottom: 4 }}>
+        <div style={{ ...mono(14, "var(--text-red)"), fontWeight: 600, marginBottom: 4 }}>
           Dispute Raised — Uploads Blocked
         </div>
-        <div style={mono(11, "var(--text-secondary)")}>
+        <div style={mono(12, "var(--text-secondary)")}>
           {dispute.comment || "A dispute has been raised by the project manager. Please review the instructions below."}
         </div>
         {dispute.instructions && (
           <div style={{
-            ...mono(11, "var(--text-primary)"),
+            ...mono(12, "var(--text-primary)"),
             marginTop: 8, padding: "8px 10px",
             background: "var(--bg-overlay)", borderRadius: "var(--radius-sm)",
             border: "1px solid var(--border)",

@@ -29,14 +29,14 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
         <button
           onClick={onBack}
-          style={{ background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex", alignItems: "center", gap: 4, ...mono(12, "var(--text-muted)") }}
+          style={{ background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex", alignItems: "center", gap: 4, ...mono(14, "var(--text-muted)") }}
         >
           <Icon n="chevR" size={16} color="var(--text-muted)" style={{ transform: "rotate(180deg)" }} />
           {isMobile && "Back"}
         </button>
         <div>
           <div style={disp(isMobile ? 20 : 24, 800)}>{assignment.address.street} {assignment.address.number}</div>
-          <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>
+          <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
             {assignment.tsg_id} · {buildType.label} · {assignment.address.postal_code} {assignment.address.city}
           </div>
         </div>
@@ -53,7 +53,7 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
           borderRadius: "var(--radius-lg)",
         }}>
           <div style={disp(18, 700, undefined, { marginBottom: 8 })}>New Assignment</div>
-          <div style={mono(12, "var(--text-secondary)", { marginBottom: 16 })}>
+          <div style={mono(14, "var(--text-secondary)", { marginBottom: 16 })}>
             Accept this package to begin build execution
           </div>
           <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
@@ -89,13 +89,13 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
                   }}
                   disabled={isDisputed && phase !== assignment.phase}
                 >
-                  <div style={mono(11, phaseColors[phase], { textTransform: "uppercase", letterSpacing: ".06em" })}>
+                  <div style={mono(12, phaseColors[phase], { textTransform: "uppercase", letterSpacing: ".06em" })}>
                     Phase {i + 1}
                   </div>
                   <div style={disp(13, 700, undefined, { marginTop: 4 })}>
                     {BUILD_PHASE_LABELS[phase]}
                   </div>
-                  <div style={mono(11, isDone ? "var(--text-green)" : "var(--text-muted)", { marginTop: 4 })}>
+                  <div style={mono(12, isDone ? "var(--text-green)" : "var(--text-muted)", { marginTop: 4 })}>
                     {phaseUploads} / {required} images
                   </div>
                 </button>
@@ -133,7 +133,7 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
               padding: 16, background: "var(--bg-raised)",
               border: "1px solid var(--border)", borderRadius: "var(--radius-lg)", marginBottom: 20,
             }}>
-              <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+              <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
                 Required Forms
               </div>
               {phaseConfig.forms.map(form => (
@@ -142,7 +142,7 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
                   borderBottom: "1px solid var(--border)",
                 }}>
                   <Icon n="file" size={14} color="var(--text-muted)" />
-                  <span style={mono(11, "var(--text-secondary)", { textTransform: "capitalize" })}>
+                  <span style={mono(12, "var(--text-secondary)", { textTransform: "capitalize" })}>
                     {form.replace(/_/g, " ")}
                   </span>
                   <button className="toggle-btn primary" style={{ marginLeft: "auto", padding: "3px 10px" }}>
@@ -167,7 +167,7 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
                 }} />
               </div>
             </div>
-            <span style={mono(11, "var(--text-secondary)")}>{assignment.progress}% overall</span>
+            <span style={mono(12, "var(--text-secondary)")}>{assignment.progress}% overall</span>
           </div>
         </>
       )}

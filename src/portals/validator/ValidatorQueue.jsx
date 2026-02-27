@@ -33,7 +33,7 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
       <h1 style={disp(isMobile ? 22 : 28, 800)}>Validation Queue</h1>
-      <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 20 })}>
+      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 20 })}>
         Review completed surveys · {surveys.length} in queue
       </p>
 
@@ -71,11 +71,11 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
               <StatusBadge status={s.status} />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={disp(16, 700)}>{s.address.street} {s.address.number}</div>
-                <div style={mono(11, "var(--text-secondary)", { marginTop: 2 })}>
+                <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
                   {s.tsg_id} · {s.address.postal_code} {s.address.city}
                 </div>
               </div>
-              <div style={mono(11, "var(--text-muted)")}>
+              <div style={mono(12, "var(--text-muted)")}>
                 {s.completed_sections?.length || 0} sections
               </div>
               <Icon n="chevR" size={14} color="var(--text-muted)" />

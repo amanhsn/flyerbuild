@@ -19,7 +19,7 @@ export const AddressImport = () => {
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: "24px 28px" }}>
       <h1 style={disp(28, 800)}>Admin Tools</h1>
-      <p style={mono(12, "var(--text-secondary)", { marginTop: 4, marginBottom: 20 })}>
+      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 20 })}>
         System configuration and bulk operations
       </p>
 
@@ -40,10 +40,10 @@ export const AddressImport = () => {
 
       {activeTab === "import" && (
         <div style={{ maxWidth: 600 }}>
-          <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
             Bulk Address Import
           </div>
-          <p style={mono(11, "var(--text-secondary)", { marginBottom: 16 })}>
+          <p style={mono(12, "var(--text-secondary)", { marginBottom: 16 })}>
             Upload a CSV file with columns: street, number, bus, postal_code, city, lat, lng, assigned_surveyor
           </p>
           <FileUploadZone
@@ -66,10 +66,10 @@ export const AddressImport = () => {
 
       {activeTab === "grouping" && (
         <div>
-          <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
             Building Grouping / Splitting
           </div>
-          <p style={mono(11, "var(--text-secondary)", { marginBottom: 16 })}>
+          <p style={mono(12, "var(--text-secondary)", { marginBottom: 16 })}>
             Group MDU buildings that share a basement or split grouped buildings into separate surveys. Use A/B suffixes for split buildings.
           </p>
           <div style={{
@@ -77,7 +77,7 @@ export const AddressImport = () => {
             borderRadius: "var(--radius-lg)", textAlign: "center",
           }}>
             <Icon n="building" size={32} color="var(--text-muted)" />
-            <div style={mono(12, "var(--text-muted)", { marginTop: 8 })}>
+            <div style={mono(14, "var(--text-muted)", { marginTop: 8 })}>
               Select buildings from the map view to group or split them
             </div>
           </div>
@@ -86,7 +86,7 @@ export const AddressImport = () => {
 
       {activeTab === "rbac" && (
         <div>
-          <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
             Role-Based Access Control
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -98,10 +98,10 @@ export const AddressImport = () => {
               }}>
                 <Icon n="user" size={16} color="var(--primary)" />
                 <div style={{ flex: 1 }}>
-                  <div style={mono(12, "var(--text-primary)", { fontWeight: 600, textTransform: "capitalize" })}>
+                  <div style={mono(14, "var(--text-primary)", { fontWeight: 600, textTransform: "capitalize" })}>
                     {role}
                   </div>
-                  <div style={mono(11, "var(--text-muted)")}>
+                  <div style={mono(12, "var(--text-muted)")}>
                     Configure permissions and access levels
                   </div>
                 </div>
@@ -114,10 +114,10 @@ export const AddressImport = () => {
 
       {activeTab === "triggers" && (
         <div>
-          <div style={mono(11, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
             Workflow Triggers
           </div>
-          <p style={mono(11, "var(--text-secondary)", { marginBottom: 16 })}>
+          <p style={mono(12, "var(--text-secondary)", { marginBottom: 16 })}>
             Configure automated actions triggered by status changes.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -137,8 +137,8 @@ export const AddressImport = () => {
                   background: wf.active ? "var(--green)" : "var(--text-muted)",
                 }} />
                 <div style={{ flex: 1 }}>
-                  <div style={mono(11, "var(--text-primary)")}>{wf.trigger}</div>
-                  <div style={mono(11, "var(--text-secondary)")}>{wf.action}</div>
+                  <div style={mono(12, "var(--text-primary)")}>{wf.trigger}</div>
+                  <div style={mono(12, "var(--text-secondary)")}>{wf.action}</div>
                 </div>
                 <button className={`toggle-btn ${wf.active ? "green" : "primary"}`} style={{ padding: "4px 10px" }}>
                   {wf.active ? "Active" : "Enable"}
