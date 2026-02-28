@@ -1,40 +1,27 @@
 import { Icon } from "../../icons/Icon";
-import { mono } from "../../styles/helpers";
+import { cn } from "../../lib/utils";
 
-/**
- * DisputeBanner — shown to subcontractors when blocked by a dispute.
- */
 export const DisputeBanner = ({ dispute, onDismiss }) => {
   if (!dispute) return null;
 
   return (
-    <div style={{
-      display: "flex", alignItems: "flex-start", gap: 12,
-      padding: "14px 16px", margin: "0 0 12px",
-      background: "var(--red-glow)", border: "1px solid var(--red-dim)",
-      borderRadius: "var(--radius-md)",
-    }}>
-      <Icon n="alert" size={18} color="var(--red)" style={{ flexShrink: 0, marginTop: 2 }} />
-      <div style={{ flex: 1 }}>
-        <div style={{ ...mono(14, "var(--text-red)"), fontWeight: 600, marginBottom: 4 }}>
+    <div className="flex items-start gap-3 px-4 py-3.5 mb-3 bg-red-glow border border-red-dim rounded-md">
+      <Icon n="alert" size={18} color="var(--red)" className="shrink-0 mt-0.5" />
+      <div className="flex-1">
+        <div className="font-mono text-sm text-text-red font-semibold mb-1">
           Dispute Raised — Uploads Blocked
         </div>
-        <div style={mono(12, "var(--text-secondary)")}>
+        <div className="font-mono text-xs text-text-secondary">
           {dispute.comment || "A dispute has been raised by the project manager. Please review the instructions below."}
         </div>
         {dispute.instructions && (
-          <div style={{
-            ...mono(12, "var(--text-primary)"),
-            marginTop: 8, padding: "8px 10px",
-            background: "var(--bg-overlay)", borderRadius: "var(--radius-sm)",
-            border: "1px solid var(--border)",
-          }}>
+          <div className="font-mono text-xs text-text-primary mt-2 px-2.5 py-2 bg-bg-overlay rounded-sm border border-border">
             {dispute.instructions}
           </div>
         )}
       </div>
       {onDismiss && (
-        <button onClick={onDismiss} style={{ background: "none", border: "none", cursor: "pointer", padding: 4 }}>
+        <button onClick={onDismiss} className="bg-transparent border-none cursor-pointer p-1">
           <Icon n="x" size={14} color="var(--text-red)" />
         </button>
       )}

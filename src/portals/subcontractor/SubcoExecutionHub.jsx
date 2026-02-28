@@ -3,7 +3,6 @@ import { useLang } from "../../i18n/LangContext";
 import { DisputeBanner, FileUploadZone } from "../../components/shared";
 import { BUILD_TYPES, BUILD_PHASES, BUILD_PHASE_LABELS } from "../../data/buildTypes";
 import { Icon } from "../../icons/Icon";
-import { disp, mono } from "../../styles/helpers";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
 const phaseColors = { pre_build: "var(--primary)", during_build: "var(--blue)", post_build: "var(--green)" };
@@ -24,19 +23,20 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
   const handleAccept = () => setAcceptState(true);
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "16px" : "24px 28px" }}>
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+      <div className="flex items-center gap-3 mb-5">
         <button
           onClick={onBack}
-          style={{ background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex", alignItems: "center", gap: 4, ...mono(14, "var(--text-muted)") }}
+          className="font-mono text-sm text-text-muted flex items-center gap-1 cursor-pointer"
+          style={{ background: "none", border: "none", padding: 4 }}
         >
           <Icon n="chevR" size={16} color="var(--text-muted)" style={{ transform: "rotate(180deg)" }} />
           {isMobile && "Back"}
         </button>
         <div>
-          <div style={disp(isMobile ? 20 : 24, 800)}>{assignment.address.street} {assignment.address.number}</div>
-          <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
+          <div className={`font-display ${isMobile ? "text-xl" : "text-2xl"} font-extrabold tracking-wide`}>{assignment.address.street} {assignment.address.number}</div>
+          <div className="font-mono text-xs text-text-secondary mt-0.5">
             {assignment.tsg_id} · {buildType.label} · {assignment.address.postal_code} {assignment.address.city}
           </div>
         </div>
@@ -47,16 +47,14 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
 
       {/* Pending acceptance */}
       {!acceptState && (
-        <div style={{
-          padding: 24, marginBottom: 20, textAlign: "center",
-          background: "var(--bg-raised)", border: "1px solid var(--border)",
-          borderRadius: "var(--radius-lg)",
+        <div className="text-center mb-5 bg-bg-raised border border-border rounded-lg" style={{
+          padding: 24,
         }}>
-          <div style={disp(18, 700, undefined, { marginBottom: 8 })}>New Assignment</div>
-          <div style={mono(14, "var(--text-secondary)", { marginBottom: 16 })}>
+          <div className="font-display text-lg font-bold tracking-wide mb-2">New Assignment</div>
+          <div className="font-mono text-sm text-text-secondary mb-4">
             Accept this package to begin build execution
           </div>
-          <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+          <div className="flex gap-2.5 justify-center flex-wrap">
             <button className="toggle-btn green active" onClick={handleAccept} style={{ padding: "8px 20px" }}>
               Accept Package
             </button>
@@ -70,7 +68,7 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
       {/* Phase navigation */}
       {acceptState && !isCompleted && (
         <>
-          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 6, marginBottom: 20 }}>
+          <div className="mb-5 gap-1.5" style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
             {BUILD_PHASES.map((phase, i) => {
               const phaseUploads = uploadedImages[phase]?.length || 0;
               const required = buildType.phases[phase]?.requiredImages || 0;
@@ -79,23 +77,23 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
                 <button
                   key={phase}
                   onClick={() => setActivePhase(phase)}
+                  className="text-center"
                   style={{
                     flex: 1, padding: "12px 14px", borderRadius: "var(--radius-md)",
                     border: activePhase === phase ? `2px solid ${phaseColors[phase]}` : "1px solid var(--border)",
                     background: activePhase === phase ? `${phaseColors[phase]}15` : "var(--bg-raised)",
                     cursor: isDisputed ? "default" : "pointer",
                     opacity: isDisputed && phase !== assignment.phase ? 0.4 : 1,
-                    textAlign: "center",
                   }}
                   disabled={isDisputed && phase !== assignment.phase}
                 >
-                  <div style={mono(12, phaseColors[phase], { textTransform: "uppercase", letterSpacing: ".06em" })}>
+                  <div className="font-mono text-xs uppercase tracking-wider" style={{ color: phaseColors[phase] }}>
                     Phase {i + 1}
                   </div>
-                  <div style={disp(13, 700, undefined, { marginTop: 4 })}>
+                  <div className="font-display text-[13px] font-bold tracking-wide mt-1">
                     {BUILD_PHASE_LABELS[phase]}
                   </div>
-                  <div style={mono(12, isDone ? "var(--text-green)" : "var(--text-muted)", { marginTop: 4 })}>
+                  <div className={`font-mono text-xs ${isDone ? "text-text-green" : "text-text-muted"} mt-1`}>
                     {phaseUploads} / {required} images
                   </div>
                 </button>
@@ -104,7 +102,7 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
           </div>
 
           {/* Upload area */}
-          <div style={{ marginBottom: 20 }}>
+          <div className="mb-5">
             <FileUploadZone
               label={`${BUILD_PHASE_LABELS[activePhase]} — Upload Images (${phaseConfig.requiredImages} required)`}
               files={uploadedImages[activePhase]}
@@ -129,23 +127,21 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
 
           {/* Dynamic forms for this phase */}
           {phaseConfig.forms.length > 0 && (
-            <div style={{
-              padding: 16, background: "var(--bg-raised)",
-              border: "1px solid var(--border)", borderRadius: "var(--radius-lg)", marginBottom: 20,
+            <div className="bg-bg-raised border border-border rounded-lg mb-5" style={{
+              padding: 16,
             }}>
-              <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+              <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2.5">
                 Required Forms
               </div>
               {phaseConfig.forms.map(form => (
-                <div key={form} style={{
-                  display: "flex", alignItems: "center", gap: 8, padding: "8px 0",
-                  borderBottom: "1px solid var(--border)",
+                <div key={form} className="flex items-center gap-2 border-b border-border" style={{
+                  padding: "8px 0",
                 }}>
                   <Icon n="file" size={14} color="var(--text-muted)" />
-                  <span style={mono(12, "var(--text-secondary)", { textTransform: "capitalize" })}>
+                  <span className="font-mono text-xs text-text-secondary capitalize">
                     {form.replace(/_/g, " ")}
                   </span>
-                  <button className="toggle-btn primary" style={{ marginLeft: "auto", padding: "3px 10px" }}>
+                  <button className="toggle-btn primary ml-auto" style={{ padding: "3px 10px" }}>
                     Fill Form
                   </button>
                 </div>
@@ -154,12 +150,10 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
           )}
 
           {/* Progress summary */}
-          <div style={{
-            padding: "12px 16px", background: "var(--bg-raised)",
-            border: "1px solid var(--border)", borderRadius: "var(--radius-md)",
-            display: "flex", alignItems: "center", gap: 12,
+          <div className="bg-bg-raised border border-border rounded-md flex items-center gap-3" style={{
+            padding: "12px 16px",
           }}>
-            <div style={{ flex: 1 }}>
+            <div className="flex-1">
               <div style={{ height: 6, background: "var(--bg-overlay)", borderRadius: 3 }}>
                 <div style={{
                   width: `${assignment.progress}%`, height: "100%", borderRadius: 3,
@@ -167,21 +161,20 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
                 }} />
               </div>
             </div>
-            <span style={mono(12, "var(--text-secondary)")}>{assignment.progress}% overall</span>
+            <span className="font-mono text-xs text-text-secondary">{assignment.progress}% overall</span>
           </div>
         </>
       )}
 
-      {/* Completed state — meetstaat upload */}
+      {/* Completed state -- meetstaat upload */}
       {isCompleted && (
         <div>
-          <div style={{
-            padding: 16, marginBottom: 20, textAlign: "center",
+          <div className="text-center mb-5 rounded-lg" style={{
+            padding: 16,
             background: "var(--green-glow)", border: "1px solid var(--green-dim)",
-            borderRadius: "var(--radius-lg)",
           }}>
             <Icon n="check" size={24} color="var(--green)" />
-            <div style={disp(16, 700, "var(--text-green)", { marginTop: 8 })}>Build Completed</div>
+            <div className="font-display text-base font-bold tracking-wide text-text-green mt-2">Build Completed</div>
           </div>
 
           <FileUploadZone
@@ -195,7 +188,7 @@ export const SubcoExecutionHub = ({ assignment, onBack }) => {
             maxFiles={1}
           />
           {meetstaatFile.length > 0 && (
-            <button className="toggle-btn green active" style={{ marginTop: 16, padding: "8px 20px" }}>
+            <button className="toggle-btn green active mt-4" style={{ padding: "8px 20px" }}>
               Submit Meetstaat
             </button>
           )}

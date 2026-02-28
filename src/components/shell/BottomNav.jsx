@@ -1,7 +1,6 @@
 import { Icon } from "../../icons/Icon";
 import { useLang } from "../../i18n/LangContext";
-
-const DEFAULT_ITEMS = null; // will use surveyor defaults below
+import { cn } from "../../lib/utils";
 
 export const BottomNav = ({ active, setActive, items }) => {
   const { t } = useLang();
@@ -17,7 +16,11 @@ export const BottomNav = ({ active, setActive, items }) => {
   return (
     <nav className="bottom-nav">
       {navItems.map(({ id, icon, label }) => (
-        <button key={id} className={`bottom-nav-item${active === id ? " active" : ""}`} onClick={() => setActive(id)}>
+        <button
+          key={id}
+          className={cn("bottom-nav-item", active === id && "active")}
+          onClick={() => setActive(id)}
+        >
           <Icon n={icon} size={20} />
           {label}
         </button>

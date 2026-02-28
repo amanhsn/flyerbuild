@@ -13,7 +13,7 @@ export const FilterBar = ({ filter, setFilter }) => {
   ];
 
   return (
-    <div style={{ display: "flex", gap: 6, overflowX: "auto", flexShrink: 0, paddingBottom: 4 }}>
+    <div className="flex gap-1.5 overflow-x-auto shrink-0 pb-1">
       {filters.map(([v, l]) => (
         <button
           key={v}

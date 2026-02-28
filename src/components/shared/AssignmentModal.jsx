@@ -2,8 +2,8 @@ import { useState } from "react";
 import { getUsersByRole } from "../../data/mockUsers";
 import { TextArea } from "./Field";
 import { Icon } from "../../icons/Icon";
-import { mono, disp } from "../../styles/helpers";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { cn } from "../../lib/utils";
 
 export const AssignmentModal = ({ title, subtitle, role, currentValue, onSubmit, onCancel }) => {
   const isMobile = useIsMobile();
@@ -13,54 +13,40 @@ export const AssignmentModal = ({ title, subtitle, role, currentValue, onSubmit,
 
   const canSubmit = selectedUser !== "";
   const iconName = role === "subcontractor" ? "settings" : "user";
-  const accentBg = "var(--primary-glow)";
-  const accentBorder = "var(--primary-dim)";
-  const accentColor = "var(--primary)";
 
   return (
     <div
       onClick={onCancel}
-      style={{
-        position: "fixed", inset: 0, background: "rgba(0,0,0,.6)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        zIndex: 1000,
-      }}
+      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        style={{
-          background: "var(--bg-base)", border: "1px solid var(--border)",
-          borderRadius: "var(--radius-xl)", padding: isMobile ? 16 : 24, width: "100%",
-          maxWidth: 460, margin: isMobile ? "0 16px" : 0,
-          boxShadow: "0 8px 32px rgba(0,0,0,.4)",
-        }}
+        className={cn(
+          "bg-bg-base border border-border rounded-xl w-full max-w-[460px] shadow-[0_8px_32px_rgba(0,0,0,.4)]",
+          isMobile ? "p-4 mx-4" : "p-6"
+        )}
       >
         {/* Header */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: "var(--radius-md)",
-            background: accentBg, border: `1px solid ${accentBorder}`,
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}>
-            <Icon n={iconName} size={18} color={accentColor} />
+        <div className="flex items-center gap-2.5 mb-5">
+          <div className="w-9 h-9 rounded-md bg-primary-glow border border-primary-dim flex items-center justify-center">
+            <Icon n={iconName} size={18} color="var(--primary)" />
           </div>
           <div>
-            <div style={disp(16, 700)}>{title}</div>
-            {subtitle && <div style={mono(12, "var(--text-secondary)")}>{subtitle}</div>}
+            <div className="font-display text-base font-bold tracking-wide">{title}</div>
+            {subtitle && <div className="font-mono text-xs text-text-secondary">{subtitle}</div>}
           </div>
         </div>
 
         {/* Form */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <div className="flex flex-col gap-4">
           <div>
-            <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+            <div className="font-mono text-xs text-text-muted uppercase tracking-[.08em] mb-1.5">
               {role === "subcontractor" ? "Subcontractor" : "Surveyor"}
             </div>
             <select
-              className="field-input"
+              className="w-full px-3 py-2.5 bg-bg-elevated border border-border-bright rounded-md text-text-primary font-mono text-sm outline-none transition-colors focus:border-primary"
               value={selectedUser}
               onChange={(e) => setSelectedUser(e.target.value)}
-              style={{ width: "100%" }}
             >
               <option value="">Select {role === "subcontractor" ? "subcontractor" : "surveyor"}...</option>
               {users.map((u) => (
@@ -79,18 +65,20 @@ export const AssignmentModal = ({ title, subtitle, role, currentValue, onSubmit,
         </div>
 
         {/* Actions */}
-        <div style={{ display: "flex", gap: 10, marginTop: 20, justifyContent: "flex-end" }}>
-          <button className="cta-btn secondary" onClick={onCancel}>
+        <div className="flex gap-2.5 mt-5 justify-end">
+          <button
+            className="px-4 py-2 bg-bg-elevated border border-border rounded-md font-display text-base font-semibold text-text-secondary cursor-pointer transition-all"
+            onClick={onCancel}
+          >
             Cancel
           </button>
           <button
-            className="toggle-btn primary active"
+            className={cn(
+              "flex items-center gap-1.5 px-5 py-2 rounded-md bg-primary border border-primary text-white font-display text-[17px] font-bold tracking-[.03em] cursor-pointer transition-all",
+              !canSubmit && "opacity-50 cursor-default"
+            )}
             onClick={() => onSubmit(selectedUser, notes)}
             disabled={!canSubmit}
-            style={{
-              padding: "8px 20px", display: "flex", alignItems: "center", gap: 6,
-              opacity: canSubmit ? 1 : 0.5,
-            }}
           >
             <Icon n={iconName} size={14} color="#fff" />
             Assign

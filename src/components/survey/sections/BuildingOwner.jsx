@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Field, TextArea, ToggleButton, Checkbox } from "../../shared";
 import { useLang } from "../../../i18n/LangContext";
-import { mono, disp } from "../../../styles/helpers";
+import { cn } from "../../../lib/utils";
+
 
 export const BuildingOwner = ({ survey, setField, disabled }) => {
   const { t } = useLang();
@@ -9,13 +10,13 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
   const owner = survey.building_owner || {};
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+    <div className="flex flex-col gap-5">
       {/* Owner Found Toggle */}
       <div>
-        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">
           {t("ownerFound")}
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="flex gap-2">
           <ToggleButton
             label="Owner Found"
             variant="green"
@@ -35,12 +36,7 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
 
       {/* Sub-tabs: Owner Info / Syndic Info */}
       <div>
-        <div style={{
-          display: "flex",
-          gap: 0,
-          borderBottom: "2px solid var(--border)",
-          marginBottom: 16,
-        }}>
+        <div className="flex gap-0 border-b-2 border-border mb-4">
           {[
             { key: "owner", label: t("ownerInfo") },
             { key: "syndic", label: t("syndicInfo") },
@@ -48,16 +44,12 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
             <button
               key={key}
               onClick={() => setActiveTab(key)}
+              className={cn(
+                "font-mono text-xs uppercase tracking-widest py-2.5 px-5 bg-transparent border-none cursor-pointer -mb-0.5",
+                activeTab === key ? "text-primary" : "text-text-muted"
+              )}
               style={{
-                ...mono(12, activeTab === key ? "var(--primary)" : "var(--text-muted)"),
-                padding: "10px 20px",
-                background: "transparent",
-                border: "none",
                 borderBottom: activeTab === key ? "2px solid var(--primary)" : "2px solid transparent",
-                cursor: "pointer",
-                marginBottom: -2,
-                textTransform: "uppercase",
-                letterSpacing: ".08em",
               }}
             >
               {label}
@@ -67,8 +59,8 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
 
         {/* Owner Info Tab */}
         {activeTab === "owner" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <div style={{ display: "flex", gap: 12 }}>
+          <div className="flex flex-col gap-3.5">
+            <div className="flex gap-3">
               <Field
                 label={t("ownerName")}
                 value={owner.ownerName}
@@ -82,7 +74,7 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
                 disabled={disabled}
               />
             </div>
-            <div style={{ display: "flex", gap: 12 }}>
+            <div className="flex gap-3">
               <Field
                 label={t("ownerEmail")}
                 value={owner.ownerEmail}
@@ -109,8 +101,8 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
 
         {/* Syndic Info Tab */}
         {activeTab === "syndic" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <div style={{ display: "flex", gap: 12 }}>
+          <div className="flex flex-col gap-3.5">
+            <div className="flex gap-3">
               <Field
                 label={t("syndicName")}
                 value={owner.syndicName}
@@ -124,7 +116,7 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
                 disabled={disabled}
               />
             </div>
-            <div style={{ display: "flex", gap: 12 }}>
+            <div className="flex gap-3">
               <Field
                 label={t("syndicEmail")}
                 value={owner.syndicEmail}
@@ -151,14 +143,8 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
       </div>
 
       {/* Common Address Fields */}
-      <div style={{
-        borderTop: "1px solid var(--border)",
-        paddingTop: 16,
-        display: "flex",
-        flexDirection: "column",
-        gap: 14,
-      }}>
-        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+      <div className="border-t border-border pt-4 flex flex-col gap-3.5">
+        <div className="font-mono text-xs text-text-muted uppercase tracking-widest">
           {t("address")}
         </div>
         <Field
@@ -167,7 +153,7 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
           onChange={(v) => setField("building_owner.street", v)}
           disabled={disabled}
         />
-        <div style={{ display: "flex", gap: 12 }}>
+        <div className="flex gap-3">
           <Field
             label={t("houseNumber")}
             value={owner.houseNumber}
@@ -181,7 +167,7 @@ export const BuildingOwner = ({ survey, setField, disabled }) => {
             disabled={disabled}
           />
         </div>
-        <div style={{ display: "flex", gap: 12 }}>
+        <div className="flex gap-3">
           <Field
             label={t("postalCode")}
             value={owner.postalCode}

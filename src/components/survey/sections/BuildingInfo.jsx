@@ -1,7 +1,6 @@
 import { Field, TextArea } from "../../shared";
 import { Icon } from "../../../icons/Icon";
 import { useLang } from "../../../i18n/LangContext";
-import { mono, disp } from "../../../styles/helpers";
 
 const getBuildingType = (totalUnits) => {
   if (totalUnits == null || totalUnits === 0) return "--";
@@ -23,7 +22,7 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
   const secondaryAddresses = info.secondary_addresses || [];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div className="flex flex-col gap-4">
       {/* Main Address */}
       <Field
         label={t("mainAddress")}
@@ -32,7 +31,7 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
         disabled={disabled}
       />
 
-      <div style={{ display: "flex", gap: 12 }}>
+      <div className="flex gap-3">
         <Field
           label={t("nameResidence")}
           value={info.nameResidence}
@@ -48,10 +47,10 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
       </div>
 
       {/* Unit Counts */}
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+      <div className="font-mono text-xs text-text-muted uppercase tracking-widest">
         {t("unitCounts")}
       </div>
-      <div style={{ display: "flex", gap: 12 }}>
+      <div className="flex gap-3">
         <Field
           label={t("amountLu")}
           value={info.amountLu}
@@ -76,18 +75,12 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
       </div>
 
       {/* Total Units (display-only) */}
-      <div style={{ display: "flex", gap: 12 }}>
-        <div style={{ flex: 1 }}>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+      <div className="flex gap-3">
+        <div className="flex-1">
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-[5px]">
             {t("totalUnits")}
           </div>
-          <div style={{
-            ...disp(18, 700, "var(--primary)"),
-            padding: "8px 12px",
-            background: "var(--bg-overlay)",
-            borderRadius: "var(--radius-sm)",
-            border: "1px solid var(--border)",
-          }}>
+          <div className="font-display text-lg font-bold tracking-wide text-primary py-2 px-3 bg-bg-overlay rounded-sm border border-border">
             {totalUnits}
           </div>
         </div>
@@ -103,23 +96,14 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
 
       {/* Building Type (auto-calculated) */}
       <div>
-        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+        <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-[5px]">
           {t("buildingType")}
         </div>
-        <div style={{
-          ...mono(14, "var(--text-secondary)"),
-          padding: "10px 14px",
-          background: "var(--bg-overlay)",
-          borderRadius: "var(--radius-sm)",
-          border: "1px solid var(--border)",
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-        }}>
+        <div className="font-mono text-sm text-text-secondary py-2.5 px-3.5 bg-bg-overlay rounded-sm border border-border flex items-center gap-2">
           <Icon n="building" size={16} color="var(--primary)" />
           <span>{buildingType}</span>
           {totalUnits > 0 && (
-            <span style={mono(12, "var(--text-muted)", { marginLeft: "auto" })}>
+            <span className="font-mono text-xs text-text-muted ml-auto">
               ({totalUnits} units)
             </span>
           )}
@@ -129,27 +113,18 @@ export const BuildingInfo = ({ survey, setField, disabled }) => {
       {/* Secondary Addresses */}
       {secondaryAddresses.length > 0 && (
         <div>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">
             {t("secondaryAddresses")}
           </div>
-          <div style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 4,
-            background: "var(--bg-raised)",
-            border: "1px solid var(--border)",
-            borderRadius: "var(--radius-lg)",
-            overflow: "hidden",
-          }}>
+          <div className="flex flex-col gap-1 bg-bg-raised border border-border rounded-lg overflow-hidden">
             {secondaryAddresses.map((addr, idx) => (
-              <div key={idx} style={{
-                ...mono(12, "var(--text-secondary)"),
-                padding: "10px 14px",
-                borderBottom: idx < secondaryAddresses.length - 1 ? "1px solid var(--border)" : "none",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-              }}>
+              <div
+                key={idx}
+                className="font-mono text-xs text-text-secondary py-2.5 px-3.5 flex items-center gap-2"
+                style={{
+                  borderBottom: idx < secondaryAddresses.length - 1 ? "1px solid var(--border)" : "none",
+                }}
+              >
                 <Icon n="nav" size={14} color="var(--text-muted)" />
                 <span>{addr}</span>
               </div>

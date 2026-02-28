@@ -14,7 +14,10 @@
       "Bash(xargs sed:*)",
       "Bash(lsof -i :5173)",
       "Bash(npm i:*)",
-      "Bash(npx vercel:*)"
+      "Bash(npx vercel:*)",
+      "Bash(xargs:*)",
+      "Bash(cat:*)",
+      "Bash(npx tailwindcss:*)"
     ]
   }
 }

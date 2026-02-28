@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Field, TextArea, ToggleButton } from "../../shared";
 import { Icon } from "../../../icons/Icon";
 import { useLang } from "../../../i18n/LangContext";
-import { mono, disp } from "../../../styles/helpers";
 
 export const VisitInfo = ({ survey, setField, disabled, addVisit, deleteVisit }) => {
   const { t } = useLang();
@@ -19,13 +18,13 @@ export const VisitInfo = ({ survey, setField, disabled, addVisit, deleteVisit })
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+    <div className="flex flex-col gap-5">
       {/* Entry Status */}
       <div>
-        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">
           {t("entryStatus")}
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="flex gap-2">
           <ToggleButton
             label="Entry OK"
             variant="green"
@@ -55,10 +54,9 @@ export const VisitInfo = ({ survey, setField, disabled, addVisit, deleteVisit })
 
       {/* Add Visit Button */}
       <button
-        className="toggle-btn primary active"
+        className="toggle-btn primary active self-start flex items-center gap-1.5"
         onClick={handleAddVisit}
         disabled={disabled}
-        style={{ alignSelf: "flex-start", display: "flex", alignItems: "center", gap: 6 }}
       >
         <Icon n="plus" size={14} color="#fff" />
         <span>{t("addVisit")}</span>
@@ -67,25 +65,20 @@ export const VisitInfo = ({ survey, setField, disabled, addVisit, deleteVisit })
       {/* Visit History Table */}
       {visits.length > 0 && (
         <div>
-          <div style={disp(14, 600, "var(--text-primary)", { marginBottom: 10 })}>
+          <div className="font-display text-sm font-semibold tracking-wide text-text-primary mb-2.5">
             {t("visitHistory")}
           </div>
-          <div style={{
-            border: "1px solid var(--border)",
-            borderRadius: "var(--radius-lg)",
-            overflow: "hidden",
-          }}>
+          <div className="border border-border rounded-lg overflow-hidden">
             {/* Table Header */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 100px 1.5fr 50px",
-              gap: 0,
-              background: "var(--bg-overlay)",
-              padding: "10px 14px",
-              borderBottom: "1px solid var(--border)",
-            }}>
+            <div
+              className="bg-bg-overlay py-2.5 px-3.5 border-b border-border"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 100px 1.5fr 50px",
+              }}
+            >
               {["Date", "Surveyor", "Status", "Remark", ""].map((col) => (
-                <div key={col} style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
+                <div key={col} className="font-mono text-xs text-text-muted uppercase tracking-widest">
                   {col}
                 </div>
               ))}
@@ -95,47 +88,42 @@ export const VisitInfo = ({ survey, setField, disabled, addVisit, deleteVisit })
             {visits.map((visit, idx) => (
               <div
                 key={idx}
+                className="py-2.5 px-3.5 bg-bg-raised items-center"
                 style={{
                   display: "grid",
                   gridTemplateColumns: "1fr 1fr 100px 1.5fr 50px",
-                  gap: 0,
-                  padding: "10px 14px",
                   borderBottom: idx < visits.length - 1 ? "1px solid var(--border)" : "none",
-                  background: "var(--bg-raised)",
-                  alignItems: "center",
                 }}
               >
-                <div style={mono(12, "var(--text-secondary)")}>
+                <div className="font-mono text-xs text-text-secondary">
                   {visit.timestamp ? new Date(visit.timestamp).toLocaleDateString() : "--"}
                 </div>
-                <div style={mono(12, "var(--text-secondary)")}>
+                <div className="font-mono text-xs text-text-secondary">
                   {visit.surveyor || "--"}
                 </div>
                 <div>
-                  <span style={{
-                    ...mono(12, visit.entry_status === "ok" ? "var(--green)" : "var(--red)"),
-                    padding: "2px 8px",
-                    borderRadius: "var(--radius-sm)",
-                    background: visit.entry_status === "ok"
-                      ? "rgba(var(--green-rgb, 76,175,80), 0.15)"
-                      : "rgba(var(--red-rgb, 244,67,54), 0.15)",
-                  }}>
+                  <span
+                    className={`font-mono text-xs ${visit.entry_status === "ok" ? "text-green" : "text-red"}`}
+                    style={{
+                      padding: "2px 8px",
+                      borderRadius: "var(--radius-sm)",
+                      background: visit.entry_status === "ok"
+                        ? "rgba(var(--green-rgb, 76,175,80), 0.15)"
+                        : "rgba(var(--red-rgb, 244,67,54), 0.15)",
+                    }}
+                  >
                     {visit.entry_status === "ok" ? "OK" : "No Entry"}
                   </span>
                 </div>
-                <div style={mono(12, "var(--text-muted)")}>
+                <div className="font-mono text-xs text-text-muted">
                   {visit.visit_remark || "--"}
                 </div>
-                <div style={{ display: "flex", justifyContent: "center" }}>
+                <div className="flex justify-center">
                   <button
-                    className="toggle-btn"
+                    className="toggle-btn py-1 px-1.5 bg-transparent border border-border rounded-sm"
                     onClick={() => deleteVisit && deleteVisit(idx)}
                     disabled={disabled}
                     style={{
-                      padding: "4px 6px",
-                      background: "transparent",
-                      border: "1px solid var(--border)",
-                      borderRadius: "var(--radius-sm)",
                       cursor: disabled ? "default" : "pointer",
                     }}
                   >
@@ -149,14 +137,7 @@ export const VisitInfo = ({ survey, setField, disabled, addVisit, deleteVisit })
       )}
 
       {visits.length === 0 && (
-        <div style={{
-          ...mono(12, "var(--text-muted)"),
-          padding: 20,
-          textAlign: "center",
-          background: "var(--bg-raised)",
-          borderRadius: "var(--radius-lg)",
-          border: "1px solid var(--border)",
-        }}>
+        <div className="font-mono text-xs text-text-muted text-center p-5 bg-bg-raised rounded-lg border border-border">
           {t("noVisits")}
         </div>
       )}

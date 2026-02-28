@@ -1,30 +1,19 @@
 import { useLang } from "../../i18n/LangContext";
 import { REJECTION_REASONS } from "../../data/rejectionReasons";
-import { mono } from "../../styles/helpers";
 
-/**
- * ReasonCodeSelect — dropdown for selecting predefined reason codes.
- * Used by Validator (rejection) and Subcontractor (reassignment request).
- */
 export const ReasonCodeSelect = ({ value, onChange, disabled = false, label = "Reason" }) => {
   const { lang } = useLang();
 
   return (
     <div>
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 6 })}>
+      <div className="font-mono text-xs text-text-muted uppercase tracking-[.08em] mb-1.5">
         {label}
       </div>
       <select
         value={value || ""}
         onChange={(e) => onChange?.(e.target.value)}
         disabled={disabled}
-        style={{
-          width: "100%", padding: "10px 14px",
-          background: "var(--bg-overlay)", color: "var(--text-primary)",
-          border: "1px solid var(--border)", borderRadius: "var(--radius-sm)",
-          fontFamily: "var(--font-mono)", fontSize: 12,
-          cursor: disabled ? "default" : "pointer",
-        }}
+        className="w-full px-3.5 py-2.5 bg-bg-overlay text-text-primary border border-border rounded-sm font-mono text-xs cursor-pointer disabled:cursor-default"
       >
         <option value="">Select a reason...</option>
         {REJECTION_REASONS.map(r => (

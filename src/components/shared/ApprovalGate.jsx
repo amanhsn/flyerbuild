@@ -1,52 +1,53 @@
 import { Icon } from "../../icons/Icon";
-import { mono, disp } from "../../styles/helpers";
+import { cn } from "../../lib/utils";
 
-/**
- * ApprovalGate — visualizes a workflow gate status.
- * gates: [{ key, label, cleared: boolean, clearedAt?, clearedBy? }]
- */
 export const ApprovalGate = ({ title, gates = [] }) => {
   const allCleared = gates.every(g => g.cleared);
 
   return (
-    <div style={{
-      background: "var(--bg-raised)", border: "1px solid var(--border)",
-      borderRadius: "var(--radius-lg)", padding: 16,
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+    <div className="bg-bg-raised border border-border rounded-lg p-4">
+      <div className="flex items-center gap-2 mb-3">
         <Icon
           n={allCleared ? "check" : "shield"}
           size={16}
           color={allCleared ? "var(--green)" : "var(--primary)"}
         />
-        <div style={disp(14, 600, allCleared ? "var(--text-green)" : "var(--text-primary)")}>
+        <div className={cn(
+          "font-display text-sm font-semibold tracking-wide",
+          allCleared ? "text-text-green" : "text-text-primary"
+        )}>
           {title}
         </div>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="flex flex-col gap-2">
         {gates.map(g => (
-          <div key={g.key} style={{
-            display: "flex", alignItems: "center", gap: 10,
-            padding: "8px 12px",
-            background: g.cleared ? "var(--green-glow)" : "var(--bg-overlay)",
-            border: `1px solid ${g.cleared ? "var(--green-dim)" : "var(--border)"}`,
-            borderRadius: "var(--radius-sm)",
-          }}>
-            <div style={{
-              width: 20, height: 20, borderRadius: "50%",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              background: g.cleared ? "var(--green)" : "var(--bg-elevated)",
-              border: g.cleared ? "none" : "1px solid var(--border)",
-            }}>
+          <div
+            key={g.key}
+            className={cn(
+              "flex items-center gap-2.5 px-3 py-2 rounded-sm border",
+              g.cleared
+                ? "bg-green-glow border-green-dim"
+                : "bg-bg-overlay border-border"
+            )}
+          >
+            <div className={cn(
+              "w-5 h-5 rounded-full flex items-center justify-center",
+              g.cleared
+                ? "bg-green"
+                : "bg-bg-elevated border border-border"
+            )}>
               {g.cleared && <Icon n="check" size={12} color="#fff" />}
             </div>
-            <div style={{ flex: 1 }}>
-              <div style={mono(12, g.cleared ? "var(--text-green)" : "var(--text-secondary)")}>
+            <div className="flex-1">
+              <div className={cn(
+                "font-mono text-xs",
+                g.cleared ? "text-text-green" : "text-text-secondary"
+              )}>
                 {g.label}
               </div>
               {g.cleared && g.clearedBy && (
-                <div style={mono(12, "var(--text-muted)", { marginTop: 2 })}>
+                <div className="font-mono text-xs text-text-muted mt-0.5">
                   {g.clearedBy} · {g.clearedAt || ""}
                 </div>
               )}

@@ -1,6 +1,6 @@
 import { Field } from "../../shared";
 import { useLang } from "../../../i18n/LangContext";
-import { mono } from "../../../styles/helpers";
+
 
 const QUANTITY_FIELDS = [
   { key: "leadInTrench", label: "Lead-in Trench (m)" },
@@ -20,16 +20,12 @@ export const ExecutionQuantities = ({ survey, setField, disabled }) => {
   const quantities = survey.execution_quantities || {};
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+    <div className="flex flex-col gap-4">
+      <div className="font-mono text-xs text-text-muted uppercase tracking-widest">
         {t("executionQuantities")}
       </div>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: 14,
-      }}>
+      <div className="grid grid-cols-2 gap-3.5">
         {QUANTITY_FIELDS.map(({ key, label }) => (
           <Field
             key={key}

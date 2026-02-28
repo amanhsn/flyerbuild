@@ -12,8 +12,8 @@ import { SubcoPortalRoot } from "./portals/subcontractor/SubcoPortalRoot";
 
 import { ROLES } from "./data/roles";
 import { DEFAULT_USERS } from "./data/mockUsers";
-import { mono } from "./styles/helpers";
 import { useIsMobile } from "./hooks/useIsMobile";
+import { cn } from "./lib/utils";
 
 export default function App() {
   const [lang, setLang] = useState("en");
@@ -53,10 +53,9 @@ export default function App() {
           {/* Role switcher for dev */}
           {isMobile ? (
             <select
-              className="field-input"
+              className="w-auto ml-2 px-2 py-1 bg-bg-elevated border border-border-bright rounded-md text-text-primary font-mono text-xs outline-none"
               value={userRole}
               onChange={(e) => setUserRole(e.target.value)}
-              style={{ width: "auto", marginLeft: 8, padding: "4px 8px", ...mono(12, "var(--text-primary)") }}
             >
               {Object.keys(ROLES).map(role => (
                 <option key={role} value={role}>
@@ -65,18 +64,17 @@ export default function App() {
               ))}
             </select>
           ) : (
-            <div style={{ display: "flex", gap: 4, marginLeft: 12 }}>
+            <div className="flex gap-1 ml-3">
               {Object.keys(ROLES).map(role => (
                 <button
                   key={role}
                   onClick={() => setUserRole(role)}
-                  style={{
-                    ...mono(12, userRole === role ? "#fff" : "var(--text-muted)"),
-                    padding: "3px 8px", borderRadius: "var(--radius-sm)",
-                    border: userRole === role ? "1px solid var(--primary)" : "1px solid var(--border)",
-                    background: userRole === role ? "var(--primary)" : "var(--bg-overlay)",
-                    cursor: "pointer", textTransform: "uppercase", letterSpacing: ".06em",
-                  }}
+                  className={cn(
+                    "font-mono text-xs uppercase tracking-wider px-2 py-[3px] rounded-sm border cursor-pointer",
+                    userRole === role
+                      ? "text-white border-primary bg-primary"
+                      : "text-text-muted border-border bg-bg-overlay"
+                  )}
                 >
                   {role === "subcontractor" ? "Subco" : role.charAt(0).toUpperCase() + role.slice(1)}
                 </button>
@@ -86,7 +84,7 @@ export default function App() {
         </TopBar>
 
         {/* Portal content */}
-        <div className="app-body" style={{ flex: 1, overflow: "hidden", display: "flex" }}>
+        <div className="app-body flex-1 overflow-hidden flex">
           {userRole === "surveyor" && <SurveyorPortalRoot sidebarOpen={sidebarOpen} onSidebarClose={closeSidebar} />}
           {userRole === "validator" && <ValidatorPortalRoot />}
           {userRole === "admin" && <AdminPortalRoot sidebarOpen={sidebarOpen} onSidebarClose={closeSidebar} onMenuToggle={() => setSidebarOpen(v => !v)} />}

@@ -1,0 +1,6 @@
+@layer components {
+  /* Uppercase label pattern — used frequently for section headers */
+  .label-upper {
+    @apply font-mono text-xs text-text-muted uppercase tracking-widest;
+  }
+}

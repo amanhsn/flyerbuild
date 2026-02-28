@@ -1,5 +1,5 @@
 import { useLang } from "../../../i18n/LangContext";
-import { mono, disp } from "../../../styles/helpers";
+
 
 const LEGEND_ITEMS = [
   { label: "Fiber Cable", color: "var(--primary)", type: "line" },
@@ -17,27 +17,26 @@ const LEGEND_ITEMS = [
 const LegendSymbol = ({ type, color, dashed }) => {
   if (type === "circle") {
     return (
-      <div style={{
-        width: 14, height: 14, borderRadius: "50%",
-        background: color, flexShrink: 0,
-      }} />
+      <div
+        className="w-3.5 h-3.5 rounded-full shrink-0"
+        style={{ background: color }}
+      />
     );
   }
   if (type === "rect") {
     return (
-      <div style={{
-        width: 16, height: 12, borderRadius: 2,
-        background: color, opacity: 0.8, flexShrink: 0,
-      }} />
+      <div
+        className="w-4 h-3 shrink-0 opacity-80"
+        style={{ borderRadius: 2, background: color }}
+      />
     );
   }
   // line
   return (
-    <div style={{
-      width: 24, height: 0,
-      borderTop: `3px ${dashed ? "dashed" : "solid"} ${color}`,
-      flexShrink: 0,
-    }} />
+    <div
+      className="w-6 h-0 shrink-0"
+      style={{ borderTop: `3px ${dashed ? "dashed" : "solid"} ${color}` }}
+    />
   );
 };
 
@@ -45,49 +44,26 @@ export const Legend = () => {
   const { t } = useLang();
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+    <div className="flex flex-col gap-4">
+      <div className="font-mono text-xs text-text-muted uppercase tracking-widest">
         {t("annotationLegend")}
       </div>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: 6,
-        background: "var(--bg-raised)",
-        border: "1px solid var(--border)",
-        borderRadius: "var(--radius-lg)",
-        padding: 16,
-      }}>
+      <div className="grid grid-cols-2 gap-1.5 bg-bg-raised border border-border rounded-lg p-4">
         {LEGEND_ITEMS.map(({ label, color, type, dashed }) => (
           <div
             key={label}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "8px 10px",
-              borderRadius: "var(--radius-sm)",
-              background: "var(--bg-elevated)",
-              border: "1px solid var(--border)",
-            }}
+            className="flex items-center gap-2.5 py-2 px-2.5 rounded-sm bg-bg-elevated border border-border"
           >
             <LegendSymbol type={type} color={color} dashed={dashed} />
-            <span style={mono(12, "var(--text-secondary)")}>
+            <span className="font-mono text-xs text-text-secondary">
               {label}
             </span>
           </div>
         ))}
       </div>
 
-      <div style={{
-        ...mono(12, "var(--text-muted)"),
-        padding: "10px 14px",
-        background: "var(--bg-overlay)",
-        borderRadius: "var(--radius-sm)",
-        border: "1px solid var(--border)",
-        textAlign: "center",
-      }}>
+      <div className="font-mono text-xs text-text-muted text-center py-2.5 px-3.5 bg-bg-overlay rounded-sm border border-border">
         This legend is for reference only and applies to floor plan annotations.
       </div>
     </div>

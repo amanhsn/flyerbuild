@@ -4,7 +4,6 @@ import { useLang } from "../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../data/mockSurveys";
 import { STATUSES } from "../../data/statusConfig";
 import { StatusBadge } from "../shared";
-import { disp, mono } from "../../styles/helpers";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
 function getHex(status) {
@@ -18,11 +17,11 @@ export const MapScreen = ({ onSelectSurvey }) => {
   const [hoveredId, setHoveredId] = useState(null);
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div className="flex-1 flex flex-col overflow-hidden">
       {/* Header */}
       <div style={{ padding: isMobile ? "12px 16px 8px" : "20px 24px 12px" }}>
-        <h1 style={disp(isMobile ? 22 : 26, 800)}>{t("mapTitle")}</h1>
-        <p style={mono(14, "var(--text-secondary)", { marginTop: 4 })}>
+        <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[26px]"} font-extrabold tracking-wide`}>{t("mapTitle")}</h1>
+        <p className="font-mono text-sm text-text-secondary mt-1">
           {surveys.length} addresses — {t("mapSub")}
         </p>
       </div>
@@ -60,14 +59,14 @@ export const MapScreen = ({ onSelectSurvey }) => {
                 }}
               >
                 <Tooltip>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                  <div className="flex items-center gap-1.5 mb-1">
                     <StatusBadge status={s.status} />
-                    <span style={mono(12, "var(--text-muted)")}>{s.tsg_id}</span>
+                    <span className="font-mono text-xs text-text-muted">{s.tsg_id}</span>
                   </div>
-                  <div style={mono(12, "var(--text-primary)")}>
+                  <div className="font-mono text-xs text-text-primary">
                     {s.address.street} {s.address.number}
                   </div>
-                  <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
+                  <div className="font-mono text-xs text-text-secondary mt-0.5">
                     {s.address.postal_code} {s.address.city}
                   </div>
                 </Tooltip>

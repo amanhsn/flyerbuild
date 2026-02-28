@@ -1,7 +1,7 @@
 import { TextArea } from "../../shared";
 import { PhotoSlot } from "../../shared/PhotoSlot";
 import { useLang } from "../../../i18n/LangContext";
-import { mono } from "../../../styles/helpers";
+
 
 const SECTION_CONFIG = {
   photo_facade: {
@@ -84,7 +84,7 @@ export const PhotoSection = ({ survey, setField, disabled, sectionKey }) => {
 
   if (!config) {
     return (
-      <div style={mono(12, "var(--red)")}>
+      <div className="font-mono text-xs text-red">
         Unknown photo section: {sectionKey}
       </div>
     );
@@ -93,17 +93,13 @@ export const PhotoSection = ({ survey, setField, disabled, sectionKey }) => {
   const photos = survey.photos?.[sectionKey] || {};
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+    <div className="flex flex-col gap-4">
+      <div className="font-mono text-xs text-text-muted uppercase tracking-widest">
         {t(`sec_${sectionKey}`)}
       </div>
 
       {/* Photo Grid */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
-        gap: 10,
-      }}>
+      <div className="grid gap-2.5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))" }}>
         {config.slots.map(({ key, label, required }) => (
           <PhotoSlot
             key={key}

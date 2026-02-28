@@ -26,7 +26,7 @@ export const ReadOnlySurveyView = ({ survey, onBack, actionBar }) => {
   const noopBool = () => false;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", flex: 1, overflow: "hidden" }}>
+    <div className="flex flex-col flex-1 overflow-hidden">
       <SurveyHeader survey={survey} completedCount={completedCount} onBack={onBack} />
 
       <SectionNav
@@ -36,7 +36,7 @@ export const ReadOnlySurveyView = ({ survey, onBack, actionBar }) => {
         onSelect={setActiveIndex}
       />
 
-      <div style={{ flex: 1, overflowY: "auto", padding: "16px 24px 100px" }}>
+      <div className="flex-1 overflow-y-auto px-6 pt-4 pb-[100px]">
         {currentSection && (
           <SectionRenderer
             section={currentSection}
@@ -55,12 +55,10 @@ export const ReadOnlySurveyView = ({ survey, onBack, actionBar }) => {
         )}
 
         {/* Navigation */}
-        <div style={{
-          display: "flex", gap: 10, marginTop: 16, justifyContent: "center",
-        }}>
+        <div className="flex gap-2.5 mt-4 justify-center">
           {activeIndex > 0 && (
             <button
-              className="cta-btn secondary"
+              className="px-4 py-3 bg-bg-elevated border border-border rounded-md font-display text-base font-semibold text-text-secondary cursor-pointer transition-all"
               onClick={() => setActiveIndex(i => i - 1)}
             >
               {t("previous")}
@@ -68,7 +66,7 @@ export const ReadOnlySurveyView = ({ survey, onBack, actionBar }) => {
           )}
           {activeIndex < visibleSections.length - 1 && (
             <button
-              className="cta-btn secondary"
+              className="px-4 py-3 bg-bg-elevated border border-border rounded-md font-display text-base font-semibold text-text-secondary cursor-pointer transition-all"
               onClick={() => setActiveIndex(i => i + 1)}
             >
               Next Section →
@@ -77,7 +75,6 @@ export const ReadOnlySurveyView = ({ survey, onBack, actionBar }) => {
         </div>
       </div>
 
-      {/* Optional action bar (approve/reject for validator, etc.) */}
       {actionBar}
     </div>
   );

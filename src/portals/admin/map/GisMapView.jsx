@@ -5,7 +5,6 @@ import { MOCK_SURVEYS } from "../../../data/mockSurveys";
 import { STATUSES } from "../../../data/statusConfig";
 import { StatusBadge, DataTable, AssignmentModal } from "../../../components/shared";
 import { Icon } from "../../../icons/Icon";
-import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
 function getHex(status) {
@@ -61,7 +60,8 @@ export const GisMapView = () => {
     { key: "assign", label: "", width: "40px", render: (r) => (
       <button
         onClick={(e) => { e.stopPropagation(); setAssignModal(r); }}
-        style={{ background: "none", border: "none", cursor: "pointer", padding: 4, borderRadius: "var(--radius-sm)", display: "flex", alignItems: "center", justifyContent: "center" }}
+        className="flex items-center justify-center cursor-pointer rounded-sm"
+        style={{ background: "none", border: "none", padding: 4 }}
         title="Assign surveyor"
       >
         <Icon n="user" size={14} color="var(--text-muted)" />
@@ -72,36 +72,36 @@ export const GisMapView = () => {
   const statusOptions = ["all", ...Object.keys(STATUSES)];
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div className="flex-1 flex flex-col overflow-hidden">
       {/* Header + filter */}
-      <div style={{ padding: isMobile ? "12px 16px 8px" : "16px 20px 12px", display: "flex", alignItems: "center", gap: isMobile ? 8 : 12, flexWrap: "wrap" }}>
-        <h2 style={disp(isMobile ? 18 : 22, 700)}>GIS Map & Table</h2>
+      <div className="flex items-center flex-wrap" style={{ padding: isMobile ? "12px 16px 8px" : "16px 20px 12px", gap: isMobile ? 8 : 12 }}>
+        <h2 className={`font-display ${isMobile ? "text-lg" : "text-[22px]"} font-bold tracking-wide`}>GIS Map & Table</h2>
         <select
           value={statusFilter}
           onChange={e => setStatusFilter(e.target.value)}
+          className="font-mono text-xs text-text-secondary rounded-sm"
           style={{
-            ...mono(12, "var(--text-secondary)"),
             padding: "4px 8px", background: "var(--bg-overlay)",
-            border: "1px solid var(--border)", borderRadius: "var(--radius-sm)",
+            border: "1px solid var(--border)",
           }}
         >
           {statusOptions.map(s => (
             <option key={s} value={s}>{s === "all" ? "All Statuses" : STATUSES[s]?.label || s}</option>
           ))}
         </select>
-        <span style={mono(12, "var(--text-muted)")}>{filtered.length} addresses</span>
+        <span className="font-mono text-xs text-text-muted">{filtered.length} addresses</span>
       </div>
 
       {/* Mobile toggle */}
       {isMobile && (
-        <div style={{ display: "flex", gap: 4, padding: "0 16px 8px" }}>
+        <div className="flex gap-1 px-4 pb-2">
           <button className={`filter-btn${mobileView === "map" ? " active" : ""}`} onClick={() => setMobileView("map")}>Map</button>
           <button className={`filter-btn${mobileView === "table" ? " active" : ""}`} onClick={() => setMobileView("table")}>Table</button>
         </div>
       )}
 
       {/* Split: map left, table right */}
-      <div style={{ flex: 1, display: "flex", flexDirection: isMobile ? "column" : "row", overflow: "hidden", gap: 0 }}>
+      <div className="flex-1 overflow-hidden" style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
         {/* Map */}
         {(!isMobile || mobileView === "map") && (
           <div style={{
@@ -141,14 +141,14 @@ export const GisMapView = () => {
                     }}
                   >
                     <Tooltip>
-                      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                      <div className="flex items-center gap-1.5 mb-1">
                         <StatusBadge status={s.status} />
-                        <span style={mono(12, "var(--text-muted)")}>{s.tsg_id}</span>
+                        <span className="font-mono text-xs text-text-muted">{s.tsg_id}</span>
                       </div>
-                      <div style={mono(12, "var(--text-primary)")}>
+                      <div className="font-mono text-xs text-text-primary">
                         {s.address.street} {s.address.number}
                       </div>
-                      <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
+                      <div className="font-mono text-xs text-text-secondary mt-0.5">
                         {s.address.postal_code} {s.address.city}
                       </div>
                     </Tooltip>
@@ -161,7 +161,7 @@ export const GisMapView = () => {
 
         {/* Table */}
         {(!isMobile || mobileView === "table") && (
-          <div style={{ flex: 1, overflowY: "auto", padding: "0 16px 16px" }}>
+          <div className="flex-1 overflow-y-auto px-4 pb-4">
             <DataTable
               columns={columns}
               rows={filtered}

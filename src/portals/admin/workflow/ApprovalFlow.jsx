@@ -3,7 +3,6 @@ import { useLang } from "../../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../../data/mockSurveys";
 import { ApprovalGate, StatusBadge, EmptyState } from "../../../components/shared";
 import { Icon } from "../../../icons/Icon";
-import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
 export const ApprovalFlow = () => {
@@ -21,32 +20,31 @@ export const ApprovalFlow = () => {
   const selectedData = approvalSurveys.find(s => s.id === selectedSurvey);
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 style={disp(isMobile ? 22 : 28, 800)}>Approval Flow</h1>
-      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
-        Multi-level approval gates — {approvalSurveys.length} addresses in pipeline
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "16px" : "24px 28px" }}>
+      <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Approval Flow</h1>
+      <p className="font-mono text-sm text-text-secondary mt-1 mb-6">
+        Multi-level approval gates -- {approvalSurveys.length} addresses in pipeline
       </p>
 
-      <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 20 }}>
+      <div className="gap-5" style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
         {/* List */}
         {(!isMobile || !selectedSurvey) && (
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
+          <div className="flex-1 flex flex-col gap-2">
             {approvalSurveys.map(s => (
               <div
                 key={s.id}
                 onClick={() => setSelectedSurvey(s.id)}
+                className="cursor-pointer rounded-md flex items-center gap-2.5"
                 style={{
-                  padding: "12px 16px", cursor: "pointer",
+                  padding: "12px 16px",
                   background: selectedSurvey === s.id ? "var(--primary-glow)" : "var(--bg-raised)",
                   border: `1px solid ${selectedSurvey === s.id ? "var(--primary-dim)" : "var(--border)"}`,
-                  borderRadius: "var(--radius-md)",
-                  display: "flex", alignItems: "center", gap: 10,
                 }}
               >
                 <StatusBadge status={s.status} />
-                <div style={{ flex: 1 }}>
-                  <div style={mono(14, "var(--text-primary)")}>{s.address.street} {s.address.number}</div>
-                  <div style={mono(12, "var(--text-muted)")}>{s.tsg_id}</div>
+                <div className="flex-1">
+                  <div className="font-mono text-sm text-text-primary">{s.address.street} {s.address.number}</div>
+                  <div className="font-mono text-xs text-text-muted">{s.tsg_id}</div>
                 </div>
                 <Icon n="chevR" size={12} color="var(--text-muted)" />
               </div>
@@ -56,19 +54,20 @@ export const ApprovalFlow = () => {
 
         {/* Gate detail */}
         {(!isMobile || selectedSurvey) && (
-          <div style={{ flex: 1 }}>
+          <div className="flex-1">
             {selectedData ? (
-              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <div className="flex flex-col gap-4">
                 {isMobile && (
                   <button
                     onClick={() => setSelectedSurvey(null)}
-                    style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, padding: 0, ...mono(14, "var(--text-primary-accent)") }}
+                    className="font-mono text-sm text-text-primary-accent flex items-center gap-1.5 cursor-pointer"
+                    style={{ background: "none", border: "none", padding: 0 }}
                   >
                     <Icon n="chevR" size={12} color="var(--text-primary-accent)" style={{ transform: "rotate(180deg)" }} />
                     Back to list
                   </button>
                 )}
-                <div style={disp(18, 700)}>
+                <div className="font-display text-lg font-bold tracking-wide">
                   {selectedData.address.street} {selectedData.address.number}
                 </div>
 
@@ -96,11 +95,11 @@ export const ApprovalFlow = () => {
                   ]}
                 />
 
-                <div style={{ display: "flex", gap: 8, marginTop: 8, flexWrap: "wrap" }}>
-                  <button className="toggle-btn green active" style={{ padding: "8px 16px", display: "flex", alignItems: "center", gap: 6 }}>
+                <div className="flex gap-2 mt-2 flex-wrap">
+                  <button className="toggle-btn green active flex items-center gap-1.5" style={{ padding: "8px 16px" }}>
                     <Icon n="file" size={14} color="#fff" /> Generate PDF
                   </button>
-                  <button className="toggle-btn primary" style={{ padding: "8px 16px", display: "flex", alignItems: "center", gap: 6 }}>
+                  <button className="toggle-btn primary flex items-center gap-1.5" style={{ padding: "8px 16px" }}>
                     <Icon n="mail" size={14} color="var(--primary)" /> Send Email
                   </button>
                 </div>

@@ -1,14 +1,16 @@
-import { mono } from "../../styles/helpers";
+import { cn } from "../../lib/utils";
 
-export const Field = ({ label, value, onChange, disabled, flex, type = "text", placeholder }) => (
-  <div style={{ flex: flex || 1 }}>
+const inputClasses = "w-full px-3 py-2.5 bg-bg-elevated border border-border-bright rounded-md text-text-primary font-mono text-sm outline-none transition-colors focus:border-primary disabled:bg-bg-overlay disabled:border-border";
+
+export const Field = ({ label, value, onChange, disabled, flex, type = "text", placeholder, className }) => (
+  <div className={cn("min-w-0", className)} style={flex != null ? { flex } : { flex: 1 }}>
     {label && (
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+      <div className="font-mono text-xs text-text-muted uppercase tracking-[.08em] mb-1.5">
         {label}
       </div>
     )}
     <input
-      className="field-input"
+      className={inputClasses}
       type={type}
       value={value ?? ""}
       onChange={onChange ? (e) => onChange(e.target.value) : undefined}
@@ -19,22 +21,21 @@ export const Field = ({ label, value, onChange, disabled, flex, type = "text", p
   </div>
 );
 
-export const TextArea = ({ label, value, onChange, disabled, placeholder, rows = 4 }) => (
-  <div style={{ flex: 1 }}>
+export const TextArea = ({ label, value, onChange, disabled, placeholder, rows = 4, className }) => (
+  <div className={cn("flex-1 min-w-0", className)}>
     {label && (
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+      <div className="font-mono text-xs text-text-muted uppercase tracking-[.08em] mb-1.5">
         {label}
       </div>
     )}
     <textarea
-      className="field-input"
+      className={cn(inputClasses, "resize-y w-full")}
       value={value ?? ""}
       onChange={onChange ? (e) => onChange(e.target.value) : undefined}
       defaultValue={!onChange ? value : undefined}
       disabled={disabled}
       placeholder={placeholder}
       rows={rows}
-      style={{ width: "100%" }}
     />
   </div>
 );

@@ -3,7 +3,6 @@ import { ReadOnlySurveyView } from "../../components/shared/ReadOnlySurveyView";
 import { RejectionDialog } from "./RejectionDialog";
 import { Icon } from "../../icons/Icon";
 import { useLang } from "../../i18n/LangContext";
-import { mono, disp } from "../../styles/helpers";
 import { getMissingSectionFields, SECTIONS } from "../../data/sectionRegistry";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
@@ -37,20 +36,18 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
   };
 
   const actionBar = (
-    <div style={{
-      position: "sticky", bottom: 0,
-      padding: isMobile ? "12px 16px" : "12px 24px", borderTop: "1px solid var(--border)",
-      background: "var(--bg-base)", display: "flex", flexDirection: "column", gap: 8,
+    <div className="sticky bottom-0 border-t border-border flex flex-col gap-2" style={{
+      padding: isMobile ? "12px 16px" : "12px 24px",
+      background: "var(--bg-base)",
     }}>
       {/* Pre-validation flags */}
       {preValidationFlags.length > 0 && !actionTaken && (
-        <div style={{
-          display: "flex", alignItems: "center", gap: 8, padding: "8px 12px",
+        <div className="flex items-center gap-2 rounded-sm" style={{
+          padding: "8px 12px",
           background: "var(--primary-glow)", border: "1px solid var(--primary-dim)",
-          borderRadius: "var(--radius-sm)",
         }}>
           <Icon n="alert" size={14} color="var(--primary)" />
-          <span style={mono(12, "var(--text-primary-accent)")}>
+          <span className="font-mono text-xs text-text-primary-accent">
             {preValidationFlags.length} pre-validation flag(s) detected
           </span>
         </div>
@@ -58,55 +55,51 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
 
       {/* Rework history */}
       {reworkHistory.length > 0 && (
-        <div style={{
-          padding: "8px 12px", background: "var(--bg-raised)",
-          border: "1px solid var(--border)", borderRadius: "var(--radius-sm)",
+        <div className="rounded-sm bg-bg-raised border border-border" style={{
+          padding: "8px 12px",
         }}>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 })}>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-1">
             Rework History
           </div>
           {reworkHistory.map((r, i) => (
-            <div key={i} style={mono(12, "var(--text-secondary)")}>{r.remarks}</div>
+            <div key={i} className="font-mono text-xs text-text-secondary">{r.remarks}</div>
           ))}
         </div>
       )}
 
       {/* Action taken banner */}
       {actionTaken && (
-        <div style={{
-          padding: "12px 16px", textAlign: "center",
-          borderRadius: "var(--radius-md)",
+        <div className="text-center rounded-md" style={{
+          padding: "12px 16px",
           background: actionTaken === "approved" ? "var(--green-glow)" : "var(--red-glow)",
           border: `1px solid ${actionTaken === "approved" ? "var(--green-dim)" : "var(--red-dim)"}`,
-          ...mono(14, actionTaken === "approved" ? "var(--text-green)" : "var(--text-red)"),
         }}>
-          Survey {actionTaken === "approved" ? "Approved" : "Rejected"} ✓
+          <span className={`font-mono text-sm ${actionTaken === "approved" ? "text-text-green" : "text-text-red"}`}>
+            Survey {actionTaken === "approved" ? "Approved" : "Rejected"} ✓
+          </span>
         </div>
       )}
 
       {/* Action buttons */}
       {!actionTaken && (
-        <div style={{ display: "flex", gap: isMobile ? 6 : 10, flexWrap: "wrap" }}>
+        <div className="flex flex-wrap" style={{ gap: isMobile ? 6 : 10 }}>
           <button
-            className="cta-btn secondary"
+            className="cta-btn secondary shrink-0"
             onClick={onBack}
-            style={{ flex: 0 }}
           >
             ← Back
           </button>
-          <div style={{ flex: 1 }} />
+          <div className="flex-1" />
           <button
-            className="toggle-btn red"
+            className="toggle-btn red flex items-center gap-1.5 px-4 py-2"
             onClick={() => setShowRejectDialog(true)}
-            style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px" }}
           >
             <Icon n="x" size={14} color="var(--red)" />
             Reject
           </button>
           <button
-            className="toggle-btn green active"
+            className="toggle-btn green active flex items-center gap-1.5 px-4 py-2"
             onClick={handleApprove}
-            style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px" }}
           >
             <Icon n="check" size={14} color="#fff" />
             Approve
@@ -124,7 +117,7 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
   );
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div className="flex-1 flex flex-col overflow-hidden">
       <ReadOnlySurveyView survey={survey} onBack={onBack} actionBar={actionBar} />
     </div>
   );

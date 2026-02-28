@@ -4,7 +4,6 @@ import { MOCK_SURVEYS } from "../../../data/mockSurveys";
 import { BUILD_TYPES, BUILD_TYPE_KEYS } from "../../../data/buildTypes";
 import { FileUploadZone, StatusBadge, AssignmentModal, EmptyState } from "../../../components/shared";
 import { Icon } from "../../../icons/Icon";
-import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
 export const EngineeringGate = () => {
@@ -23,16 +22,16 @@ export const EngineeringGate = () => {
   const selected = eligibleSurveys.find(s => s.id === selectedId);
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 style={disp(isMobile ? 22 : 28, 800)}>Engineering Gate</h1>
-      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
-        Upload splicing plans, define build types — {eligibleSurveys.length} addresses ready
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "16px" : "24px 28px" }}>
+      <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Engineering Gate</h1>
+      <p className="font-mono text-sm text-text-secondary mt-1 mb-6">
+        Upload splicing plans, define build types -- {eligibleSurveys.length} addresses ready
       </p>
 
-      <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 20 }}>
+      <div className="gap-5" style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
         {/* Address list */}
         {(!isMobile || !selectedId) && (
-        <div style={{ width: isMobile ? "100%" : 280, flexShrink: 0, display: "flex", flexDirection: "column", gap: 6 }}>
+        <div className="shrink-0 flex flex-col gap-1.5" style={{ width: isMobile ? "100%" : 280 }}>
           {eligibleSurveys.map(s => {
             const hasPlan = !!uploadedPlans[s.id]?.length;
             const hasBuildType = !!buildTypeMap[s.id];
@@ -40,21 +39,21 @@ export const EngineeringGate = () => {
               <div
                 key={s.id}
                 onClick={() => setSelectedId(s.id)}
+                className="cursor-pointer rounded-md"
                 style={{
-                  padding: "10px 14px", cursor: "pointer",
+                  padding: "10px 14px",
                   background: selectedId === s.id ? "var(--primary-glow)" : "var(--bg-raised)",
                   border: `1px solid ${selectedId === s.id ? "var(--primary-dim)" : "var(--border)"}`,
-                  borderRadius: "var(--radius-md)",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <div className="flex items-center gap-1.5">
                   <div style={{
                     width: 8, height: 8, borderRadius: "50%",
                     background: hasPlan && hasBuildType ? "var(--green)" : "var(--primary)",
                   }} />
-                  <span style={mono(12, "var(--text-primary)")}>{s.tsg_id}</span>
+                  <span className="font-mono text-xs text-text-primary">{s.tsg_id}</span>
                 </div>
-                <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
+                <div className="font-mono text-xs text-text-secondary mt-0.5">
                   {s.address.street} {s.address.number}
                 </div>
               </div>
@@ -65,31 +64,32 @@ export const EngineeringGate = () => {
 
         {/* Detail */}
         {(!isMobile || selectedId) && (
-        <div style={{ flex: 1 }}>
+        <div className="flex-1">
           {selected ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            <div className="flex flex-col gap-5">
               {isMobile && (
                 <button
                   onClick={() => setSelectedId(null)}
-                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, padding: 0, ...mono(14, "var(--text-primary-accent)") }}
+                  className="font-mono text-sm text-text-primary-accent flex items-center gap-1.5 cursor-pointer"
+                  style={{ background: "none", border: "none", padding: 0 }}
                 >
                   <Icon n="chevR" size={12} color="var(--text-primary-accent)" style={{ transform: "rotate(180deg)" }} />
                   Back to list
                 </button>
               )}
               <div>
-                <div style={disp(18, 700)}>{selected.address.street} {selected.address.number}</div>
-                <div style={mono(12, "var(--text-secondary)", { marginTop: 4 })}>
+                <div className="font-display text-lg font-bold tracking-wide">{selected.address.street} {selected.address.number}</div>
+                <div className="font-mono text-xs text-text-secondary mt-1">
                   {selected.tsg_id} · {selected.address.postal_code} {selected.address.city}
                 </div>
               </div>
 
               {/* Build Type Selection */}
               <div>
-                <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+                <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">
                   Build Type
                 </div>
-                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                <div className="flex gap-1.5 flex-wrap">
                   {BUILD_TYPE_KEYS.map(bt => (
                     <button
                       key={bt}
@@ -102,7 +102,7 @@ export const EngineeringGate = () => {
                   ))}
                 </div>
                 {buildTypeMap[selected.id] && (
-                  <div style={mono(12, "var(--text-secondary)", { marginTop: 6 })}>
+                  <div className="font-mono text-xs text-text-secondary mt-1.5">
                     {BUILD_TYPES[buildTypeMap[selected.id]].description}
                   </div>
                 )}
@@ -130,17 +130,16 @@ export const EngineeringGate = () => {
               />
 
               {/* Gate status */}
-              {/* Gate status */}
-              <div style={{
-                padding: "12px 16px", borderRadius: "var(--radius-md)",
+              <div className="rounded-md" style={{
+                padding: "12px 16px",
                 background: (buildTypeMap[selected.id] && uploadedPlans[selected.id]?.length)
                   ? "var(--green-glow)" : "var(--primary-glow)",
                 border: `1px solid ${(buildTypeMap[selected.id] && uploadedPlans[selected.id]?.length) ? "var(--green-dim)" : "var(--primary-dim)"}`,
               }}>
-                <div style={mono(12, (buildTypeMap[selected.id] && uploadedPlans[selected.id]?.length) ? "var(--text-green)" : "var(--text-primary-accent)")}>
+                <div className={`font-mono text-xs ${(buildTypeMap[selected.id] && uploadedPlans[selected.id]?.length) ? "text-text-green" : "text-text-primary-accent"}`}>
                   {(buildTypeMap[selected.id] && uploadedPlans[selected.id]?.length)
-                    ? "✓ Engineering gate cleared — ready for subcontractor assignment"
-                    : "⏳ Engineering gate not cleared — assign build type and upload plans"}
+                    ? "Engineering gate cleared -- ready for subcontractor assignment"
+                    : "Engineering gate not cleared -- assign build type and upload plans"}
                 </div>
               </div>
 
@@ -148,18 +147,16 @@ export const EngineeringGate = () => {
               {buildTypeMap[selected.id] && uploadedPlans[selected.id]?.length > 0 && (
                 <div>
                   {selected.assigned_subcontractor ? (
-                    <div style={{
-                      padding: "12px 16px", borderRadius: "var(--radius-md)",
-                      background: "var(--bg-raised)", border: "1px solid var(--border)",
-                      display: "flex", alignItems: "center", justifyContent: "space-between",
+                    <div className="rounded-md bg-bg-raised border border-border flex items-center justify-between" style={{
+                      padding: "12px 16px",
                     }}>
                       <div>
-                        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 })}>
+                        <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-1">
                           Assigned Subcontractor
                         </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        <div className="flex items-center gap-1.5">
                           <Icon n="settings" size={14} color="var(--text-secondary)" />
-                          <span style={mono(13, "var(--text-primary)")}>{selected.assigned_subcontractor}</span>
+                          <span className="font-mono text-[13px] text-text-primary">{selected.assigned_subcontractor}</span>
                         </div>
                       </div>
                       <button
@@ -172,9 +169,9 @@ export const EngineeringGate = () => {
                     </div>
                   ) : (
                     <button
-                      className="toggle-btn primary active"
+                      className="toggle-btn primary active flex items-center gap-1.5"
                       onClick={() => setAssignModal(selected)}
-                      style={{ padding: "8px 20px", display: "flex", alignItems: "center", gap: 6 }}
+                      style={{ padding: "8px 20px" }}
                     >
                       <Icon n="settings" size={14} color="#fff" />
                       Assign Subcontractor

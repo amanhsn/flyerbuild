@@ -1,6 +1,6 @@
 import { Icon } from "../../icons/Icon";
-import { mono, disp } from "../../styles/helpers";
 import { useLang } from "../../i18n/LangContext";
+import { cn } from "../../lib/utils";
 
 export const SectionCard = ({ title, sectionKey, completed, editing, setEditing, readOnly, saveDisabled, children }) => {
   const { t } = useLang();
@@ -8,46 +8,36 @@ export const SectionCard = ({ title, sectionKey, completed, editing, setEditing,
   const isEditing = !!editing[sectionKey];
 
   return (
-    <div className={`section-card${isDone && !isEditing ? " done" : ""} fade-up`}>
-      {/* Header */}
-      <div style={{
-        padding: "14px 16px",
-        borderBottom: "1px solid var(--border)",
-        background: "var(--bg-elevated)",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-      }}>
+    <div className={cn(
+      "section-card animate-fade-up",
+      isDone && !isEditing && "done"
+    )}>
+      <div className="px-4 py-3.5 border-b border-border bg-bg-elevated flex items-center justify-between">
         <div>
-          <div style={disp(18, 700)}>{title}</div>
+          <div className="font-display text-lg font-bold tracking-wide">{title}</div>
           {isDone && !isEditing && (
-            <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 3 }}>
+            <div className="flex items-center gap-[5px] mt-[3px]">
               <Icon n="check" size={11} color="var(--text-green)" />
-              <span style={mono(12, "var(--text-green)")}>{t("saved")}</span>
+              <span className="font-mono text-xs text-text-green">{t("saved")}</span>
             </div>
           )}
           {readOnly && (
-            <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 3 }}>
+            <div className="flex items-center gap-[5px] mt-[3px]">
               <Icon n="info" size={11} color="var(--text-muted)" />
-              <span style={mono(12, "var(--text-muted)")}>Read-only</span>
+              <span className="font-mono text-xs text-text-muted">Read-only</span>
             </div>
           )}
         </div>
         {isDone && !isEditing && !readOnly && (
           <button
             onClick={() => setEditing(p => ({ ...p, [sectionKey]: true }))}
-            style={{
-              display: "flex", alignItems: "center", gap: 6, padding: "7px 12px",
-              borderRadius: "var(--radius-sm)", background: "var(--bg-overlay)",
-              border: "1px solid var(--border)", color: "var(--text-secondary)",
-              ...mono(11), cursor: "pointer",
-            }}
+            className="flex items-center gap-1.5 px-3 py-[7px] rounded-sm bg-bg-overlay border border-border text-text-secondary font-mono text-[11px] cursor-pointer"
           >
             <Icon n="pen" size={12} /> {t("edit")}
           </button>
         )}
       </div>
-
-      {/* Body */}
-      <div style={{ padding: "16px" }}>{children}</div>
+      <div className="p-4">{children}</div>
     </div>
   );
 };

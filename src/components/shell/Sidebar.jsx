@@ -1,13 +1,5 @@
 import { Icon } from "../../icons/Icon";
 import { useLang } from "../../i18n/LangContext";
-import { mono, disp } from "../../styles/helpers";
-
-const DEFAULT_ITEMS = [
-  ["dashboard", "dashboard", "Dashboard"],
-  ["map",       "map",       "Map"],
-  ["history",   "clock",     "History"],
-  ["profile",   "user",      "Profile"],
-];
 
 export const Sidebar = ({ active, setActive, items, roleLabel = "Surveyor", user, open, onClose }) => {
   const { t, currentUser } = useLang();
@@ -32,19 +24,16 @@ export const Sidebar = ({ active, setActive, items, roleLabel = "Surveyor", user
   return (
     <>
       <div className={`sidebar${open ? " open" : ""}`}>
-        <div style={{ padding: "0 0 12px", borderBottom: "1px solid var(--border)" }}>
-          <div style={{ padding: "16px 20px", display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{
-              width: 32, height: 32, borderRadius: "var(--radius-sm)", background: "var(--primary)",
-              display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-            }}>
+        <div className="pb-3 border-b border-border">
+          <div className="px-5 py-4 flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-sm bg-primary flex items-center justify-center shrink-0">
               <Icon n="layers" size={16} color="#fff" />
             </div>
             <div className="sidebar-logo-text">
-              <div style={disp(14, 800, undefined, { letterSpacing: ".06em", textTransform: "uppercase", lineHeight: 1 })}>
+              <div className="font-display text-sm font-extrabold tracking-wide uppercase leading-none">
                 {t("appName")}
               </div>
-              <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
+              <div className="font-mono text-xs text-text-muted uppercase tracking-widest">
                 {roleLabel}
               </div>
             </div>
@@ -58,16 +47,14 @@ export const Sidebar = ({ active, setActive, items, roleLabel = "Surveyor", user
             </button>
           ))}
         </nav>
-        <div style={{ padding: "12px 20px", borderTop: "1px solid var(--border)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{
-              width: 32, height: 32, borderRadius: "50%", background: "var(--primary)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 13, color: "#fff", flexShrink: 0,
-            }}>{u.initials}</div>
+        <div className="px-5 py-3 border-t border-border">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-display font-extrabold text-[13px] text-white shrink-0">
+              {u.initials}
+            </div>
             <div className="sidebar-user-info">
-              <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 13 }}>{u.name}</div>
-              <div style={mono(12, "var(--text-muted)", { marginTop: 1 })}>v2.4.0</div>
+              <div className="font-body font-semibold text-[13px]">{u.name}</div>
+              <div className="font-mono text-xs text-text-muted mt-px">v2.4.0</div>
             </div>
           </div>
         </div>

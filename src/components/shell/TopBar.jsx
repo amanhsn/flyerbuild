@@ -1,8 +1,8 @@
 import { Icon } from "../../icons/Icon";
 import { useLang } from "../../i18n/LangContext";
 import { LangToggle } from "../../i18n/LangContext";
-import { mono, disp } from "../../styles/helpers";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { cn } from "../../lib/utils";
 
 export const TopBar = ({ lang, setLang, online = true, theme, setTheme, onMenuToggle, children }) => {
   const { t, currentUser } = useLang();
@@ -12,51 +12,41 @@ export const TopBar = ({ lang, setLang, online = true, theme, setTheme, onMenuTo
 
   return (
     <header className="app-topbar">
-      <div style={{ display: "flex", alignItems: "center", gap: 10, flex: 1, minWidth: 0 }}>
+      <div className="flex items-center gap-2.5 flex-1 min-w-0">
         {onMenuToggle && (
           <button className="topbar-menu-btn" onClick={onMenuToggle}>
             <Icon n="list" size={18} color="var(--text-secondary)" />
           </button>
         )}
-        <div style={{
-          width: 30, height: 30, borderRadius: "var(--radius-sm)", background: "var(--primary)",
-          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-        }}>
+        <div className="w-[30px] h-[30px] rounded-sm bg-primary flex items-center justify-center shrink-0">
           <Icon n="layers" size={15} color="#fff" />
         </div>
         <div>
-          <div style={disp(14, 800, undefined, { letterSpacing: ".06em", textTransform: "uppercase", lineHeight: 1 })}>
+          <div className="font-display text-sm font-extrabold tracking-wide uppercase leading-none">
             {t("appName")}
           </div>
-          <div className="topbar-appname-sub" style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
+          <div className="topbar-appname-sub font-mono text-xs text-text-muted uppercase tracking-widest">
             {t("appRole")}
           </div>
         </div>
         {children}
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 6 : 12, flexShrink: 0 }}>
-        {/* Theme toggle */}
+      <div className={cn("flex items-center shrink-0", isMobile ? "gap-1.5" : "gap-3")}>
         <button
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-          style={{
-            background: "var(--bg-overlay)", border: "1px solid var(--border)",
-            borderRadius: "var(--radius-sm)", padding: "5px 8px", cursor: "pointer",
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}
+          className="bg-bg-overlay border border-border rounded-sm px-2 py-[5px] cursor-pointer flex items-center justify-center"
         >
           <Icon n={theme === "light" ? "moon" : "sun"} size={14} color="var(--text-secondary)" />
         </button>
         <LangToggle lang={lang} setLang={setLang} />
-        <div style={{ display: "flex", alignItems: "center", gap: 6, ...mono(12, "var(--text-green)") }}>
-          <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--green)" }} />
+        <div className="font-mono text-xs text-text-green flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-green" />
           <span className="topbar-online-label">{t("online")}</span>
         </div>
-        <div style={{
-          width: 30, height: 30, borderRadius: "50%", background: "var(--bg-elevated)",
-          border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center",
-          fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 12, color: "var(--text-primary-accent)",
-        }}>{initials}</div>
+        <div className="w-[30px] h-[30px] rounded-full bg-bg-elevated border border-border flex items-center justify-center font-display font-extrabold text-xs text-text-primary-accent">
+          {initials}
+        </div>
       </div>
     </header>
   );

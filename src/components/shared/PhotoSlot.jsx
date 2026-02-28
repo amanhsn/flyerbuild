@@ -1,47 +1,45 @@
 import { Icon } from "../../icons/Icon";
-import { mono } from "../../styles/helpers";
+import { cn } from "../../lib/utils";
 
 export const PhotoSlot = ({ label, required = false, filled = false, onClick }) => (
   <div
-    className={`photo-slot${!filled && required ? " missing-required" : ""}`}
+    className={cn("photo-slot", !filled && required && "missing-required")}
     onClick={onClick}
   >
     {filled ? (
       <>
-        <div style={{
-          flex: 1,
-          background: "linear-gradient(135deg,var(--bg-overlay),var(--bg-elevated))",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
+        <div className="flex-1 flex items-center justify-center" style={{ background: "linear-gradient(135deg,var(--bg-overlay),var(--bg-elevated))" }}>
           <Icon n="camera" size={26} color="var(--text-muted)" />
         </div>
-        <div style={{
-          padding: "7px 10px",
-          background: "var(--bg-overlay)",
-          display: "flex", justifyContent: "space-between",
-          ...mono(12, "var(--text-secondary)"),
-        }}>
+        <div className="font-mono text-xs text-text-secondary px-2.5 py-[7px] bg-bg-overlay flex justify-between">
           <span>{label}</span>
-          <span style={{ color: "var(--text-green)" }}>✓</span>
+          <span className="text-text-green">&#10003;</span>
         </div>
       </>
     ) : (
-      <div style={{
-        flex: 1, display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center", gap: 8, margin: 8,
-        border: `2px dashed ${required ? "var(--red-dim)" : "var(--border)"}`,
-        borderRadius: "var(--radius-lg)",
-        background: `radial-gradient(circle at 50% 40%, ${required ? "var(--red-glow)" : "var(--bg-elevated)"} 0%, transparent 70%)`,
-      }}>
-        <div style={{
-          width: 36, height: 36, borderRadius: "50%",
-          background: required ? "var(--red-glow)" : "var(--bg-overlay)",
-          border: `1px solid ${required ? "var(--red-dim)" : "var(--border)"}`,
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
+      <div
+        className="flex-1 flex flex-col items-center justify-center gap-2 m-2 rounded-lg"
+        style={{
+          border: `2px dashed ${required ? "var(--red-dim)" : "var(--border)"}`,
+          background: `radial-gradient(circle at 50% 40%, ${required ? "var(--red-glow)" : "var(--bg-elevated)"} 0%, transparent 70%)`,
+        }}
+      >
+        <div
+          className={cn(
+            "w-9 h-9 rounded-full flex items-center justify-center border",
+            required
+              ? "bg-red-glow border-red-dim"
+              : "bg-bg-overlay border-border"
+          )}
+        >
           <Icon n="camera" size={16} color={required ? "var(--text-red)" : "var(--text-muted)"} />
         </div>
-        <span style={{ ...mono(11, required ? "var(--text-red)" : "var(--text-muted)"), textAlign: "center", lineHeight: 1.3, maxWidth: "80%" }}>
+        <span
+          className={cn(
+            "font-mono text-[11px] text-center leading-snug max-w-[80%]",
+            required ? "text-text-red" : "text-text-muted"
+          )}
+        >
           {label}{required && " *"}
         </span>
       </div>

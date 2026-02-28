@@ -1,23 +1,31 @@
 import { Icon } from "../../icons/Icon";
-import { mono } from "../../styles/helpers";
 import { useLang } from "../../i18n/LangContext";
+import { cn } from "../../lib/utils";
 
 export const SyncBar = ({ online }) => {
   const { t } = useLang();
   return (
-    <div className="app-syncbar" style={{
-      display: "flex", alignItems: "center", gap: 10, padding: "7px 20px",
-      background: online ? "rgba(16,185,129,.06)" : "rgba(192,57,43,.06)",
-      borderTop: `1px solid ${online ? "var(--green-dim)" : "var(--primary-dim)"}`,
-    }}>
+    <div
+      className={cn(
+        "app-syncbar flex items-center gap-2.5 px-5 py-[7px] border-t",
+        online
+          ? "bg-[rgba(16,185,129,.06)] border-green-dim"
+          : "bg-[rgba(192,57,43,.06)] border-primary-dim"
+      )}
+    >
       <Icon n={online ? "wifi" : "wifiOff"} size={13} color={online ? "var(--text-green)" : "var(--text-primary-accent)"} />
-      <span style={mono(12, online ? "var(--text-green)" : "var(--text-primary-accent)")}>{online ? t("syncOnline") : t("syncOffline")}</span>
-      <span style={{ ...mono(10), marginLeft: "auto" }}>{online ? t("syncDone") : t("syncPending")}</span>
-      <div style={{
-        width: 7, height: 7, borderRadius: "50%",
-        background: online ? "var(--green)" : "var(--primary)",
-        animation: online ? "none" : "pulseDot 2s infinite",
-      }} />
+      <span className={cn("font-mono text-xs", online ? "text-text-green" : "text-text-primary-accent")}>
+        {online ? t("syncOnline") : t("syncOffline")}
+      </span>
+      <span className="font-mono text-[10px] text-text-muted ml-auto">
+        {online ? t("syncDone") : t("syncPending")}
+      </span>
+      <div
+        className={cn(
+          "w-[7px] h-[7px] rounded-full",
+          online ? "bg-green" : "bg-primary animate-pulse-dot"
+        )}
+      />
     </div>
   );
 };

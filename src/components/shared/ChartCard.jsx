@@ -1,33 +1,23 @@
-import { mono, disp } from "../../styles/helpers";
-
-/**
- * ChartCard — simple bar chart card for dashboards.
- * data: [{ label, value, color? }]
- * title: string
- */
 export const ChartCard = ({ title, data = [], height = 120 }) => {
   const maxVal = Math.max(...data.map(d => d.value), 1);
 
   return (
-    <div style={{
-      background: "var(--bg-raised)", border: "1px solid var(--border)",
-      borderRadius: "var(--radius-lg)", padding: 16,
-    }}>
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+    <div className="bg-bg-raised border border-border rounded-lg p-4">
+      <div className="font-mono text-xs text-text-muted uppercase tracking-[.08em] mb-3">
         {title}
       </div>
-      <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height }}>
+      <div className="flex items-end gap-1.5" style={{ height }}>
         {data.map((d, i) => (
-          <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-            <div style={mono(12, "var(--text-secondary)")}>{d.value}</div>
-            <div style={{
-              width: "100%", maxWidth: 40,
-              height: `${(d.value / maxVal) * (height - 30)}px`,
-              background: d.color || "var(--primary)",
-              borderRadius: "var(--radius-sm) var(--radius-sm) 0 0",
-              minHeight: 2, transition: "height .3s ease",
-            }} />
-            <div style={mono(8, "var(--text-muted)", { textAlign: "center", lineHeight: 1.2 })}>
+          <div key={i} className="flex-1 flex flex-col items-center gap-1">
+            <div className="font-mono text-xs text-text-secondary">{d.value}</div>
+            <div
+              className="w-full max-w-[40px] rounded-t-sm min-h-[2px] transition-[height] duration-300 ease-out"
+              style={{
+                height: `${(d.value / maxVal) * (height - 30)}px`,
+                background: d.color || "var(--primary)",
+              }}
+            />
+            <div className="font-mono text-[8px] text-text-muted text-center leading-tight">
               {d.label}
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { Field, Checkbox } from "../../shared";
 import { useLang } from "../../../i18n/LangContext";
-import { mono, disp } from "../../../styles/helpers";
+
 
 export const FacadeStreet = ({ survey, setField, disabled }) => {
   const { t } = useLang();
@@ -8,24 +8,15 @@ export const FacadeStreet = ({ survey, setField, disabled }) => {
   const street = survey.street || {};
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+    <div className="flex flex-col gap-6">
       {/* === Facade Section === */}
       <div>
-        <div style={{
-          ...disp(14, 600, "var(--text-primary)"),
-          marginBottom: 14,
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-        }}>
-          <div style={{
-            width: 4, height: 18, borderRadius: 2,
-            background: "var(--primary)",
-          }} />
+        <div className="font-display text-sm font-semibold tracking-wide text-text-primary mb-3.5 flex items-center gap-2">
+          <div className="w-1 h-[18px] rounded-sm bg-primary" />
           {t("facade")}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        <div className="flex flex-col gap-1.5">
           <Checkbox
             label={t("heritageProtection")}
             checked={!!facade.heritageProtection}
@@ -58,7 +49,7 @@ export const FacadeStreet = ({ survey, setField, disabled }) => {
           />
         </div>
 
-        <div style={{ marginTop: 14 }}>
+        <div className="mt-3.5">
           <Field
             label={t("remarksFacade")}
             value={facade.remarksFacade}
@@ -69,29 +60,16 @@ export const FacadeStreet = ({ survey, setField, disabled }) => {
       </div>
 
       {/* Divider */}
-      <div style={{
-        height: 1,
-        background: "var(--border-bright)",
-        margin: "0 -4px",
-      }} />
+      <div className="h-px -mx-1 bg-border-bright" />
 
       {/* === Street Section === */}
       <div>
-        <div style={{
-          ...disp(14, 600, "var(--text-primary)"),
-          marginBottom: 14,
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-        }}>
-          <div style={{
-            width: 4, height: 18, borderRadius: 2,
-            background: "var(--blue)",
-          }} />
+        <div className="font-display text-sm font-semibold tracking-wide text-text-primary mb-3.5 flex items-center gap-2">
+          <div className="w-1 h-[18px] rounded-sm bg-blue" />
           {t("street")}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        <div className="flex flex-col gap-1.5">
           <Checkbox
             label={t("streetCabinet")}
             checked={!!street.streetCabinet}
@@ -100,7 +78,7 @@ export const FacadeStreet = ({ survey, setField, disabled }) => {
           />
 
           {street.streetCabinet && (
-            <div style={{ paddingLeft: 30, marginBottom: 6 }}>
+            <div className="pl-[30px] mb-1.5">
               <Field
                 label={t("streetCabinetType")}
                 value={street.streetCabinetType}
@@ -118,7 +96,7 @@ export const FacadeStreet = ({ survey, setField, disabled }) => {
           />
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 14 }}>
+        <div className="flex flex-col gap-3.5 mt-3.5">
           <Field
             label={t("decorativePaving")}
             value={street.decorativePaving}

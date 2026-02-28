@@ -23,12 +23,13 @@ export const KpiRow = ({ surveys }) => {
   }, [surveys, t]);
 
   return (
-    <div style={{
-      display: "grid",
-      gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))",
-      gap: 12,
-      marginBottom: 20,
-    }}>
+    <div
+      className="gap-3 mb-5"
+      style={{
+        display: "grid",
+        gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))",
+      }}
+    >
       {kpis.map((kpi) => (
         <KpiCard key={kpi.label} {...kpi} />
       ))}

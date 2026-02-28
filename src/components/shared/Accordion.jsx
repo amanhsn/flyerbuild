@@ -1,27 +1,17 @@
 import { useState } from "react";
 import { Icon } from "../../icons/Icon";
-import { mono, disp } from "../../styles/helpers";
+import { cn } from "../../lib/utils";
 
 export const Accordion = ({ title, defaultOpen = false, children }) => {
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <div style={{
-      borderRadius: "var(--radius-md)",
-      border: "1px solid var(--border)",
-      background: "var(--bg-raised)",
-      overflow: "hidden",
-    }}>
+    <div className="rounded-md border border-border bg-bg-raised overflow-hidden">
       <button
         onClick={() => setOpen(!open)}
-        style={{
-          width: "100%", padding: "12px 14px",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          background: "var(--bg-elevated)", border: "none", cursor: "pointer",
-          color: "var(--text-primary)",
-        }}
+        className="w-full px-3.5 py-3 flex items-center justify-between bg-bg-elevated border-none cursor-pointer text-text-primary"
       >
-        <span style={disp(14, 600)}>{title}</span>
+        <span className="font-display text-sm font-semibold tracking-wide">{title}</span>
         <Icon
           n="chevR"
           size={14}
@@ -30,7 +20,7 @@ export const Accordion = ({ title, defaultOpen = false, children }) => {
         />
       </button>
       {open && (
-        <div style={{ padding: "12px 14px", borderTop: "1px solid var(--border)" }}>
+        <div className="px-3.5 py-3 border-t border-border">
           {children}
         </div>
       )}

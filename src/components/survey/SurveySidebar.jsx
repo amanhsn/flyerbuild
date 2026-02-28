@@ -1,28 +1,18 @@
 import { Icon } from "../../icons/Icon";
 import { StatusBadge, Accordion } from "../shared";
 import { useLang } from "../../i18n/LangContext";
-import { mono, disp } from "../../styles/helpers";
 import { SECTIONS } from "../../data/sectionRegistry";
+import { cn } from "../../lib/utils";
 
 export const SurveySidebar = ({ survey, visibleSections }) => {
   const { t } = useLang();
   const completedSet = new Set(survey.completed_sections);
 
   return (
-    <div style={{
-      width: 280, flexShrink: 0,
-      borderLeft: "1px solid var(--border)",
-      background: "var(--bg-raised)",
-      overflowY: "auto",
-      display: "flex", flexDirection: "column", gap: 12,
-      padding: 16,
-    }}>
+    <div className="w-[280px] shrink-0 border-l border-border bg-bg-raised overflow-y-auto flex flex-col gap-3 p-4">
       {/* Status */}
-      <div style={{
-        padding: "12px 14px", borderRadius: "var(--radius-md)",
-        background: "var(--bg-elevated)", border: "1px solid var(--border)",
-      }}>
-        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+      <div className="px-3.5 py-3 rounded-md bg-bg-elevated border border-border">
+        <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">
           Status
         </div>
         <StatusBadge status={survey.status} />
@@ -30,29 +20,29 @@ export const SurveySidebar = ({ survey, visibleSections }) => {
 
       {/* Details */}
       <Accordion title={t("sidebarDetails")} defaultOpen={true}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <div className="flex flex-col gap-2.5">
           <div>
-            <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+            <div className="font-mono text-xs text-text-muted uppercase tracking-widest">
               {t("sidebarTsgId")}
             </div>
-            <div style={mono(14, "var(--text-secondary)", { marginTop: 2 })}>{survey.tsg_id}</div>
+            <div className="font-mono text-sm text-text-secondary mt-0.5">{survey.tsg_id}</div>
           </div>
 
           {survey.rework_remarks && (
             <div>
-              <div style={mono(12, "var(--text-red)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+              <div className="font-mono text-xs text-text-red uppercase tracking-widest">
                 {t("sidebarReworkRemarks")}
               </div>
-              <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>{survey.rework_remarks}</div>
+              <div className="font-mono text-xs text-text-secondary mt-0.5">{survey.rework_remarks}</div>
             </div>
           )}
 
           {survey.validated_by && (
             <div>
-              <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+              <div className="font-mono text-xs text-text-muted uppercase tracking-widest">
                 {t("sidebarValidatedBy")}
               </div>
-              <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
+              <div className="font-mono text-xs text-text-secondary mt-0.5">
                 {survey.validated_by} · {survey.validated_at}
               </div>
             </div>
@@ -60,10 +50,10 @@ export const SurveySidebar = ({ survey, visibleSections }) => {
 
           {survey.completed_by && (
             <div>
-              <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+              <div className="font-mono text-xs text-text-muted uppercase tracking-widest">
                 {t("sidebarCompletedBy")}
               </div>
-              <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
+              <div className="font-mono text-xs text-text-secondary mt-0.5">
                 {survey.completed_by} · {survey.completed_at}
               </div>
             </div>
@@ -73,20 +63,19 @@ export const SurveySidebar = ({ survey, visibleSections }) => {
 
       {/* Sections checklist */}
       <Accordion title={t("sidebarSections")} defaultOpen={true}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <div className="flex flex-col gap-1">
           {visibleSections.map((sec) => {
             const done = completedSet.has(sec.key);
             return (
-              <div key={sec.key} style={{
-                display: "flex", alignItems: "center", gap: 8, padding: "4px 0",
-              }}>
-                <div style={{
-                  width: 8, height: 8, borderRadius: "50%",
-                  background: done ? "var(--green)" : "var(--bg-overlay)",
-                  border: `1px solid ${done ? "var(--green)" : "var(--border-bright)"}`,
-                  flexShrink: 0,
-                }} />
-                <span style={mono(12, done ? "var(--text-green)" : "var(--text-secondary)")}>
+              <div key={sec.key} className="flex items-center gap-2 py-1">
+                <div
+                  className="w-2 h-2 rounded-full shrink-0"
+                  style={{
+                    background: done ? "var(--green)" : "var(--bg-overlay)",
+                    border: `1px solid ${done ? "var(--green)" : "var(--border-bright)"}`,
+                  }}
+                />
+                <span className={cn("font-mono text-xs", done ? "text-text-green" : "text-text-secondary")}>
                   {t(`sec_${sec.key}`)}
                 </span>
               </div>
@@ -96,37 +85,23 @@ export const SurveySidebar = ({ survey, visibleSections }) => {
       </Accordion>
 
       {/* Distance */}
-      <div style={{
-        padding: "12px 14px", borderRadius: "var(--radius-md)",
-        background: "var(--bg-elevated)", border: "1px solid var(--border)",
-        display: "flex", alignItems: "center", gap: 10,
-      }}>
+      <div className="px-3.5 py-3 rounded-md bg-bg-elevated border border-border flex items-center gap-2.5">
         <Icon n="nav" size={14} color="var(--text-primary-accent)" />
         <div>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" })}>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest">
             {t("sidebarDistance")}
           </div>
-          <div style={mono(13, "var(--text-primary)", { marginTop: 2 })}>{survey.distance_km} km</div>
+          <div className="font-mono text-[13px] text-text-primary mt-0.5">{survey.distance_km} km</div>
         </div>
       </div>
 
       {/* PDF Downloads */}
       <Accordion title={t("sidebarPdfDownloads")}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          <button style={{
-            display: "flex", alignItems: "center", gap: 8, padding: "8px 12px",
-            borderRadius: "var(--radius-sm)", background: "var(--bg-overlay)",
-            border: "1px solid var(--border)", color: "var(--text-secondary)",
-            ...mono(11), cursor: "pointer", width: "100%",
-          }}>
+        <div className="flex flex-col gap-2">
+          <button className="font-mono text-[11px] text-text-secondary flex items-center gap-2 py-2 px-3 rounded-sm bg-bg-overlay border border-border cursor-pointer w-full">
             <Icon n="file" size={13} /> {t("downloadTsa")}
           </button>
-          <button style={{
-            display: "flex", alignItems: "center", gap: 8, padding: "8px 12px",
-            borderRadius: "var(--radius-sm)", background: "var(--bg-overlay)",
-            border: "1px solid var(--border)", color: "var(--text-secondary)",
-            ...mono(11), cursor: "pointer", width: "100%",
-          }}>
+          <button className="font-mono text-[11px] text-text-secondary flex items-center gap-2 py-2 px-3 rounded-sm bg-bg-overlay border border-border cursor-pointer w-full">
             <Icon n="file" size={13} /> {t("downloadSsv")}
           </button>
         </div>

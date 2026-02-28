@@ -1,14 +1,7 @@
 import { useState, useMemo } from "react";
 import { EmptyState } from "./EmptyState";
-import { mono, disp } from "../../styles/helpers";
+import { cn } from "../../lib/utils";
 
-/**
- * DataTable — reusable sortable data table.
- * columns: [{ key, label, width?, render?(row) }]
- * rows: array of objects
- * onRowClick: (row) => void
- * selectedId: highlight row matching this id
- */
 export const DataTable = ({ columns, rows, onRowClick, selectedId, emptyMessage = "No data" }) => {
   const [sortKey, setSortKey] = useState(null);
   const [sortDir, setSortDir] = useState("asc");
@@ -33,28 +26,18 @@ export const DataTable = ({ columns, rows, onRowClick, selectedId, emptyMessage 
   };
 
   return (
-    <div style={{
-      border: "1px solid var(--border)", borderRadius: "var(--radius-lg)",
-      overflow: "hidden", background: "var(--bg-raised)",
-    }}>
-      <div style={{ overflowX: "auto" }}>
+    <div className="border border-border rounded-lg overflow-hidden bg-bg-raised">
+      <div className="overflow-x-auto">
         {/* Header */}
-        <div style={{
-          display: "flex", borderBottom: "1px solid var(--border)",
-          background: "var(--bg-elevated)", padding: "0 12px",
-          minWidth: "fit-content",
-        }}>
+        <div className="flex border-b border-border bg-bg-elevated px-3 min-w-fit">
           {columns.map(col => (
             <div
               key={col.key}
               onClick={() => handleSort(col.key)}
-              style={{
-                ...mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em" }),
-                padding: "10px 6px", cursor: "pointer", userSelect: "none",
-                flex: col.width ? `0 0 ${col.width}` : 1,
-              }}
+              className="font-mono text-xs text-text-muted uppercase tracking-[.08em] py-2.5 px-1.5 cursor-pointer select-none"
+              style={{ flex: col.width ? `0 0 ${col.width}` : 1 }}
             >
-              {col.label} {sortKey === col.key ? (sortDir === "asc" ? "↑" : "↓") : ""}
+              {col.label} {sortKey === col.key ? (sortDir === "asc" ? "\u2191" : "\u2193") : ""}
             </div>
           ))}
         </div>
@@ -67,22 +50,18 @@ export const DataTable = ({ columns, rows, onRowClick, selectedId, emptyMessage 
             <div
               key={row.id ?? i}
               onClick={() => onRowClick?.(row)}
-              style={{
-                display: "flex", padding: "0 12px", cursor: onRowClick ? "pointer" : "default",
-                borderBottom: i < sorted.length - 1 ? "1px solid var(--border)" : "none",
-                background: selectedId && row.id === selectedId ? "var(--primary-glow)" : "transparent",
-                transition: "background .15s",
-                minWidth: "fit-content",
-              }}
+              className={cn(
+                "flex px-3 min-w-fit transition-colors",
+                onRowClick ? "cursor-pointer" : "cursor-default",
+                i < sorted.length - 1 && "border-b border-border",
+                selectedId && row.id === selectedId ? "bg-primary-glow" : "bg-transparent"
+              )}
             >
               {columns.map(col => (
                 <div
                   key={col.key}
-                  style={{
-                    ...mono(12, "var(--text-secondary)"),
-                    padding: "10px 6px", overflow: "hidden", textOverflow: "ellipsis",
-                    whiteSpace: "nowrap", flex: col.width ? `0 0 ${col.width}` : 1,
-                  }}
+                  className="font-mono text-xs text-text-secondary py-2.5 px-1.5 overflow-hidden text-ellipsis whitespace-nowrap"
+                  style={{ flex: col.width ? `0 0 ${col.width}` : 1 }}
                 >
                   {col.render ? col.render(row) : row[col.key] ?? "--"}
                 </div>

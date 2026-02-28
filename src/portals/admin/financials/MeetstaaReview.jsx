@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useLang } from "../../../i18n/LangContext";
 import { FileUploadZone } from "../../../components/shared";
 import { Icon } from "../../../icons/Icon";
-import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
 const PAYMENT_CODES = [
@@ -28,35 +27,35 @@ export const MeetstaaReview = () => {
   const selected = MOCK_MEETSTAAT.find(m => m.tsg_id === selectedId);
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 style={disp(isMobile ? 22 : 28, 800)}>Meetstaat & Financials</h1>
-      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "16px" : "24px 28px" }}>
+      <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Meetstaat & Financials</h1>
+      <p className="font-mono text-sm text-text-secondary mt-1 mb-6">
         Review subcontractor return PDFs and reconcile payment items
       </p>
 
-      <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 20 }}>
+      <div className="gap-5" style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
         {/* List */}
         {(!isMobile || !selectedId) && (
-        <div style={{ width: isMobile ? "100%" : 280, flexShrink: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+        <div className="shrink-0 flex flex-col gap-2" style={{ width: isMobile ? "100%" : 280 }}>
           {MOCK_MEETSTAAT.map(m => (
             <div
               key={m.tsg_id}
               onClick={() => setSelectedId(m.tsg_id)}
+              className="cursor-pointer rounded-md"
               style={{
-                padding: "12px 16px", cursor: "pointer",
+                padding: "12px 16px",
                 background: selectedId === m.tsg_id ? "var(--primary-glow)" : "var(--bg-raised)",
                 border: `1px solid ${selectedId === m.tsg_id ? "var(--primary-dim)" : "var(--border)"}`,
-                borderRadius: "var(--radius-md)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div className="flex items-center gap-2">
                 <div style={{
                   width: 8, height: 8, borderRadius: "50%",
                   background: m.status === "approved" ? "var(--green)" : "var(--primary)",
                 }} />
-                <span style={mono(14, "var(--text-primary)")}>{m.tsg_id}</span>
+                <span className="font-mono text-sm text-text-primary">{m.tsg_id}</span>
               </div>
-              <div style={mono(12, "var(--text-secondary)", { marginTop: 4 })}>
+              <div className="font-mono text-xs text-text-secondary mt-1">
                 {m.subco} · {m.status === "approved" ? "Approved" : "Pending Review"}
               </div>
             </div>
@@ -66,34 +65,32 @@ export const MeetstaaReview = () => {
 
         {/* Detail */}
         {(!isMobile || selectedId) && (
-        <div style={{ flex: 1 }}>
+        <div className="flex-1">
           {selected ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            <div className="flex flex-col gap-5">
               {isMobile && (
                 <button
                   onClick={() => setSelectedId(null)}
-                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, padding: 0, ...mono(14, "var(--text-primary-accent)") }}
+                  className="font-mono text-sm text-text-primary-accent flex items-center gap-1.5 cursor-pointer"
+                  style={{ background: "none", border: "none", padding: 0 }}
                 >
                   <Icon n="chevR" size={12} color="var(--text-primary-accent)" style={{ transform: "rotate(180deg)" }} />
                   Back to list
                 </button>
               )}
               <div>
-                <div style={disp(18, 700)}>{selected.tsg_id}</div>
-                <div style={mono(12, "var(--text-secondary)", { marginTop: 4 })}>
+                <div className="font-display text-lg font-bold tracking-wide">{selected.tsg_id}</div>
+                <div className="font-mono text-xs text-text-secondary mt-1">
                   {selected.subco} · Uploaded {selected.uploadedAt}
                 </div>
               </div>
 
               {/* Uploaded meetstaat */}
-              <div style={{
-                padding: "12px 16px", background: "var(--bg-raised)",
-                border: "1px solid var(--border)", borderRadius: "var(--radius-md)",
-                display: "flex", alignItems: "center", gap: 10,
-                flexWrap: "wrap",
+              <div className="bg-bg-raised border border-border rounded-md flex items-center gap-2.5 flex-wrap" style={{
+                padding: "12px 16px",
               }}>
                 <Icon n="file" size={18} color="var(--primary)" />
-                <span style={{ ...mono(14, "var(--text-primary)"), flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{selected.files[0].name}</span>
+                <span className="font-mono text-sm text-text-primary flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">{selected.files[0].name}</span>
                 <button className="toggle-btn primary" style={{ padding: "4px 10px" }}>
                   View PDF
                 </button>
@@ -101,25 +98,20 @@ export const MeetstaaReview = () => {
 
               {/* Payment code line items */}
               <div>
-                <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+                <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2.5">
                   Payment Code Line Items
                 </div>
-                <div style={{
-                  border: "1px solid var(--border)", borderRadius: "var(--radius-lg)",
-                  overflow: "hidden",
-                }}>
+                <div className="border border-border rounded-lg overflow-hidden">
                   {PAYMENT_CODES.map(pc => {
                     const qty = lineItems[`${selected.tsg_id}-${pc.code}`] || 0;
                     return (
-                      <div key={pc.code} style={{
-                        display: "flex", alignItems: "center", gap: 12,
-                        padding: "10px 14px", borderBottom: "1px solid var(--border)",
-                        background: "var(--bg-raised)",
+                      <div key={pc.code} className="flex items-center gap-3 border-b border-border bg-bg-raised" style={{
+                        padding: "10px 14px",
                         flexWrap: isMobile ? "wrap" : "nowrap",
                       }}>
-                        <span style={mono(12, "var(--primary)", { width: 60 })}>{pc.code}</span>
-                        <span style={{ ...mono(12, "var(--text-secondary)"), flex: isMobile ? "1 1 100%" : 1 }}>{pc.description}</span>
-                        <span style={mono(12, "var(--text-muted)")}>€{pc.unitPrice.toFixed(2)}</span>
+                        <span className="font-mono text-xs text-primary" style={{ width: 60 }}>{pc.code}</span>
+                        <span className="font-mono text-xs text-text-secondary" style={{ flex: isMobile ? "1 1 100%" : 1 }}>{pc.description}</span>
+                        <span className="font-mono text-xs text-text-muted">{pc.unitPrice.toFixed(2)}</span>
                         <input
                           type="number"
                           min="0"
@@ -128,15 +120,16 @@ export const MeetstaaReview = () => {
                             ...li,
                             [`${selected.tsg_id}-${pc.code}`]: parseInt(e.target.value) || 0,
                           }))}
+                          className="text-center rounded-sm"
                           style={{
-                            width: 60, padding: "4px 8px", textAlign: "center",
+                            width: 60, padding: "4px 8px",
                             background: "var(--bg-overlay)", border: "1px solid var(--border)",
-                            borderRadius: "var(--radius-sm)", color: "var(--text-primary)",
+                            color: "var(--text-primary)",
                             fontFamily: "var(--font-mono)", fontSize: 11,
                           }}
                         />
-                        <span style={mono(12, "var(--text-primary)", { width: 70, textAlign: "right" })}>
-                          €{(qty * pc.unitPrice).toFixed(2)}
+                        <span className="font-mono text-xs text-text-primary text-right" style={{ width: 70 }}>
+                          {(qty * pc.unitPrice).toFixed(2)}
                         </span>
                       </div>
                     );
@@ -144,7 +137,7 @@ export const MeetstaaReview = () => {
                 </div>
               </div>
 
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <div className="flex gap-2 flex-wrap">
                 <button className="toggle-btn green active" style={{ padding: "8px 16px" }}>
                   Approve Meetstaat
                 </button>
@@ -154,7 +147,7 @@ export const MeetstaaReview = () => {
               </div>
             </div>
           ) : (
-            <div style={{ padding: 40, textAlign: "center", ...mono(13, "var(--text-muted)") }}>
+            <div className="font-mono text-[13px] text-text-muted text-center" style={{ padding: 40 }}>
               Select a meetstaat to review
             </div>
           )}

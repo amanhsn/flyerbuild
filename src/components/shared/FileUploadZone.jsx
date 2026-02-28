@@ -1,17 +1,8 @@
 import { useState } from "react";
 import { Icon } from "../../icons/Icon";
 import { useLang } from "../../i18n/LangContext";
-import { mono } from "../../styles/helpers";
+import { cn } from "../../lib/utils";
 
-/**
- * FileUploadZone — drag-and-drop or click-to-upload area.
- * files: array of { name, size, uploadedAt }
- * onUpload: (files: FileList) => void
- * onDelete: (index) => void
- * accept: file accept string (e.g. "image/*,.pdf")
- * maxFiles: max number of uploads
- * disabled: boolean
- */
 export const FileUploadZone = ({
   files = [], onUpload, onDelete, accept = "image/*,.pdf",
   maxFiles = 20, disabled = false, label,
@@ -34,33 +25,29 @@ export const FileUploadZone = ({
   return (
     <div>
       {label && (
-        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div className="font-mono text-xs text-text-muted uppercase tracking-[.08em] mb-2">
           {label}
         </div>
       )}
 
-      {/* Drop zone */}
       <div
         onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
-        style={{
-          border: `2px dashed ${dragOver ? "var(--primary)" : "var(--border)"}`,
-          borderRadius: "var(--radius-lg)",
-          padding: 24, textAlign: "center",
-          background: dragOver ? "var(--primary-glow)" : "var(--bg-overlay)",
-          transition: "all .2s", cursor: disabled ? "default" : "pointer",
-          opacity: disabled ? 0.5 : 1,
-        }}
+        className={cn(
+          "rounded-lg p-6 text-center transition-all border-2 border-dashed",
+          dragOver ? "border-primary bg-primary-glow" : "border-border bg-bg-overlay",
+          disabled ? "cursor-default opacity-50" : "cursor-pointer"
+        )}
         onClick={() => {
           if (!disabled) document.getElementById("file-upload-input")?.click();
         }}
       >
         <Icon n="upload" size={24} color="var(--text-muted)" />
-        <div style={mono(14, "var(--text-secondary)", { marginTop: 8 })}>
+        <div className="font-mono text-sm text-text-secondary mt-2">
           {t("dropFiles")}
         </div>
-        <div style={mono(12, "var(--text-muted)", { marginTop: 4 })}>
+        <div className="font-mono text-xs text-text-muted mt-1">
           {files.length} / {maxFiles} files
         </div>
         <input
@@ -69,26 +56,21 @@ export const FileUploadZone = ({
           accept={accept}
           multiple
           onChange={handleChange}
-          style={{ display: "none" }}
+          className="hidden"
           disabled={disabled}
         />
       </div>
 
-      {/* File list */}
       {files.length > 0 && (
-        <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 4 }}>
+        <div className="mt-3 flex flex-col gap-1">
           {files.map((f, i) => (
-            <div key={i} style={{
-              display: "flex", alignItems: "center", gap: 8,
-              padding: "8px 12px", background: "var(--bg-raised)",
-              border: "1px solid var(--border)", borderRadius: "var(--radius-sm)",
-            }}>
+            <div key={i} className="flex items-center gap-2 px-3 py-2 bg-bg-raised border border-border rounded-sm">
               <Icon n="file" size={14} color="var(--text-muted)" />
-              <span style={{ ...mono(12, "var(--text-secondary)"), flex: 1 }}>{f.name}</span>
+              <span className="font-mono text-xs text-text-secondary flex-1">{f.name}</span>
               {!disabled && onDelete && (
                 <button
                   onClick={(e) => { e.stopPropagation(); onDelete(i); }}
-                  style={{ background: "none", border: "none", cursor: "pointer", padding: 2 }}
+                  className="bg-transparent border-none cursor-pointer p-0.5"
                 >
                   <Icon n="trash" size={12} color="var(--red)" />
                 </button>

@@ -1,30 +1,23 @@
 import { Field, Checkbox } from "../../shared";
 import { useLang } from "../../../i18n/LangContext";
-import { mono, disp } from "../../../styles/helpers";
+
 
 export const ExistingTelecom = ({ survey, setField, disabled }) => {
   const { t } = useLang();
   const telecom = survey.existing_telecom || {};
 
   const subHeading = (label, color = "var(--primary)") => (
-    <div style={{
-      ...disp(13, 600, "var(--text-primary)"),
-      marginTop: 8,
-      marginBottom: 10,
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-    }}>
-      <div style={{
-        width: 4, height: 16, borderRadius: 2,
-        background: color,
-      }} />
+    <div className="font-display text-[13px] font-semibold tracking-wide text-text-primary mt-2 mb-2.5 flex items-center gap-2">
+      <div
+        className="w-1 h-4 shrink-0 rounded-sm"
+        style={{ background: color }}
+      />
       {label}
     </div>
   );
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div className="flex flex-col gap-4">
       {/* Existing Fiber */}
       <div>
         <Checkbox
@@ -34,7 +27,7 @@ export const ExistingTelecom = ({ survey, setField, disabled }) => {
           disabled={disabled}
         />
         {telecom.existingFiber && (
-          <div style={{ paddingLeft: 30, marginTop: 6 }}>
+          <div className="pl-[30px] mt-1.5">
             <Field
               label={t("existingFiberRemarks")}
               value={telecom.existingFiberRemarks}
@@ -46,11 +39,11 @@ export const ExistingTelecom = ({ survey, setField, disabled }) => {
       </div>
 
       {/* Divider */}
-      <div style={{ height: 1, background: "var(--border)" }} />
+      <div className="h-px bg-border" />
 
       {/* Technical Shafts */}
       {subHeading(t("technicalShafts"), "var(--blue)")}
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <div className="flex flex-col gap-1.5">
         <Checkbox
           label={t("shaftVertical")}
           checked={!!telecom.shaftVertical}
@@ -84,11 +77,11 @@ export const ExistingTelecom = ({ survey, setField, disabled }) => {
       />
 
       {/* Divider */}
-      <div style={{ height: 1, background: "var(--border)" }} />
+      <div className="h-px bg-border" />
 
       {/* Vertical Cabling */}
       {subHeading(t("verticalCabling"), "var(--green)")}
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <div className="flex flex-col gap-1.5">
         <Checkbox
           label={t("existingVerticalFyber")}
           checked={!!telecom.existingVerticalFyber}
@@ -116,11 +109,11 @@ export const ExistingTelecom = ({ survey, setField, disabled }) => {
       />
 
       {/* Divider */}
-      <div style={{ height: 1, background: "var(--border)" }} />
+      <div className="h-px bg-border" />
 
       {/* Coax */}
       {subHeading(t("coax"), "var(--red)")}
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <div className="flex flex-col gap-1.5">
         <Checkbox
           label={t("coaxMultitaps")}
           checked={!!telecom.coaxMultitaps}
@@ -128,7 +121,7 @@ export const ExistingTelecom = ({ survey, setField, disabled }) => {
           disabled={disabled}
         />
         {telecom.coaxMultitaps && (
-          <div style={{ paddingLeft: 30, marginBottom: 6 }}>
+          <div className="pl-[30px] mb-1.5">
             <Field
               label={t("coaxCount")}
               value={telecom.coaxCount}

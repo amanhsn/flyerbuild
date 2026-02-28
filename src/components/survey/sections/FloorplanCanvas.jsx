@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Icon } from "../../../icons/Icon";
 import { useLang } from "../../../i18n/LangContext";
-import { mono } from "../../../styles/helpers";
+import { cn } from "../../../lib/utils";
+
 
 const CANVAS_H = 420;
 const GRID_SIZE = 20;
@@ -208,70 +209,59 @@ export const FloorplanCanvas = ({ survey, setField, disabled }) => {
         key={key}
         disabled={disabled}
         onClick={() => setActiveTool(isActive ? null : key)}
+        className={cn(
+          "flex items-center gap-1.5 py-1.5 px-3 rounded-sm",
+          isActive ? "bg-primary-glow" : "bg-bg-elevated"
+        )}
         style={{
-          display: "flex", alignItems: "center", gap: 6,
-          padding: "6px 12px",
-          background: isActive ? "var(--primary-glow)" : "var(--bg-elevated)",
           border: `1px solid ${isActive ? "var(--primary)" : "var(--border)"}`,
-          borderRadius: "var(--radius-sm)",
           cursor: disabled ? "default" : "pointer",
           opacity: disabled ? 0.5 : 1,
         }}
         title={label}
       >
         <Icon n={icon} size={14} color={isActive ? "var(--primary)" : "var(--text-secondary)"} />
-        <span style={mono(12, isActive ? "var(--primary)" : "var(--text-secondary)")}>{label}</span>
+        <span className={cn("font-mono text-xs", isActive ? "text-primary" : "text-text-secondary")}>{label}</span>
       </button>
     );
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+    <div className="flex flex-col gap-3.5">
       {/* Toolbar */}
-      <div style={{
-        display: "flex", gap: 6, padding: "8px 10px", flexWrap: "wrap",
-        background: "var(--bg-overlay)", borderRadius: "var(--radius-lg)",
-        border: "1px solid var(--border)",
-      }}>
+      <div className="flex gap-1.5 py-2 px-2.5 flex-wrap bg-bg-overlay rounded-lg border border-border">
         {TOOLS.map(({ key, icon, label }) => toolBtn(key, icon, label))}
-        <div style={{ flex: 1 }} />
+        <div className="flex-1" />
         <button
           disabled={disabled || snapshots.length === 0}
           onClick={handleUndo}
+          className="flex items-center gap-1.5 py-1.5 px-3 bg-bg-elevated border border-border rounded-sm"
           style={{
-            display: "flex", alignItems: "center", gap: 6,
-            padding: "6px 12px", background: "var(--bg-elevated)",
-            border: "1px solid var(--border)", borderRadius: "var(--radius-sm)",
             cursor: disabled || snapshots.length === 0 ? "default" : "pointer",
             opacity: disabled || snapshots.length === 0 ? 0.4 : 1,
           }}
         >
           <Icon n="x" size={14} color="var(--text-secondary)" />
-          <span style={mono(12, "var(--text-secondary)")}>Undo</span>
+          <span className="font-mono text-xs text-text-secondary">Undo</span>
         </button>
         <button
           disabled={disabled}
           onClick={handleClear}
+          className="flex items-center gap-1.5 py-1.5 px-3 bg-bg-elevated border border-border rounded-sm"
           style={{
-            display: "flex", alignItems: "center", gap: 6,
-            padding: "6px 12px", background: "var(--bg-elevated)",
-            border: "1px solid var(--border)", borderRadius: "var(--radius-sm)",
             cursor: disabled ? "default" : "pointer",
             opacity: disabled ? 0.5 : 1,
           }}
         >
           <Icon n="trash" size={14} color="var(--text-secondary)" />
-          <span style={mono(12, "var(--text-secondary)")}>Clear</span>
+          <span className="font-mono text-xs text-text-secondary">Clear</span>
         </button>
       </div>
 
       {/* Canvas */}
       <div
         ref={wrapRef}
-        style={{
-          position: "relative", width: "100%", borderRadius: "var(--radius-lg)",
-          border: "2px solid var(--border-bright)", overflow: "hidden",
-        }}
+        className="relative w-full rounded-lg overflow-hidden border-2 border-border-bright"
       >
         <canvas
           ref={canvasRef}

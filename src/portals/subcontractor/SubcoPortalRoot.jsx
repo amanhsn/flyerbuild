@@ -3,7 +3,6 @@ import { useLang } from "../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../data/mockSurveys";
 import { KpiCard, StatusBadge, DisputeBanner } from "../../components/shared";
 import { Icon } from "../../icons/Icon";
-import { disp, mono } from "../../styles/helpers";
 import { SubcoAssignmentList } from "./SubcoAssignmentList";
 import { SubcoExecutionHub } from "./SubcoExecutionHub";
 
@@ -47,7 +46,7 @@ export const SubcoPortalRoot = () => {
   }
 
   return (
-    <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
+    <div className="flex-1 overflow-hidden flex flex-col">
       <SubcoAssignmentList
         assignments={MOCK_ASSIGNMENTS}
         filter={filter}

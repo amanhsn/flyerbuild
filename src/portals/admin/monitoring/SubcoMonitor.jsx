@@ -3,7 +3,6 @@ import { useLang } from "../../../i18n/LangContext";
 import { KpiCard } from "../../../components/shared";
 import { EmptyState } from "../../../components/shared/EmptyState";
 import { Icon } from "../../../icons/Icon";
-import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import { SubcoBuildDetail } from "./SubcoBuildDetail";
 
@@ -128,49 +127,49 @@ export const SubcoMonitor = () => {
   const selectedData = MOCK_BUILDS.find(b => b.id === selectedBuild);
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 style={disp(isMobile ? 22 : 28, 800)}>Subcontractor Monitor</h1>
-      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "16px" : "24px 28px" }}>
+      <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Subcontractor Monitor</h1>
+      <p className="font-mono text-sm text-text-secondary mt-1 mb-6">
         Track build progress across all subcontractors
       </p>
 
-      {/* KPIs — visible on list view */}
+      {/* KPIs -- visible on list view */}
       {(!isMobile || !selectedBuild) && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 24 }}>
+        <div className="gap-3 mb-6" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))" }}>
           <KpiCard label="Active Builds" value={active} color="var(--blue)" />
           <KpiCard label="Disputed" value={disputed} color="var(--red)" />
           <KpiCard label="Total Builds" value={MOCK_BUILDS.length} color="var(--primary)" />
         </div>
       )}
 
-      <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 20 }}>
+      <div className="gap-5" style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
         {/* Left panel: Build cards list */}
         {(!isMobile || !selectedBuild) && (
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10 }}>
+          <div className="flex-1 flex flex-col gap-2.5">
             {MOCK_BUILDS.map(build => (
               <div
                 key={build.id}
                 onClick={() => setSelectedBuild(build.id)}
+                className="cursor-pointer rounded-lg"
                 style={{
-                  padding: "14px 18px", cursor: "pointer",
+                  padding: "14px 18px",
                   background: selectedBuild === build.id ? "var(--primary-glow)" : "var(--bg-raised)",
                   border: `1px solid ${
                     selectedBuild === build.id ? "var(--primary-dim)"
                     : build.status === "disputed" ? "var(--red-dim)"
                     : "var(--border)"
                   }`,
-                  borderRadius: "var(--radius-lg)",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                  <span style={mono(14, "var(--text-primary)", { fontWeight: 600 })}>{build.tsg_id}</span>
-                  <span style={mono(12, "var(--text-muted)")}>{build.subco}</span>
-                  <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 6 }}>
-                    <span style={{
-                      ...mono(12, build.status === "disputed" ? "var(--text-red)" : phaseColors[build.phase]),
+                <div className="flex items-center gap-2.5 mb-2.5">
+                  <span className="font-mono text-sm text-text-primary font-semibold">{build.tsg_id}</span>
+                  <span className="font-mono text-xs text-text-muted">{build.subco}</span>
+                  <div className="ml-auto flex items-center gap-1.5">
+                    <span className={`font-mono text-xs ${build.status === "disputed" ? "text-text-red" : ""}`} style={{
                       padding: "2px 8px", borderRadius: "var(--radius-sm)",
                       background: build.status === "disputed" ? "var(--red-glow)" : "var(--bg-overlay)",
                       border: `1px solid ${build.status === "disputed" ? "var(--red-dim)" : "var(--border)"}`,
+                      color: build.status !== "disputed" ? phaseColors[build.phase] : undefined,
                     }}>
                       {build.status === "disputed" ? "DISPUTED" : phaseLabels[build.phase]}
                     </span>
@@ -178,7 +177,7 @@ export const SubcoMonitor = () => {
                   </div>
                 </div>
 
-                <div style={mono(12, "var(--text-muted)", { marginBottom: 8 })}>
+                <div className="font-mono text-xs text-text-muted mb-2">
                   {build.address}
                 </div>
 
@@ -190,7 +189,7 @@ export const SubcoMonitor = () => {
                     transition: "width .3s ease",
                   }} />
                 </div>
-                <div style={mono(12, "var(--text-muted)", { marginTop: 4, textAlign: "right" })}>
+                <div className="font-mono text-xs text-text-muted text-right mt-1">
                   {build.progress}% complete
                 </div>
               </div>
@@ -200,7 +199,7 @@ export const SubcoMonitor = () => {
 
         {/* Right panel: Build detail */}
         {(!isMobile || selectedBuild) && (
-          <div style={{ flex: 1 }}>
+          <div className="flex-1">
             {selectedData ? (
               <SubcoBuildDetail
                 build={selectedData}

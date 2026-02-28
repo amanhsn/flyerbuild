@@ -1,24 +1,17 @@
-export const Skeleton = ({ width = "100%", height = 16, radius, style }) => (
+import { cn } from "../../lib/utils";
+
+export const Skeleton = ({ width = "100%", height = 16, radius, style, className }) => (
   <div
-    className="skeleton"
-    style={{
-      width,
-      height,
-      borderRadius: radius,
-      ...style,
-    }}
+    className={cn(
+      "bg-gradient-to-r from-bg-elevated via-bg-overlay to-bg-elevated bg-[length:800px_100%] animate-shimmer rounded-md",
+      className
+    )}
+    style={{ width, height, borderRadius: radius, ...style }}
   />
 );
 
 export const SkeletonKpiCard = () => (
-  <div style={{
-    background: "var(--bg-raised)",
-    border: "1px solid var(--border)",
-    borderRadius: "var(--radius-lg)",
-    padding: "16px 18px",
-    display: "flex", flexDirection: "column", gap: 10,
-    flex: 1, minWidth: 0,
-  }}>
+  <div className="bg-bg-raised border border-border rounded-lg p-4 flex flex-col gap-2.5 flex-1 min-w-0">
     <Skeleton width={80} height={10} />
     <Skeleton width={48} height={28} />
     <Skeleton height={3} radius={2} />
@@ -27,12 +20,12 @@ export const SkeletonKpiCard = () => (
 
 export const SkeletonSurveyCard = ({ delay = 0 }) => (
   <div
-    className="survey-card"
-    style={{ pointerEvents: "none", animationDelay: `${delay}ms` }}
+    className="survey-card pointer-events-none"
+    style={{ animationDelay: `${delay}ms` }}
   >
-    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }}>
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
-        <div style={{ display: "flex", gap: 7 }}>
+    <div className="flex items-start justify-between gap-2.5">
+      <div className="flex-1 flex flex-col gap-2">
+        <div className="flex gap-[7px]">
           <Skeleton width={60} height={18} radius="var(--radius-sm)" />
           <Skeleton width={80} height={18} radius="var(--radius-sm)" />
         </div>
@@ -40,10 +33,10 @@ export const SkeletonSurveyCard = ({ delay = 0 }) => (
         <Skeleton width="50%" height={14} />
       </div>
     </div>
-    <div style={{ display: "flex", gap: 14, marginTop: 13, paddingTop: 11, borderTop: "1px solid var(--border)" }}>
+    <div className="flex gap-3.5 mt-[13px] pt-[11px] border-t border-border">
       <Skeleton width={60} height={14} />
       <Skeleton width={50} height={14} />
-      <Skeleton width={40} height={14} style={{ marginLeft: "auto" }} />
+      <Skeleton width={40} height={14} className="ml-auto" />
     </div>
   </div>
 );

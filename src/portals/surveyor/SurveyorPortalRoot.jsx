@@ -32,7 +32,7 @@ export const SurveyorPortalRoot = ({ sidebarOpen, onSidebarClose }) => {
           onClose={onSidebarClose}
         />
       )}
-      <main className="main-content" style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column", paddingBottom: isMobile && !showSurveyView ? 60 : 0 }}>
+      <main className="main-content flex-1 overflow-hidden flex flex-col" style={{ paddingBottom: isMobile && !showSurveyView ? 60 : 0 }}>
         {showSurveyView ? (
           <SurveyView initialSurvey={selectedSurvey} onBack={handleBackToDashboard} />
         ) : navTab === "dashboard" ? (

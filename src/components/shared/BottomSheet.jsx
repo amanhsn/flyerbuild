@@ -1,5 +1,4 @@
 import { useRef, useCallback } from "react";
-import { disp } from "../../styles/helpers";
 
 export const BottomSheet = ({ open, onClose, title, children }) => {
   const sheetRef = useRef(null);
@@ -32,20 +31,11 @@ export const BottomSheet = ({ open, onClose, title, children }) => {
   if (!open) return null;
 
   return (
-    <div
-      style={{
-        position: "fixed", inset: 0, zIndex: 1000,
-        display: "flex", alignItems: "flex-end",
-      }}
-    >
+    <div className="fixed inset-0 z-[1000] flex items-end">
       {/* Backdrop */}
       <div
         onClick={onClose}
-        style={{
-          position: "absolute", inset: 0,
-          background: "rgba(0,0,0,.5)",
-          animation: "fadeIn .2s ease both",
-        }}
+        className="absolute inset-0 bg-black/50 animate-fade-in"
       />
 
       {/* Sheet */}
@@ -54,32 +44,20 @@ export const BottomSheet = ({ open, onClose, title, children }) => {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        style={{
-          position: "relative", zIndex: 1,
-          width: "100%", maxHeight: "85vh",
-          background: "var(--bg-raised)",
-          borderRadius: "var(--radius-xl) var(--radius-xl) 0 0",
-          border: "1px solid var(--border)", borderBottom: "none",
-          display: "flex", flexDirection: "column",
-          animation: "fadeUp .25s ease both",
-          overflow: "hidden",
-        }}
+        className="relative z-[1] w-full max-h-[85vh] bg-bg-raised rounded-t-xl border border-border border-b-0 flex flex-col animate-fade-up overflow-hidden"
       >
         {/* Drag handle */}
-        <div style={{ display: "flex", justifyContent: "center", padding: "10px 0 6px" }}>
-          <div style={{
-            width: 36, height: 4, borderRadius: 2,
-            background: "var(--border-bright)",
-          }} />
+        <div className="flex justify-center pt-2.5 pb-1.5">
+          <div className="w-9 h-1 rounded-full bg-border-bright" />
         </div>
 
         {title && (
-          <div style={{ padding: "4px 20px 12px", borderBottom: "1px solid var(--border)" }}>
-            <div style={disp(16, 700)}>{title}</div>
+          <div className="px-5 pb-3 border-b border-border">
+            <div className="font-display text-base font-bold tracking-wide">{title}</div>
           </div>
         )}
 
-        <div style={{ flex: 1, overflowY: "auto", padding: 20 }}>
+        <div className="flex-1 overflow-y-auto p-5">
           {children}
         </div>
       </div>

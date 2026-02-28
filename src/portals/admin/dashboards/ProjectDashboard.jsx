@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { useLang } from "../../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../../data/mockSurveys";
 import { KpiCard, ChartCard } from "../../../components/shared";
-import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
 export const ProjectDashboard = () => {
@@ -29,13 +28,13 @@ export const ProjectDashboard = () => {
   }, [surveys]);
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "20px 16px" : "24px 28px" }}>
-      <h1 style={disp(isMobile ? 22 : 28, 800)}>Project Dashboard</h1>
-      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "20px 16px" : "24px 28px" }}>
+      <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Project Dashboard</h1>
+      <p className="font-mono text-sm text-text-secondary mt-1 mb-6">
         Project health and forecasting
       </p>
 
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))", gap: isMobile ? 8 : 12, marginBottom: 24 }}>
+      <div className="mb-6" style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))", gap: isMobile ? 8 : 12 }}>
         <KpiCard label="Completion" value={`${stats.completionPct}%`} color="var(--green)" />
         <KpiCard label="Completed" value={stats.completed} color="var(--green)" total={stats.total} />
         <KpiCard label="Remaining" value={stats.total - stats.completed} color="var(--primary)" total={stats.total} />
@@ -43,14 +42,14 @@ export const ProjectDashboard = () => {
       </div>
 
       {stats.bottleneck && (
-        <div style={{
+        <div className="rounded-md mb-5" style={{
           padding: "14px 18px", background: "var(--primary-glow)",
-          border: "1px solid var(--primary-dim)", borderRadius: "var(--radius-md)", marginBottom: 20,
+          border: "1px solid var(--primary-dim)",
         }}>
-          <div style={mono(12, "var(--text-primary-accent)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 })}>
+          <div className="font-mono text-xs text-text-primary-accent uppercase tracking-widest mb-1">
             Bottleneck
           </div>
-          <div style={mono(13, "var(--text-primary)")}>
+          <div className="font-mono text-[13px] text-text-primary">
             {stats.bottleneck[1]} surveys stuck in <strong>{stats.bottleneck[0]}</strong>
           </div>
         </div>

@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { useLang } from "../../i18n/LangContext";
 import { KpiCard, StatusBadge, EmptyState } from "../../components/shared";
 import { Icon } from "../../icons/Icon";
-import { disp, mono } from "../../styles/helpers";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
 const FILTERS = [
@@ -31,14 +30,14 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
   const approvalRate = total > 0 ? Math.round((approved / total) * 100) : 0;
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 style={disp(isMobile ? 22 : 28, 800)}>Validation Queue</h1>
-      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 20 })}>
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "16px" : "24px 28px" }}>
+      <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Validation Queue</h1>
+      <p className="font-mono text-sm text-text-secondary mt-1 mb-5">
         Review completed surveys · {surveys.length} in queue
       </p>
 
       {/* KPIs */}
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(140px, 1fr))", gap: isMobile ? 8 : 12, marginBottom: 20 }}>
+      <div className="mb-5" style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(140px, 1fr))", gap: isMobile ? 8 : 12 }}>
         <KpiCard label="Queue Depth" value={queueDepth} color="var(--primary)" total={total} />
         <KpiCard label="Approved" value={approved} color="var(--green)" total={total} />
         <KpiCard label="Rejected" value={rejected} color="var(--red)" total={total} />
@@ -46,7 +45,7 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
       </div>
 
       {/* Filters */}
-      <div style={{ display: "flex", gap: 6, marginBottom: 16, overflowX: "auto", flexShrink: 0 }}>
+      <div className="flex gap-1.5 mb-4 overflow-x-auto shrink-0">
         {FILTERS.map(f => (
           <button
             key={f.key}
@@ -59,23 +58,22 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
       </div>
 
       {/* Survey list */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="flex flex-col gap-2">
         {filtered.map(s => (
           <div
             key={s.id}
             onClick={() => onSelectSurvey(s)}
-            className="survey-card fade-up"
-            style={{ cursor: "pointer" }}
+            className="survey-card fade-up cursor-pointer"
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div className="flex items-center gap-2.5">
               <StatusBadge status={s.status} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={disp(16, 700)}>{s.address.street} {s.address.number}</div>
-                <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
+              <div className="flex-1 min-w-0">
+                <div className="font-display text-base font-bold tracking-wide">{s.address.street} {s.address.number}</div>
+                <div className="font-mono text-xs text-text-secondary mt-0.5">
                   {s.tsg_id} · {s.address.postal_code} {s.address.city}
                 </div>
               </div>
-              <div style={mono(12, "var(--text-muted)")}>
+              <div className="font-mono text-xs text-text-muted">
                 {s.completed_sections?.length || 0} sections
               </div>
               <Icon n="chevR" size={14} color="var(--text-muted)" />

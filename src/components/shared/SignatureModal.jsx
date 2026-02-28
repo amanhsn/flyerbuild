@@ -1,14 +1,14 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Icon } from "../../icons/Icon";
-import { mono, disp } from "../../styles/helpers";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { cn } from "../../lib/utils";
 
 const STROKE_COLOR = "#1e293b";
 const CANVAS_H = 160;
 
 export const SignatureModal = ({ title, onSave, onCancel }) => {
   const isMobile = useIsMobile();
-  const [mode, setMode] = useState("draw"); // "draw" | "upload"
+  const [mode, setMode] = useState("draw");
   const canvasRef = useRef(null);
   const drawing = useRef(false);
   const [hasDrawn, setHasDrawn] = useState(false);
@@ -29,7 +29,6 @@ export const SignatureModal = ({ title, onSave, onCancel }) => {
     ctx.scale(dpr, dpr);
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, w, CANVAS_H);
-    // Signature line hint
     ctx.strokeStyle = "rgba(0,0,0,0.08)";
     ctx.lineWidth = 1;
     ctx.setLineDash([4, 4]);
@@ -125,44 +124,39 @@ export const SignatureModal = ({ title, onSave, onCancel }) => {
   return (
     <div
       onClick={onCancel}
-      style={{
-        position: "fixed", inset: 0, background: "rgba(0,0,0,.6)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        zIndex: 1000,
-      }}
+      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        style={{
-          background: "var(--bg-base)", border: "1px solid var(--border)",
-          borderRadius: "var(--radius-xl)", padding: isMobile ? 16 : 24,
-          width: "100%", maxWidth: 500, margin: isMobile ? "0 16px" : 0,
-          boxShadow: "0 8px 32px rgba(0,0,0,.4)",
-          display: "flex", flexDirection: "column", gap: 16,
-        }}
+        className={cn(
+          "bg-bg-base border border-border rounded-xl w-full max-w-[500px] shadow-[0_8px_32px_rgba(0,0,0,.4)] flex flex-col gap-4",
+          isMobile ? "p-4 mx-4" : "p-6"
+        )}
       >
         {/* Header */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: "var(--radius-md)",
-            background: "var(--primary-glow)", border: "1px solid var(--primary-dim)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}>
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-md bg-primary-glow border border-primary-dim flex items-center justify-center">
             <Icon n="sig" size={18} color="var(--primary)" />
           </div>
-          <div style={disp(16, 700)}>{title}</div>
+          <div className="font-display text-base font-bold tracking-wide">{title}</div>
         </div>
 
         {/* Mode toggle */}
-        <div style={{ display: "flex", gap: 6 }}>
+        <div className="flex gap-1.5">
           <button
-            className={`filter-btn${mode === "draw" ? " active" : ""}`}
+            className={cn(
+              "font-mono text-xs font-semibold tracking-[.04em] uppercase px-3.5 py-[7px] rounded-sm border-none whitespace-nowrap cursor-pointer transition-all",
+              mode === "draw" ? "bg-primary text-white" : "bg-bg-elevated text-text-secondary"
+            )}
             onClick={() => { setMode("draw"); setUploaded(null); }}
           >
             Draw
           </button>
           <button
-            className={`filter-btn${mode === "upload" ? " active" : ""}`}
+            className={cn(
+              "font-mono text-xs font-semibold tracking-[.04em] uppercase px-3.5 py-[7px] rounded-sm border-none whitespace-nowrap cursor-pointer transition-all",
+              mode === "upload" ? "bg-primary text-white" : "bg-bg-elevated text-text-secondary"
+            )}
             onClick={() => setMode("upload")}
           >
             Upload
@@ -171,16 +165,10 @@ export const SignatureModal = ({ title, onSave, onCancel }) => {
 
         {/* Canvas / Upload area */}
         {mode === "draw" ? (
-          <div style={{
-            borderRadius: "var(--radius-md)", overflow: "hidden",
-            border: "1px solid var(--border)",
-          }}>
+          <div className="rounded-md overflow-hidden border border-border">
             <canvas
               ref={canvasRef}
-              style={{
-                display: "block", width: "100%", height: CANVAS_H,
-                touchAction: "none", cursor: "crosshair",
-              }}
+              style={{ display: "block", width: "100%", height: CANVAS_H, touchAction: "none", cursor: "crosshair" }}
               onPointerDown={onDown}
               onPointerMove={onMove}
               onPointerUp={onUp}
@@ -190,20 +178,15 @@ export const SignatureModal = ({ title, onSave, onCancel }) => {
         ) : (
           <div
             onClick={() => fileRef.current?.click()}
-            style={{
-              height: CANVAS_H, borderRadius: "var(--radius-md)",
-              border: "2px dashed var(--border)", background: "var(--bg-elevated)",
-              display: "flex", flexDirection: "column", alignItems: "center",
-              justifyContent: "center", gap: 8, cursor: "pointer",
-              overflow: "hidden",
-            }}
+            className="flex flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed border-border bg-bg-elevated cursor-pointer overflow-hidden"
+            style={{ height: CANVAS_H }}
           >
             {uploaded ? (
-              <img src={uploaded} alt="Signature" style={{ maxHeight: CANVAS_H - 16, maxWidth: "90%", objectFit: "contain" }} />
+              <img src={uploaded} alt="Signature" className="max-w-[90%] object-contain" style={{ maxHeight: CANVAS_H - 16 }} />
             ) : (
               <>
                 <Icon n="upload" size={24} color="var(--text-muted)" />
-                <span style={mono(12, "var(--text-muted)")}>Click to upload signature image</span>
+                <span className="font-mono text-xs text-text-muted">Click to upload signature image</span>
               </>
             )}
             <input
@@ -211,22 +194,17 @@ export const SignatureModal = ({ title, onSave, onCancel }) => {
               type="file"
               accept="image/*"
               onChange={handleFile}
-              style={{ display: "none" }}
+              className="hidden"
             />
           </div>
         )}
 
         {/* Actions */}
-        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+        <div className="flex gap-2.5 justify-end">
           {mode === "draw" && (
             <button
               onClick={clearCanvas}
-              style={{
-                ...mono(13, "var(--text-secondary)"),
-                background: "none", border: "1px solid var(--border)",
-                borderRadius: "var(--radius-sm)", padding: "8px 14px",
-                cursor: "pointer", marginRight: "auto",
-              }}
+              className="font-mono text-[13px] text-text-secondary bg-transparent border border-border rounded-sm px-3.5 py-2 cursor-pointer mr-auto"
             >
               Clear
             </button>
@@ -234,25 +212,24 @@ export const SignatureModal = ({ title, onSave, onCancel }) => {
           {mode === "upload" && uploaded && (
             <button
               onClick={() => setUploaded(null)}
-              style={{
-                ...mono(13, "var(--text-secondary)"),
-                background: "none", border: "1px solid var(--border)",
-                borderRadius: "var(--radius-sm)", padding: "8px 14px",
-                cursor: "pointer", marginRight: "auto",
-              }}
+              className="font-mono text-[13px] text-text-secondary bg-transparent border border-border rounded-sm px-3.5 py-2 cursor-pointer mr-auto"
             >
               Remove
             </button>
           )}
-          <button className="cta-btn secondary" onClick={onCancel}>Cancel</button>
           <button
-            className="toggle-btn primary active"
+            className="px-4 py-2 bg-bg-elevated border border-border rounded-md font-display text-base font-semibold text-text-secondary cursor-pointer transition-all"
+            onClick={onCancel}
+          >
+            Cancel
+          </button>
+          <button
+            className={cn(
+              "flex items-center gap-1.5 px-5 py-2 rounded-md bg-primary border border-primary text-white font-display text-[17px] font-bold tracking-[.03em] cursor-pointer transition-all",
+              !canSave && "opacity-50 cursor-default"
+            )}
             disabled={!canSave}
             onClick={handleSave}
-            style={{
-              padding: "8px 20px", display: "flex", alignItems: "center", gap: 6,
-              opacity: canSave ? 1 : 0.5,
-            }}
           >
             <Icon n="check" size={14} color="#fff" />
             Save

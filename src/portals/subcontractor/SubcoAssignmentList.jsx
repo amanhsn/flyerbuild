@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { useLang } from "../../i18n/LangContext";
 import { KpiCard, EmptyState } from "../../components/shared";
 import { Icon } from "../../icons/Icon";
-import { disp, mono } from "../../styles/helpers";
 import { BUILD_PHASE_LABELS } from "../../data/buildTypes";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
@@ -39,14 +38,14 @@ export const SubcoAssignmentList = ({ assignments, filter, setFilter, onSelect }
   const pendingAccept = assignments.filter(a => a.status === "pending_acceptance").length;
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 style={disp(isMobile ? 22 : 28, 800)}>My Assignments</h1>
-      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 20 })}>
-        FiberCo BVBA — {assigned} assignments
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "16px" : "24px 28px" }}>
+      <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>My Assignments</h1>
+      <p className="font-mono text-sm text-text-secondary mt-1 mb-5">
+        FiberCo BVBA -- {assigned} assignments
       </p>
 
       {/* KPIs */}
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(130px, 1fr))", gap: isMobile ? 8 : 12, marginBottom: 20 }}>
+      <div className="mb-5" style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(130px, 1fr))", gap: isMobile ? 8 : 12 }}>
         <KpiCard label="Assigned" value={assigned} color="var(--primary)" />
         <KpiCard label="In Progress" value={inProgress} color="var(--blue)" total={assigned} />
         <KpiCard label="Completed" value={completed} color="var(--green)" total={assigned} />
@@ -55,7 +54,7 @@ export const SubcoAssignmentList = ({ assignments, filter, setFilter, onSelect }
       </div>
 
       {/* Filters */}
-      <div style={{ display: "flex", gap: 6, marginBottom: 16, overflowX: "auto", flexShrink: 0 }}>
+      <div className="flex gap-1.5 mb-4 overflow-x-auto shrink-0">
         {FILTERS.map(f => (
           <button
             key={f.key}
@@ -68,48 +67,46 @@ export const SubcoAssignmentList = ({ assignments, filter, setFilter, onSelect }
       </div>
 
       {/* Assignment cards */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <div className="flex flex-col gap-2.5">
         {filtered.map(a => (
           <div
             key={a.id}
             onClick={() => onSelect(a)}
-            className="survey-card fade-up"
+            className="survey-card fade-up cursor-pointer"
             style={{
-              cursor: "pointer",
               borderLeft: `3px solid ${statusColors[a.status] || "var(--border)"}`,
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{
-                ...mono(12, statusColors[a.status]),
-                padding: "2px 8px", borderRadius: "var(--radius-sm)",
+            <div className="flex items-center gap-2.5">
+              <div className="font-mono text-xs uppercase rounded-sm" style={{
+                color: statusColors[a.status],
+                padding: "2px 8px",
                 background: "var(--bg-overlay)", border: `1px solid ${statusColors[a.status]}40`,
-                textTransform: "uppercase",
               }}>
                 {a.status.replace(/_/g, " ")}
               </div>
-              <span style={mono(12, "var(--text-muted)")}>{a.tsg_id}</span>
+              <span className="font-mono text-xs text-text-muted">{a.tsg_id}</span>
               {a.dispute && <Icon n="alert" size={12} color="var(--red)" />}
             </div>
-            <div style={disp(17, 700, undefined, { marginTop: 6 })}>
+            <div className="font-display text-[17px] font-bold tracking-wide mt-1.5">
               {a.address.street} {a.address.number}
             </div>
-            <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>
+            <div className="font-mono text-xs text-text-secondary mt-0.5">
               {a.address.postal_code} {a.address.city}
             </div>
 
             {a.phase && (
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 10, paddingTop: 10, borderTop: "1px solid var(--border)" }}>
-                <span style={mono(12, "var(--text-muted)")}>
+              <div className="flex items-center gap-2 mt-2.5 pt-2.5 border-t border-border">
+                <span className="font-mono text-xs text-text-muted">
                   {BUILD_PHASE_LABELS[a.phase] || a.phase}
                 </span>
-                <div style={{ flex: 1, height: 4, background: "var(--bg-overlay)", borderRadius: 2 }}>
+                <div className="flex-1" style={{ height: 4, background: "var(--bg-overlay)", borderRadius: 2 }}>
                   <div style={{
                     width: `${a.progress}%`, height: "100%", borderRadius: 2,
                     background: statusColors[a.status] || "var(--primary)",
                   }} />
                 </div>
-                <span style={mono(12, "var(--text-muted)")}>{a.progress}%</span>
+                <span className="font-mono text-xs text-text-muted">{a.progress}%</span>
               </div>
             )}
           </div>

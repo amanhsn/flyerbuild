@@ -4,7 +4,6 @@ import { MOCK_SURVEYS } from "../../../data/mockSurveys";
 import { STATUSES } from "../../../data/statusConfig";
 import { KpiCard, ChartCard } from "../../../components/shared";
 import { Icon } from "../../../icons/Icon";
-import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
 export const ExecutiveDashboard = ({ surveys: surveysProp, onCreateSurvey }) => {
@@ -31,19 +30,19 @@ export const ExecutiveDashboard = ({ surveys: surveysProp, onCreateSurvey }) => 
   }));
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "20px 16px" : "24px 28px" }}>
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 24 }}>
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "20px 16px" : "24px 28px" }}>
+      <div className="flex items-start justify-between gap-3 mb-6">
         <div>
-          <h1 style={disp(isMobile ? 22 : 28, 800)}>Executive Dashboard</h1>
-          <p style={mono(14, "var(--text-secondary)", { marginTop: 4 })}>
+          <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Executive Dashboard</h1>
+          <p className="font-mono text-sm text-text-secondary mt-1">
             Overall platform metrics — {stats.total} total addresses
           </p>
         </div>
         {onCreateSurvey && (
           <button
-            className="toggle-btn primary active"
+            className="toggle-btn primary active flex items-center gap-2 shrink-0"
             onClick={onCreateSurvey}
-            style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 20px", flexShrink: 0 }}
+            style={{ padding: "10px 20px" }}
           >
             <Icon n="plus" size={16} color="#fff" />
             {!isMobile && "Create Survey"}
@@ -52,7 +51,7 @@ export const ExecutiveDashboard = ({ surveys: surveysProp, onCreateSurvey }) => 
       </div>
 
       {/* KPI Row */}
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(140px, 1fr))", gap: isMobile ? 8 : 12, marginBottom: 24 }}>
+      <div className="mb-6" style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(140px, 1fr))", gap: isMobile ? 8 : 12 }}>
         <KpiCard label="Total Addresses" value={stats.total} color="var(--primary)" />
         <KpiCard label="Completed" value={stats.completed} color="var(--green)" total={stats.total} />
         <KpiCard label="In Progress" value={stats.inProgress} color="var(--blue)" total={stats.total} />
@@ -77,24 +76,22 @@ export const ExecutiveDashboard = ({ surveys: surveysProp, onCreateSurvey }) => 
       </div>
 
       {/* Completion funnel */}
-      <div style={{ marginTop: 24 }}>
-        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+      <div className="mt-6">
+        <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-3">
           Workflow Funnel
         </div>
-        <div style={{ display: isMobile ? "grid" : "flex", gridTemplateColumns: "1fr 1fr", gap: isMobile ? 8 : 4, alignItems: "flex-end" }}>
+        <div className="items-end" style={{ display: isMobile ? "grid" : "flex", gridTemplateColumns: "1fr 1fr", gap: isMobile ? 8 : 4 }}>
           {[
             { label: "Survey", count: stats.inProgress + stats.pending, color: "var(--primary)" },
             { label: "Validation", count: stats.review, color: "var(--blue)" },
             { label: "Completed", count: stats.completed, color: "var(--green)" },
             { label: "Issues", count: stats.issues, color: "var(--red)" },
           ].map((stage, i) => (
-            <div key={i} style={{
-              flex: 1, padding: "12px 16px", textAlign: "center",
-              background: "var(--bg-raised)", border: "1px solid var(--border)",
-              borderRadius: "var(--radius-md)",
+            <div key={i} className="flex-1 text-center bg-bg-raised border border-border rounded-md" style={{
+              padding: "12px 16px",
             }}>
-              <div style={disp(24, 800, stage.color)}>{stage.count}</div>
-              <div style={mono(12, "var(--text-secondary)", { marginTop: 4 })}>{stage.label}</div>
+              <div className="font-display text-2xl font-extrabold tracking-wide" style={{ color: stage.color }}>{stage.count}</div>
+              <div className="font-mono text-xs text-text-secondary mt-1">{stage.label}</div>
             </div>
           ))}
         </div>

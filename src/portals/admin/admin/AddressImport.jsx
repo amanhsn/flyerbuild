@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useLang } from "../../../i18n/LangContext";
 import { FileUploadZone } from "../../../components/shared";
 import { Icon } from "../../../icons/Icon";
-import { disp, mono } from "../../../styles/helpers";
 
 export const AddressImport = () => {
   const { t } = useLang();
@@ -17,20 +16,20 @@ export const AddressImport = () => {
   ];
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: "24px 28px" }}>
-      <h1 style={disp(28, 800)}>Admin Tools</h1>
-      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 20 })}>
+    <div className="flex-1 overflow-y-auto" style={{ padding: "24px 28px" }}>
+      <h1 className="font-display text-[28px] font-extrabold tracking-wide">Admin Tools</h1>
+      <p className="font-mono text-sm text-text-secondary mt-1 mb-5">
         System configuration and bulk operations
       </p>
 
       {/* Tab bar */}
-      <div style={{ display: "flex", gap: 6, marginBottom: 24, overflowX: "auto" }}>
+      <div className="flex gap-1.5 mb-6 overflow-x-auto">
         {tabs.map(tab => (
           <button
             key={tab.id}
-            className={`filter-btn${activeTab === tab.id ? " active" : ""}`}
+            className={`filter-btn${activeTab === tab.id ? " active" : ""} flex items-center`}
             onClick={() => setActiveTab(tab.id)}
-            style={{ display: "flex", alignItems: "center", gap: 5 }}
+            style={{ gap: 5 }}
           >
             <Icon n={tab.icon} size={12} color={activeTab === tab.id ? "#000" : "var(--text-muted)"} />
             {tab.label}
@@ -40,10 +39,10 @@ export const AddressImport = () => {
 
       {activeTab === "import" && (
         <div style={{ maxWidth: 600 }}>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-3">
             Bulk Address Import
           </div>
-          <p style={mono(12, "var(--text-secondary)", { marginBottom: 16 })}>
+          <p className="font-mono text-xs text-text-secondary mb-4">
             Upload a CSV file with columns: street, number, bus, postal_code, city, lat, lng, assigned_surveyor
           </p>
           <FileUploadZone
@@ -57,7 +56,7 @@ export const AddressImport = () => {
             label="CSV File"
           />
           {importedFiles.length > 0 && (
-            <button className="toggle-btn green active" style={{ marginTop: 16, padding: "8px 20px" }}>
+            <button className="toggle-btn green active mt-4" style={{ padding: "8px 20px" }}>
               Process Import
             </button>
           )}
@@ -66,18 +65,17 @@ export const AddressImport = () => {
 
       {activeTab === "grouping" && (
         <div>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-3">
             Building Grouping / Splitting
           </div>
-          <p style={mono(12, "var(--text-secondary)", { marginBottom: 16 })}>
+          <p className="font-mono text-xs text-text-secondary mb-4">
             Group MDU buildings that share a basement or split grouped buildings into separate surveys. Use A/B suffixes for split buildings.
           </p>
-          <div style={{
-            padding: 24, background: "var(--bg-raised)", border: "1px solid var(--border)",
-            borderRadius: "var(--radius-lg)", textAlign: "center",
+          <div className="text-center bg-bg-raised border border-border rounded-lg" style={{
+            padding: 24,
           }}>
             <Icon n="building" size={32} color="var(--text-muted)" />
-            <div style={mono(14, "var(--text-muted)", { marginTop: 8 })}>
+            <div className="font-mono text-sm text-text-muted mt-2">
               Select buildings from the map view to group or split them
             </div>
           </div>
@@ -86,22 +84,20 @@ export const AddressImport = () => {
 
       {activeTab === "rbac" && (
         <div>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-3">
             Role-Based Access Control
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div className="flex flex-col gap-2.5">
             {["surveyor", "validator", "admin", "subcontractor"].map(role => (
-              <div key={role} style={{
-                padding: "14px 18px", background: "var(--bg-raised)",
-                border: "1px solid var(--border)", borderRadius: "var(--radius-md)",
-                display: "flex", alignItems: "center", gap: 12,
+              <div key={role} className="bg-bg-raised border border-border rounded-md flex items-center gap-3" style={{
+                padding: "14px 18px",
               }}>
                 <Icon n="user" size={16} color="var(--primary)" />
-                <div style={{ flex: 1 }}>
-                  <div style={mono(14, "var(--text-primary)", { fontWeight: 600, textTransform: "capitalize" })}>
+                <div className="flex-1">
+                  <div className="font-mono text-sm text-text-primary font-semibold capitalize">
                     {role}
                   </div>
-                  <div style={mono(12, "var(--text-muted)")}>
+                  <div className="font-mono text-xs text-text-muted">
                     Configure permissions and access levels
                   </div>
                 </div>
@@ -114,31 +110,29 @@ export const AddressImport = () => {
 
       {activeTab === "triggers" && (
         <div>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 12 })}>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-3">
             Workflow Triggers
           </div>
-          <p style={mono(12, "var(--text-secondary)", { marginBottom: 16 })}>
+          <p className="font-mono text-xs text-text-secondary mb-4">
             Configure automated actions triggered by status changes.
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <div className="flex flex-col gap-2">
             {[
               { trigger: "Survey Completed", action: "Send notification to validator", active: true },
               { trigger: "Validation Approved", action: "Generate TSA PDF", active: true },
               { trigger: "Client Approved", action: "Generate syndic/owner PDF", active: false },
               { trigger: "Build Phase Complete", action: "Notify PM for review", active: true },
             ].map((wf, i) => (
-              <div key={i} style={{
-                display: "flex", alignItems: "center", gap: 12,
-                padding: "12px 16px", background: "var(--bg-raised)",
-                border: "1px solid var(--border)", borderRadius: "var(--radius-md)",
+              <div key={i} className="flex items-center gap-3 bg-bg-raised border border-border rounded-md" style={{
+                padding: "12px 16px",
               }}>
                 <div style={{
                   width: 8, height: 8, borderRadius: "50%",
                   background: wf.active ? "var(--green)" : "var(--text-muted)",
                 }} />
-                <div style={{ flex: 1 }}>
-                  <div style={mono(12, "var(--text-primary)")}>{wf.trigger}</div>
-                  <div style={mono(12, "var(--text-secondary)")}>{wf.action}</div>
+                <div className="flex-1">
+                  <div className="font-mono text-xs text-text-primary">{wf.trigger}</div>
+                  <div className="font-mono text-xs text-text-secondary">{wf.action}</div>
                 </div>
                 <button className={`toggle-btn ${wf.active ? "green" : "primary"}`} style={{ padding: "4px 10px" }}>
                   {wf.active ? "Active" : "Enable"}

@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { useLang } from "../../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../../data/mockSurveys";
 import { KpiCard, ChartCard } from "../../../components/shared";
-import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
 export const PerformanceDashboard = () => {
@@ -32,28 +31,26 @@ export const PerformanceDashboard = () => {
   }));
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "20px 16px" : "24px 28px" }}>
-      <h1 style={disp(isMobile ? 22 : 28, 800)}>Performance Dashboard</h1>
-      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "20px 16px" : "24px 28px" }}>
+      <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Performance Dashboard</h1>
+      <p className="font-mono text-sm text-text-secondary mt-1 mb-6">
         Surveyor and subcontractor performance metrics
       </p>
 
       {/* Surveyor Performance Table */}
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+      <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2.5">
         Surveyor Performance
       </div>
-      <div style={{
-        border: "1px solid var(--border)", borderRadius: "var(--radius-lg)",
-        overflow: "hidden", marginBottom: 24,
-      }}>
-        <div style={{ overflowX: "auto" }}>
-          <div style={{
-            display: "grid", gridTemplateColumns: isMobile ? "2fr 1fr 1fr" : "2fr 1fr 1fr 1fr 1fr",
-            background: "var(--bg-elevated)", padding: "10px 14px",
-            borderBottom: "1px solid var(--border)",
-            minWidth: isMobile ? undefined : undefined,
-            ...mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".06em" }),
-          }}>
+      <div className="border border-border rounded-lg overflow-hidden mb-6">
+        <div className="overflow-x-auto">
+          <div
+            className="font-mono text-xs text-text-muted uppercase tracking-wider bg-bg-elevated border-b border-border"
+            style={{
+              display: "grid",
+              gridTemplateColumns: isMobile ? "2fr 1fr 1fr" : "2fr 1fr 1fr 1fr 1fr",
+              padding: "10px 14px",
+            }}
+          >
             <div>Surveyor</div>
             <div>Assigned</div>
             <div>Completed</div>
@@ -61,22 +58,23 @@ export const PerformanceDashboard = () => {
             {!isMobile && <div>Rework %</div>}
           </div>
           {surveyorData.map(s => (
-            <div key={s.name} style={{
-              display: "grid", gridTemplateColumns: isMobile ? "2fr 1fr 1fr" : "2fr 1fr 1fr 1fr 1fr",
-              padding: "10px 14px", borderBottom: "1px solid var(--border)",
+            <div key={s.name} className="border-b border-border" style={{
+              display: "grid",
+              gridTemplateColumns: isMobile ? "2fr 1fr 1fr" : "2fr 1fr 1fr 1fr 1fr",
+              padding: "10px 14px",
             }}>
-              <div style={mono(14, "var(--text-primary)")}>{s.name}</div>
-              <div style={mono(14, "var(--text-secondary)")}>{s.total}</div>
-              <div style={mono(14, "var(--text-green)")}>{s.completed}</div>
-              {!isMobile && <div style={mono(14, s.rework > 0 ? "var(--text-red)" : "var(--text-secondary)")}>{s.rework}</div>}
-              {!isMobile && <div style={mono(14, "var(--text-secondary)")}>{s.reworkRate}</div>}
+              <div className="font-mono text-sm text-text-primary">{s.name}</div>
+              <div className="font-mono text-sm text-text-secondary">{s.total}</div>
+              <div className="font-mono text-sm text-text-green">{s.completed}</div>
+              {!isMobile && <div className={`font-mono text-sm ${s.rework > 0 ? "text-text-red" : "text-text-secondary"}`}>{s.rework}</div>}
+              {!isMobile && <div className="font-mono text-sm text-text-secondary">{s.reworkRate}</div>}
             </div>
           ))}
         </div>
       </div>
 
       {/* Subcontractor metrics (mock) */}
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+      <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2.5">
         Subcontractor Performance
       </div>
       <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))", gap: isMobile ? 8 : 12 }}>

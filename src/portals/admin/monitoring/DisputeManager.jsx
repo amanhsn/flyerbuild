@@ -3,7 +3,6 @@ import { useLang } from "../../../i18n/LangContext";
 import { TextArea } from "../../../components/shared/Field";
 import { EmptyState } from "../../../components/shared/EmptyState";
 import { Icon } from "../../../icons/Icon";
-import { disp, mono } from "../../../styles/helpers";
 
 const MOCK_DISPUTES = [
   {
@@ -37,24 +36,23 @@ export const DisputeManager = () => {
   };
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: "24px 28px" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
-        <h1 style={disp(28, 800)}>Dispute Manager</h1>
+    <div className="flex-1 overflow-y-auto" style={{ padding: "24px 28px" }}>
+      <div className="flex items-center gap-3 mb-6">
+        <h1 className="font-display text-[28px] font-extrabold tracking-wide">Dispute Manager</h1>
         <button
-          className="toggle-btn primary active"
+          className="toggle-btn primary active flex items-center gap-1.5"
           onClick={() => setShowRaiseForm(!showRaiseForm)}
-          style={{ padding: "6px 14px", display: "flex", alignItems: "center", gap: 6 }}
+          style={{ padding: "6px 14px" }}
         >
           <Icon n="plus" size={14} color="#fff" /> Raise Dispute
         </button>
       </div>
 
       {showRaiseForm && (
-        <div style={{
-          padding: 16, marginBottom: 20, background: "var(--bg-raised)",
-          border: "1px solid var(--border)", borderRadius: "var(--radius-lg)",
+        <div className="mb-5 bg-bg-raised border border-border rounded-lg" style={{
+          padding: 16,
         }}>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2.5">
             New Dispute
           </div>
           <TextArea
@@ -64,7 +62,7 @@ export const DisputeManager = () => {
             placeholder="Describe the issue and corrective instructions..."
             rows={3}
           />
-          <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+          <div className="flex gap-2 mt-3">
             <button className="toggle-btn red active" style={{ padding: "6px 14px" }} onClick={() => setShowRaiseForm(false)}>
               Submit Dispute
             </button>
@@ -76,33 +74,32 @@ export const DisputeManager = () => {
       )}
 
       {/* Open disputes */}
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+      <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2.5">
         Open Disputes ({open.length})
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>
+      <div className="flex flex-col gap-2.5 mb-6">
         {open.map(d => (
-          <div key={d.id} style={{
-            padding: "14px 18px", background: "var(--bg-raised)",
-            border: "1px solid var(--red-dim)", borderRadius: "var(--radius-lg)",
+          <div key={d.id} className="bg-bg-raised rounded-lg" style={{
+            padding: "14px 18px",
+            border: "1px solid var(--red-dim)",
           }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+            <div className="flex items-center gap-2 mb-2">
               <Icon n="alert" size={14} color="var(--red)" />
-              <span style={mono(14, "var(--text-primary)", { fontWeight: 600 })}>{d.tsg_id}</span>
-              <span style={mono(12, "var(--text-muted)")}>{d.subco}</span>
-              <span style={mono(12, "var(--text-muted)", { marginLeft: "auto" })}>Raised {d.raisedAt}</span>
+              <span className="font-mono text-sm text-text-primary font-semibold">{d.tsg_id}</span>
+              <span className="font-mono text-xs text-text-muted">{d.subco}</span>
+              <span className="font-mono text-xs text-text-muted ml-auto">Raised {d.raisedAt}</span>
             </div>
-            <div style={mono(12, "var(--text-secondary)", { marginBottom: 6 })}>{d.comment}</div>
-            <div style={{
-              ...mono(12, "var(--text-primary)"), padding: "8px 10px",
-              background: "var(--bg-overlay)", borderRadius: "var(--radius-sm)",
-              border: "1px solid var(--border)", marginBottom: 10,
+            <div className="font-mono text-xs text-text-secondary mb-1.5">{d.comment}</div>
+            <div className="font-mono text-xs text-text-primary rounded-sm border border-border mb-2.5" style={{
+              padding: "8px 10px",
+              background: "var(--bg-overlay)",
             }}>
               Instructions: {d.instructions}
             </div>
             <button
-              className="toggle-btn green active"
+              className="toggle-btn green active flex items-center gap-1.5"
               onClick={() => handleResolve(d.id)}
-              style={{ padding: "6px 14px", display: "flex", alignItems: "center", gap: 6 }}
+              style={{ padding: "6px 14px" }}
             >
               <Icon n="check" size={14} color="#fff" /> Resume Workflow
             </button>
@@ -114,20 +111,19 @@ export const DisputeManager = () => {
       </div>
 
       {/* Resolved disputes */}
-      <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 })}>
+      <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2.5">
         Resolved ({resolved.length})
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="flex flex-col gap-2">
         {resolved.map(d => (
-          <div key={d.id} style={{
-            padding: "12px 16px", background: "var(--bg-raised)",
-            border: "1px solid var(--border)", borderRadius: "var(--radius-md)", opacity: 0.7,
+          <div key={d.id} className="bg-bg-raised border border-border rounded-md opacity-70" style={{
+            padding: "12px 16px",
           }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <div className="flex items-center gap-2">
               <Icon n="check" size={14} color="var(--green)" />
-              <span style={mono(14, "var(--text-primary)")}>{d.tsg_id}</span>
-              <span style={mono(12, "var(--text-muted)")}>{d.subco}</span>
-              <span style={mono(12, "var(--text-green)", { marginLeft: "auto" })}>Resolved {d.resolvedAt}</span>
+              <span className="font-mono text-sm text-text-primary">{d.tsg_id}</span>
+              <span className="font-mono text-xs text-text-muted">{d.subco}</span>
+              <span className="font-mono text-xs text-text-green ml-auto">Resolved {d.resolvedAt}</span>
             </div>
           </div>
         ))}

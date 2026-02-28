@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Field } from "../../../components/shared";
 import { ToggleButton } from "../../../components/shared";
 import { Icon } from "../../../icons/Icon";
-import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import { getUsersByRole } from "../../../data/mockUsers";
 import {
@@ -82,48 +81,49 @@ export const CreateSurvey = ({ onSubmit, onCancel }) => {
   };
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "20px 16px" : "24px 28px" }}>
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "20px 16px" : "24px 28px" }}>
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
+      <div className="flex items-center gap-3 mb-6">
         <button
           onClick={onCancel}
-          style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", padding: 4 }}
+          className="flex items-center cursor-pointer"
+          style={{ background: "none", border: "none", padding: 4 }}
         >
           <Icon n="chevR" size={18} color="var(--text-secondary)" style={{ transform: "rotate(180deg)" }} />
         </button>
-        <h1 style={disp(isMobile ? 22 : 28, 800)}>Create Survey</h1>
+        <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Create Survey</h1>
       </div>
 
-      <div style={{ maxWidth: 600, display: "flex", flexDirection: "column", gap: 16 }}>
+      <div className="flex flex-col gap-4" style={{ maxWidth: 600 }}>
         {/* TSG ID */}
         <Field label="TSG ID" value={form.tsg_id} onChange={set("tsg_id")} placeholder="e.g. WERK-25" />
 
         {/* Address row 1 */}
-        <div style={{ display: "flex", gap: 12 }}>
+        <div className="flex gap-3">
           <div style={{ flex: 2 }}>
             <Field label="Street" value={form.street} onChange={set("street")} placeholder="Geluwesesteenweg" />
           </div>
-          <div style={{ flex: 1 }}>
+          <div className="flex-1">
             <Field label="Number" value={form.number} onChange={set("number")} placeholder="12" />
           </div>
         </div>
 
         {/* Address row 2 */}
-        <div style={{ display: "flex", gap: 12 }}>
-          <div style={{ flex: 1 }}>
+        <div className="flex gap-3">
+          <div className="flex-1">
             <Field label="Postal Code" value={form.postal_code} onChange={set("postal_code")} placeholder="8940" />
           </div>
-          <div style={{ flex: 1 }}>
+          <div className="flex-1">
             <Field label="City" value={form.city} onChange={set("city")} placeholder="Wervik" />
           </div>
         </div>
 
         {/* Building Type */}
         <div>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">
             Building Type
           </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          <div className="flex flex-wrap gap-2">
             {BUILDING_TYPES.map(bt => (
               <ToggleButton
                 key={bt.value}
@@ -137,7 +137,7 @@ export const CreateSurvey = ({ onSubmit, onCancel }) => {
 
         {/* Priority */}
         <div>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">
             Priority
           </div>
           <ToggleButton
@@ -150,11 +150,11 @@ export const CreateSurvey = ({ onSubmit, onCancel }) => {
 
         {/* Surveyor */}
         <div>
-          <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 })}>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-widest" style={{ marginBottom: 5 }}>
             Assign Surveyor
           </div>
           <select
-            className="field-input"
+            className="w-full px-3 py-2.5 bg-bg-elevated border border-border-bright rounded-md text-text-primary font-mono text-sm outline-none transition-colors focus:border-primary"
             value={form.assigned_surveyor}
             onChange={(e) => setForm(f => ({ ...f, assigned_surveyor: e.target.value }))}
           >
@@ -166,14 +166,14 @@ export const CreateSurvey = ({ onSubmit, onCancel }) => {
         </div>
 
         {/* Actions */}
-        <div style={{ display: "flex", gap: 10, marginTop: 8, paddingBottom: 40 }}>
+        <div className="flex gap-2.5 mt-2 pb-10">
           <button className="cta-btn secondary" onClick={onCancel}>Cancel</button>
           <button
-            className="toggle-btn primary active"
+            className="toggle-btn primary active flex items-center gap-2"
             disabled={!canSubmit}
             onClick={handleSubmit}
             style={{
-              padding: "10px 24px", display: "flex", alignItems: "center", gap: 8,
+              padding: "10px 24px",
               opacity: canSubmit ? 1 : 0.5,
             }}
           >

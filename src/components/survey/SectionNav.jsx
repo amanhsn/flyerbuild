@@ -1,6 +1,6 @@
 import { Icon } from "../../icons/Icon";
 import { useLang } from "../../i18n/LangContext";
-import { mono } from "../../styles/helpers";
+import { cn } from "../../lib/utils";
 
 const SHORT_KEYS = {
   visit_info: "short_visit",
@@ -31,12 +31,7 @@ export const SectionNav = ({ sections, activeIndex, completedSections, onSelect 
   const { t } = useLang();
 
   return (
-    <div style={{
-      display: "flex", overflowX: "auto",
-      background: "var(--bg-elevated)",
-      borderBottom: "1px solid var(--border)",
-      flexShrink: 0,
-    }}>
+    <div className="flex overflow-x-auto bg-bg-elevated border-b border-border shrink-0">
       {sections.map((s, i) => {
         const isActive = i === activeIndex;
         const isDone = completedSections.includes(s.key);
@@ -44,16 +39,12 @@ export const SectionNav = ({ sections, activeIndex, completedSections, onSelect 
           <button
             key={s.key}
             onClick={() => onSelect(i)}
+            className={cn(
+              "shrink-0 py-2.5 px-[13px] bg-transparent border-none cursor-pointer flex items-center gap-[5px] transition-all font-mono text-xs font-semibold tracking-wider uppercase",
+              isActive ? "text-text-primary-accent" : isDone ? "text-text-green" : "text-text-muted"
+            )}
             style={{
-              flexShrink: 0, padding: "10px 13px",
-              background: "none", border: "none", cursor: "pointer",
-              ...mono(12,
-                isActive ? "var(--text-primary-accent)" : isDone ? "var(--text-green)" : "var(--text-muted)",
-                { fontWeight: 600, letterSpacing: ".04em", textTransform: "uppercase" },
-              ),
               borderBottom: isActive ? "2px solid var(--primary)" : "2px solid transparent",
-              display: "flex", alignItems: "center", gap: 5,
-              transition: "all .15s",
             }}
           >
             {isDone && <Icon n="check" size={10} color="var(--text-green)" />}

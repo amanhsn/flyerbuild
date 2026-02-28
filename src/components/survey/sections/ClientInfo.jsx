@@ -1,14 +1,13 @@
 import { Field } from "../../shared";
 import { useLang } from "../../../i18n/LangContext";
-import { mono } from "../../../styles/helpers";
 
 export const ClientInfo = ({ survey, setField, disabled }) => {
   const { t } = useLang();
   const client = survey.client || {};
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={{ display: "flex", gap: 12 }}>
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-3">
         <Field
           label={t("clientName")}
           value={client.company}
@@ -23,7 +22,7 @@ export const ClientInfo = ({ survey, setField, disabled }) => {
         />
       </div>
 
-      <div style={{ display: "flex", gap: 12 }}>
+      <div className="flex gap-3">
         <Field
           label={t("contactEmail")}
           value={client.contact_email}

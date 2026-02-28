@@ -7,7 +7,7 @@ import { SectionNav } from "./SectionNav";
 import { SurveySidebar } from "./SurveySidebar";
 import { SectionRenderer } from "./SectionRenderer";
 import { Icon } from "../../icons/Icon";
-import { mono } from "../../styles/helpers";
+import { cn } from "../../lib/utils";
 
 export const SurveyView = ({ initialSurvey, onBack }) => {
   const { t } = useLang();
@@ -63,25 +63,20 @@ export const SurveyView = ({ initialSurvey, onBack }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", flex: 1, overflow: "hidden" }}>
+    <div className="flex flex-col flex-1 overflow-hidden">
       {/* Header */}
       <SurveyHeader survey={survey} completedCount={completedCount} onBack={onBack} />
 
       {/* MDU Group Warning Banner */}
       {survey.mdu_group && !survey.mdu_group.is_main && !mduBannerDismissed && (
-        <div style={{
-          display: "flex", alignItems: "center", gap: 10,
-          padding: "10px 16px", margin: "0 16px 4px",
-          background: "var(--primary-glow)", border: "1px solid var(--primary-dim)",
-          borderRadius: "var(--radius-md)",
-        }}>
+        <div className="flex items-center gap-2.5 py-2.5 px-4 mx-4 mb-1 bg-primary-glow border border-primary-dim rounded-md">
           <Icon n="alert" size={16} color="var(--primary)" />
-          <div style={{ flex: 1, ...mono(12, "var(--text-primary-accent)") }}>
+          <div className="font-mono text-xs text-text-primary-accent flex-1">
             {t("buildingWarning")} — {t("buildingWarnSub")(survey.mdu_group.linked_surveys?.[0]?.tsg_id || "main building")}
           </div>
           <button
             onClick={() => setMduBannerDismissed(true)}
-            style={{ background: "none", border: "none", cursor: "pointer", padding: 4 }}
+            className="bg-transparent border-none cursor-pointer p-1"
           >
             <Icon n="x" size={14} color="var(--text-primary-accent)" />
           </button>
@@ -97,9 +92,9 @@ export const SurveyView = ({ initialSurvey, onBack }) => {
       />
 
       {/* Body: form + sidebar */}
-      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+      <div className="flex flex-1 overflow-hidden">
         {/* Form area */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "16px 24px 100px", position: "relative" }}>
+        <div className="flex-1 overflow-y-auto relative pt-4 px-6 pb-[100px]">
           {currentSection && (
             <SectionRenderer
               section={currentSection}
@@ -119,26 +114,28 @@ export const SurveyView = ({ initialSurvey, onBack }) => {
 
           {/* Autosave indicator */}
           {autoSaveStatus && (
-            <div style={{
-              position: "fixed", top: 60, right: 16, zIndex: 100,
-              ...mono(12, autoSaveStatus === "saving" ? "var(--text-primary-accent)" : "var(--text-green)"),
-              background: autoSaveStatus === "saving" ? "var(--primary-glow)" : "var(--green-glow)",
-              border: `1px solid ${autoSaveStatus === "saving" ? "var(--primary-dim)" : "var(--green-dim)"}`,
-              borderRadius: "var(--radius-sm)", padding: "4px 10px",
-            }}>
+            <div
+              className={cn(
+                "fixed top-[60px] right-4 z-[100] rounded-sm px-2.5 py-1 font-mono text-xs",
+                autoSaveStatus === "saving"
+                  ? "text-text-primary-accent"
+                  : "text-text-green"
+              )}
+              style={{
+                background: autoSaveStatus === "saving" ? "var(--primary-glow)" : "var(--green-glow)",
+                border: `1px solid ${autoSaveStatus === "saving" ? "var(--primary-dim)" : "var(--green-dim)"}`,
+              }}
+            >
               {autoSaveStatus === "saving" ? "Saving..." : "Saved"}
             </div>
           )}
 
           {/* Bottom CTA */}
-          <div style={{
-            position: "fixed", bottom: 0, left: 0, right: 0,
+          <div className="fixed bottom-0 left-0 right-0 flex gap-2.5 pointer-events-none" style={{
             padding: "10px 24px 16px",
             background: "linear-gradient(180deg,transparent 0%,var(--bg-base) 45%)",
-            display: "flex", gap: 10,
-            pointerEvents: "none",
           }}>
-            <div style={{ display: "flex", gap: 10, marginLeft: "auto", pointerEvents: "all", maxWidth: 500 }}>
+            <div className="flex gap-2.5 ml-auto pointer-events-auto max-w-[500px]">
               {activeIndex > 0 && (
                 <button className="cta-btn secondary" onClick={handlePrevious}>
                   {t("previous")}
@@ -161,7 +158,7 @@ export const SurveyView = ({ initialSurvey, onBack }) => {
         </div>
 
         {/* Sidebar — desktop only */}
-        <div className="survey-sidebar-desktop" style={{ display: "flex" }}>
+        <div className="survey-sidebar-desktop flex">
           <SurveySidebar survey={survey} visibleSections={visibleSections} />
         </div>
       </div>

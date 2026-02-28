@@ -8,19 +8,20 @@ import { FilterBar } from "./FilterBar";
 import { Icon } from "../../icons/Icon";
 import { SkeletonKpiCard, SkeletonSurveyCard } from "../shared/Skeleton";
 import { EmptyState } from "../shared/EmptyState";
-import { disp, mono } from "../../styles/helpers";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
 const DashboardSkeleton = ({ isMobile }) => (
   <>
-    <div style={{
-      display: "grid",
-      gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))",
-      gap: 12, marginBottom: 20,
-    }}>
+    <div
+      className="mb-5 gap-3"
+      style={{
+        display: "grid",
+        gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(160px, 1fr))",
+      }}
+    >
       {Array.from({ length: 5 }, (_, i) => <SkeletonKpiCard key={i} />)}
     </div>
-    <div style={{ marginTop: 12 }}>
+    <div className="mt-3">
       {Array.from({ length: 4 }, (_, i) => <SkeletonSurveyCard key={i} delay={i * 60} />)}
     </div>
   </>
@@ -40,21 +41,17 @@ export const Dashboard = ({ onSelectSurvey, loading = false }) => {
   }, [surveys, filter]);
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "16px" : "24px 28px" }}>
+    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "16px" : "24px 28px" }}>
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "baseline", gap: isMobile ? 8 : 12, marginBottom: 4, flexWrap: "wrap" }}>
-        <h1 style={disp(isMobile ? 24 : 30, 800)}>{t("navDashboard")}</h1>
-        <span style={{
-          ...mono(12, "var(--text-muted)"),
-          background: "var(--bg-elevated)",
+      <div className="flex items-baseline flex-wrap mb-1" style={{ gap: isMobile ? 8 : 12 }}>
+        <h1 className={`font-display ${isMobile ? "text-2xl" : "text-[30px]"} font-extrabold tracking-wide`}>{t("navDashboard")}</h1>
+        <span className="font-mono text-xs text-text-muted bg-bg-elevated rounded-sm border border-border" style={{
           padding: "3px 8px",
-          borderRadius: "var(--radius-sm)",
-          border: "1px solid var(--border)",
         }}>
           {t("queueDate")}
         </span>
       </div>
-      <p style={mono(14, "var(--text-secondary)", { marginTop: 5, marginBottom: 20 })}>
+      <p className="font-mono text-sm text-text-secondary mt-1 mb-5">
         {t("queueSurveyor")} · {loading ? "..." : t("queueCount")(surveys.length)}
       </p>
 
@@ -64,21 +61,15 @@ export const Dashboard = ({ onSelectSurvey, loading = false }) => {
           <KpiRow surveys={surveys} />
 
           {/* Download tomorrow card */}
-          <div style={{
-            marginBottom: 16, padding: "12px 16px", borderRadius: "var(--radius-md)",
-            background: "var(--bg-elevated)", border: "1px solid var(--border)",
-            display: "flex", alignItems: "center", gap: 12, cursor: "pointer",
-          }}>
+          <div className="mb-4 px-4 py-3 rounded-md bg-bg-elevated border border-border flex items-center gap-3 cursor-pointer">
             <Icon n="download" size={15} color="var(--text-primary-accent)" />
-            <div style={{ flex: 1 }}>
+            <div className="flex-1">
               <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 14 }}>{t("downloadTomorrow")}</div>
-              <div style={mono(12, "var(--text-secondary)", { marginTop: 2 })}>{t("downloadSub")}</div>
+              <div className="font-mono text-xs text-text-secondary mt-0.5">{t("downloadSub")}</div>
             </div>
-            <span style={{
-              ...mono(12, "var(--text-primary-accent)"),
+            <span className="font-mono text-xs text-text-primary-accent rounded-sm" style={{
               background: "var(--primary-glow)",
               padding: "4px 10px",
-              borderRadius: "var(--radius-sm)",
               border: "1px solid var(--primary-dim)",
             }}>
               {t("downloadFetch")}
@@ -89,7 +80,7 @@ export const Dashboard = ({ onSelectSurvey, loading = false }) => {
           <FilterBar filter={filter} setFilter={setFilter} />
 
           {/* Survey cards */}
-          <div style={{ marginTop: 12 }}>
+          <div className="mt-3">
             {filtered.map((s, i) => (
               <SurveyCard
                 key={s.id}

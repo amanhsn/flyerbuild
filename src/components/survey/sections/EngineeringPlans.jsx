@@ -1,43 +1,34 @@
 import { Icon } from "../../../icons/Icon";
 import { useLang } from "../../../i18n/LangContext";
-import { mono, disp } from "../../../styles/helpers";
+
 
 export const EngineeringPlans = ({ survey, setField, disabled }) => {
   const { t } = useLang();
   const plans = survey.engineering_plans || [];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div className="flex flex-col gap-4">
       {/* Upload Area */}
       <div
+        className="flex flex-col items-center justify-center gap-2.5 bg-bg-raised rounded-lg p-[30px] border-2 border-dashed border-border-bright"
         style={{
-          border: "2px dashed var(--border-bright)",
-          borderRadius: "var(--radius-lg)",
-          padding: 30,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 10,
-          background: "var(--bg-raised)",
           cursor: disabled ? "default" : "pointer",
           opacity: disabled ? 0.55 : 1,
         }}
       >
         <Icon n="upload" size={28} color="var(--text-muted)" />
-        <span style={disp(14, 600, "var(--text-secondary)")}>
+        <span className="font-display text-sm font-semibold tracking-wide text-text-secondary">
           {t("uploadPlan")}
         </span>
-        <span style={mono(12, "var(--text-muted)")}>
+        <span className="font-mono text-xs text-text-muted">
           {t("dropFiles")}
         </span>
       </div>
 
       {/* Upload Plan Button */}
       <button
-        className="toggle-btn primary active"
+        className="toggle-btn primary active self-start flex items-center gap-1.5"
         disabled={disabled}
-        style={{ alignSelf: "flex-start", display: "flex", alignItems: "center", gap: 6 }}
       >
         <Icon n="upload" size={14} color="#fff" />
         <span>{t("uploadPlanBtn")}</span>
@@ -45,22 +36,17 @@ export const EngineeringPlans = ({ survey, setField, disabled }) => {
 
       {/* Plan List */}
       {plans.length > 0 && (
-        <div style={{
-          border: "1px solid var(--border)",
-          borderRadius: "var(--radius-lg)",
-          overflow: "hidden",
-        }}>
+        <div className="border border-border rounded-lg overflow-hidden">
           {/* Header */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "1.5fr 1.5fr 1fr 1fr 50px",
-            gap: 0,
-            background: "var(--bg-overlay)",
-            padding: "10px 14px",
-            borderBottom: "1px solid var(--border)",
-          }}>
+          <div
+            className="bg-bg-overlay py-2.5 px-3.5 border-b border-border"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.5fr 1.5fr 1fr 1fr 50px",
+            }}
+          >
             {["Filename", "Description", "Uploaded By", "Uploaded At", ""].map((col) => (
-              <div key={col} style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".1em" })}>
+              <div key={col} className="font-mono text-xs text-text-muted uppercase tracking-widest">
                 {col}
               </div>
             ))}
@@ -70,41 +56,31 @@ export const EngineeringPlans = ({ survey, setField, disabled }) => {
           {plans.map((plan, idx) => (
             <div
               key={idx}
+              className="py-2.5 px-3.5 bg-bg-raised items-center"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1.5fr 1.5fr 1fr 1fr 50px",
-                gap: 0,
-                padding: "10px 14px",
                 borderBottom: idx < plans.length - 1 ? "1px solid var(--border)" : "none",
-                background: "var(--bg-raised)",
-                alignItems: "center",
               }}
             >
-              <div style={{
-                ...mono(12, "var(--text-secondary)"),
-                display: "flex", alignItems: "center", gap: 6,
-              }}>
+              <div className="font-mono text-xs text-text-secondary flex items-center gap-1.5">
                 <Icon n="file" size={14} color="var(--text-muted)" />
                 {plan.filename || "--"}
               </div>
-              <div style={mono(12, "var(--text-muted)")}>
+              <div className="font-mono text-xs text-text-muted">
                 {plan.description || "--"}
               </div>
-              <div style={mono(12, "var(--text-muted)")}>
+              <div className="font-mono text-xs text-text-muted">
                 {plan.uploaded_by || "--"}
               </div>
-              <div style={mono(12, "var(--text-muted)")}>
+              <div className="font-mono text-xs text-text-muted">
                 {plan.uploaded_at || "--"}
               </div>
-              <div style={{ display: "flex", justifyContent: "center" }}>
+              <div className="flex justify-center">
                 <button
-                  className="toggle-btn"
+                  className="toggle-btn py-1 px-1.5 bg-transparent border border-border rounded-sm"
                   disabled={disabled}
                   style={{
-                    padding: "4px 6px",
-                    background: "transparent",
-                    border: "1px solid var(--border)",
-                    borderRadius: "var(--radius-sm)",
                     cursor: disabled ? "default" : "pointer",
                   }}
                 >
@@ -117,14 +93,7 @@ export const EngineeringPlans = ({ survey, setField, disabled }) => {
       )}
 
       {plans.length === 0 && (
-        <div style={{
-          ...mono(12, "var(--text-muted)"),
-          padding: 20,
-          textAlign: "center",
-          background: "var(--bg-raised)",
-          borderRadius: "var(--radius-lg)",
-          border: "1px solid var(--border)",
-        }}>
+        <div className="font-mono text-xs text-text-muted text-center p-5 bg-bg-raised rounded-lg border border-border">
           {t("noPlans")}
         </div>
       )}

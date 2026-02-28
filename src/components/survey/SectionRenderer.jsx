@@ -106,7 +106,7 @@ export const SectionRenderer = ({
         }}
         readOnly={readOnly}
       >
-        <div style={{ padding: 20, textAlign: "center", color: "var(--text-muted)" }}>
+        <div className="p-5 text-center text-text-muted">
           Section coming soon...
         </div>
       </SectionCard>

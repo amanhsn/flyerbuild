@@ -1,6 +1,6 @@
 import { Field, ToggleButton, Checkbox } from "../../shared";
 import { useLang } from "../../../i18n/LangContext";
-import { mono } from "../../../styles/helpers";
+
 
 const VERTICAL_SOLUTIONS = [
   "T1", "T1x", "T2", "T2x", "T2xi", "T3", "T3x", "T3i", "T3xi",
@@ -24,7 +24,7 @@ export const DistributionZone = ({ survey, setField, disabled }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+    <div className="flex flex-col gap-5">
       {/* MRO Zone (read-only) */}
       <Field
         label={t("mroZone")}
@@ -42,10 +42,10 @@ export const DistributionZone = ({ survey, setField, disabled }) => {
 
       {/* Planned Distribution */}
       <div>
-        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">
           {t("plannedDistribution")}
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="flex gap-2">
           <ToggleButton
             label="Underground"
             variant="primary"
@@ -65,10 +65,10 @@ export const DistributionZone = ({ survey, setField, disabled }) => {
 
       {/* Planned Introduction */}
       <div>
-        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">
           {t("plannedIntroduction")}
         </div>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <div className="flex gap-2 flex-wrap">
           <ToggleButton
             label="Underground"
             variant="primary"
@@ -95,10 +95,10 @@ export const DistributionZone = ({ survey, setField, disabled }) => {
 
       {/* Vertical Solution (multi-select) */}
       <div>
-        <div style={mono(12, "var(--text-muted)", { textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 })}>
+        <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">
           {t("verticalSolution")}
         </div>
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+        <div className="flex gap-1.5 flex-wrap">
           {VERTICAL_SOLUTIONS.map((sol) => (
             <ToggleButton
               key={sol}
@@ -121,7 +121,7 @@ export const DistributionZone = ({ survey, setField, disabled }) => {
           disabled={disabled}
         />
         {zone.frontGarden && (
-          <div style={{ marginTop: 10, paddingLeft: 30 }}>
+          <div className="mt-2.5 pl-[30px]">
             <Field
               label={t("frontGardenLength")}
               value={zone.frontGardenLength}

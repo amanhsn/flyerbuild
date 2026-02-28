@@ -68,7 +68,7 @@ export const AdminPortalRoot = ({ sidebarOpen, onSidebarClose, onMenuToggle }) =
         open={sidebarOpen}
         onClose={onSidebarClose}
       />
-      <main style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column", paddingBottom: isMobile ? 60 : 0 }}>
+      <main className="flex-1 overflow-hidden flex flex-col" style={{ paddingBottom: isMobile ? 60 : 0 }}>
         {activeTab === "executive" && <ExecutiveDashboard surveys={surveys} onCreateSurvey={() => setActiveTab("create")} />}
         {activeTab === "create" && <CreateSurvey onSubmit={addSurvey} onCancel={() => setActiveTab("executive")} />}
         {activeTab === "project" && <ProjectDashboard />}
