@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useLang } from "../../i18n/LangContext";
-import { KpiCard, StatusBadge } from "../../components/shared";
+import { KpiCard, StatusBadge, EmptyState } from "../../components/shared";
 import { Icon } from "../../icons/Icon";
 import { disp, mono } from "../../styles/helpers";
 import { useIsMobile } from "../../hooks/useIsMobile";
@@ -83,9 +83,7 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
           </div>
         ))}
         {filtered.length === 0 && (
-          <div style={{ padding: 40, textAlign: "center", ...mono(13, "var(--text-muted)") }}>
-            No surveys match this filter.
-          </div>
+          <EmptyState icon="list" message="No surveys match this filter." sub="Try adjusting your filters" />
         )}
       </div>
     </div>

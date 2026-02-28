@@ -3,13 +3,14 @@ import { useLang } from "../../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../../data/mockSurveys";
 import { STATUSES } from "../../../data/statusConfig";
 import { KpiCard, ChartCard } from "../../../components/shared";
+import { Icon } from "../../../icons/Icon";
 import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
-export const ExecutiveDashboard = () => {
+export const ExecutiveDashboard = ({ surveys: surveysProp, onCreateSurvey }) => {
   const { t } = useLang();
   const isMobile = useIsMobile();
-  const surveys = MOCK_SURVEYS;
+  const surveys = surveysProp || MOCK_SURVEYS;
 
   const stats = useMemo(() => {
     const total = surveys.length;
@@ -31,10 +32,24 @@ export const ExecutiveDashboard = () => {
 
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "20px 16px" : "24px 28px" }}>
-      <h1 style={disp(isMobile ? 22 : 28, 800)}>Executive Dashboard</h1>
-      <p style={mono(14, "var(--text-secondary)", { marginTop: 4, marginBottom: 24 })}>
-        Overall platform metrics — {stats.total} total addresses
-      </p>
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 24 }}>
+        <div>
+          <h1 style={disp(isMobile ? 22 : 28, 800)}>Executive Dashboard</h1>
+          <p style={mono(14, "var(--text-secondary)", { marginTop: 4 })}>
+            Overall platform metrics — {stats.total} total addresses
+          </p>
+        </div>
+        {onCreateSurvey && (
+          <button
+            className="toggle-btn primary active"
+            onClick={onCreateSurvey}
+            style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 20px", flexShrink: 0 }}
+          >
+            <Icon n="plus" size={16} color="#fff" />
+            {!isMobile && "Create Survey"}
+          </button>
+        )}
+      </div>
 
       {/* KPI Row */}
       <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(140px, 1fr))", gap: isMobile ? 8 : 12, marginBottom: 24 }}>

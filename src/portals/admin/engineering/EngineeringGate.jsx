@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLang } from "../../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../../data/mockSurveys";
 import { BUILD_TYPES, BUILD_TYPE_KEYS } from "../../../data/buildTypes";
-import { FileUploadZone, StatusBadge, AssignmentModal } from "../../../components/shared";
+import { FileUploadZone, StatusBadge, AssignmentModal, EmptyState } from "../../../components/shared";
 import { Icon } from "../../../icons/Icon";
 import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
@@ -184,9 +184,7 @@ export const EngineeringGate = () => {
               )}
             </div>
           ) : (
-            <div style={{ padding: 40, textAlign: "center", ...mono(13, "var(--text-muted)") }}>
-              Select an address to configure engineering inputs
-            </div>
+            <EmptyState icon="settings" message="Select an address to configure engineering inputs" sub="Choose from the list on the left" />
           )}
         </div>
         )}

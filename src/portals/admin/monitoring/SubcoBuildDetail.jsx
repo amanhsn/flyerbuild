@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { DisputeBanner } from "../../../components/shared/DisputeBanner";
+import { EmptyState } from "../../../components/shared/EmptyState";
 import { TextArea } from "../../../components/shared/Field";
 import { BUILD_TYPES, BUILD_PHASES, BUILD_PHASE_LABELS } from "../../../data/buildTypes";
 import { Icon } from "../../../icons/Icon";
@@ -173,12 +174,8 @@ export const SubcoBuildDetail = ({ build, onBack, isMobile }) => {
             ))}
           </div>
         ) : (
-          <div style={{
-            padding: 24, textAlign: "center", marginBottom: 16,
-            border: "1px dashed var(--border)", borderRadius: "var(--radius-md)",
-            ...mono(12, "var(--text-muted)"),
-          }}>
-            No images uploaded for this phase
+          <div style={{ marginBottom: 16, border: "1px dashed var(--border)", borderRadius: "var(--radius-md)" }}>
+            <EmptyState icon="camera" message="No images uploaded for this phase" pad={24} />
           </div>
         )}
 

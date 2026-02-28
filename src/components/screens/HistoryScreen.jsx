@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useLang } from "../../i18n/LangContext";
 import { StatusBadge } from "../shared/StatusBadge";
+import { EmptyState } from "../shared/EmptyState";
 import { Icon } from "../../icons/Icon";
 import { disp, mono } from "../../styles/helpers";
 import { useIsMobile } from "../../hooks/useIsMobile";
@@ -150,9 +151,7 @@ export const HistoryScreen = () => {
       </div>
 
       {history.length === 0 && (
-        <div style={{ padding: 40, textAlign: "center", ...mono(13, "var(--text-muted)") }}>
-          No visit history yet.
-        </div>
+        <EmptyState icon="clock" message="No visit history yet." sub="Completed visits will appear here" />
       )}
     </div>
   );

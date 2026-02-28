@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useLang } from "../../i18n/LangContext";
-import { KpiCard } from "../../components/shared";
+import { KpiCard, EmptyState } from "../../components/shared";
 import { Icon } from "../../icons/Icon";
 import { disp, mono } from "../../styles/helpers";
 import { BUILD_PHASE_LABELS } from "../../data/buildTypes";
@@ -115,9 +115,7 @@ export const SubcoAssignmentList = ({ assignments, filter, setFilter, onSelect }
           </div>
         ))}
         {filtered.length === 0 && (
-          <div style={{ padding: 40, textAlign: "center", ...mono(13, "var(--text-muted)") }}>
-            No assignments match this filter.
-          </div>
+          <EmptyState icon="clipboard" message="No assignments match this filter." sub="Try adjusting your filters" />
         )}
       </div>
     </div>

@@ -32,7 +32,7 @@ const ALL_SECTIONS = [
 // Helpers
 // ---------------------------------------------------------------------------
 
-function emptyPhotos() {
+export function emptyPhotos() {
   return {
     facade: [],
     letterbox: [],
@@ -47,7 +47,7 @@ function emptyPhotos() {
   };
 }
 
-function emptyExecutionQuantities() {
+export function emptyExecutionQuantities() {
   return {
     cost_lead_in_trench: 0,
     diamond_drilling_cost: 0,
@@ -62,7 +62,7 @@ function emptyExecutionQuantities() {
   };
 }
 
-function emptyExistingTelecom() {
+export function emptyExistingTelecom() {
   return {
     existing_fyber: false,
     existing_fyber_remarks: "",
@@ -82,7 +82,7 @@ function emptyExistingTelecom() {
   };
 }
 
-function emptyFacadeStreet() {
+export function emptyFacadeStreet() {
   return {
     protective_heritage_facade: false,
     electric_cables_facade: false,
@@ -98,7 +98,7 @@ function emptyFacadeStreet() {
   };
 }
 
-function emptyDistributionZone() {
+export function emptyDistributionZone() {
   return {
     mro_zone: "",
     pop_area: "",
@@ -111,7 +111,7 @@ function emptyDistributionZone() {
   };
 }
 
-function emptyBuildingInfo() {
+export function emptyBuildingInfo() {
   return {
     name_residence: "",
     evp_area: "",
@@ -126,7 +126,7 @@ function emptyBuildingInfo() {
   };
 }
 
-function emptyBuildingOwner() {
+export function emptyBuildingOwner() {
   return {
     owner_found: false,
     owner_name: "",
@@ -147,7 +147,7 @@ function emptyBuildingOwner() {
   };
 }
 
-function emptyAgreement() {
+export function emptyAgreement() {
   return {
     undersigned_name: "",
     signature_date_owner: "",

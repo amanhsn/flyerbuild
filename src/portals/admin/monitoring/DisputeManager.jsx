@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLang } from "../../../i18n/LangContext";
 import { TextArea } from "../../../components/shared/Field";
+import { EmptyState } from "../../../components/shared/EmptyState";
 import { Icon } from "../../../icons/Icon";
 import { disp, mono } from "../../../styles/helpers";
 
@@ -108,9 +109,7 @@ export const DisputeManager = () => {
           </div>
         ))}
         {open.length === 0 && (
-          <div style={{ padding: 20, textAlign: "center", ...mono(14, "var(--text-muted)") }}>
-            No open disputes
-          </div>
+          <EmptyState icon="shield" message="No open disputes" sub="All clear" pad={24} />
         )}
       </div>
 

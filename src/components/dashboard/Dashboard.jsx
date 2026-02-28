@@ -7,6 +7,7 @@ import { SurveyCard } from "./SurveyCard";
 import { FilterBar } from "./FilterBar";
 import { Icon } from "../../icons/Icon";
 import { SkeletonKpiCard, SkeletonSurveyCard } from "../shared/Skeleton";
+import { EmptyState } from "../shared/EmptyState";
 import { disp, mono } from "../../styles/helpers";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
@@ -98,12 +99,7 @@ export const Dashboard = ({ onSelectSurvey, loading = false }) => {
               />
             ))}
             {filtered.length === 0 && (
-              <div style={{
-                padding: 40, textAlign: "center",
-                ...mono(13, "var(--text-muted)"),
-              }}>
-                No surveys match this filter.
-              </div>
+              <EmptyState icon="list" message="No surveys match this filter." sub="Try adjusting your filters" />
             )}
           </div>
         </>

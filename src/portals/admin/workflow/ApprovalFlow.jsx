@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useLang } from "../../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../../data/mockSurveys";
-import { ApprovalGate, StatusBadge } from "../../../components/shared";
+import { ApprovalGate, StatusBadge, EmptyState } from "../../../components/shared";
 import { Icon } from "../../../icons/Icon";
 import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
@@ -106,9 +106,7 @@ export const ApprovalFlow = () => {
                 </div>
               </div>
             ) : (
-              <div style={{ padding: 40, textAlign: "center", ...mono(13, "var(--text-muted)") }}>
-                Select an address to view approval gates
-              </div>
+              <EmptyState icon="shield" message="Select an address to view approval gates" sub="Choose from the list on the left" />
             )}
           </div>
         )}

@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { EmptyState } from "./EmptyState";
 import { mono, disp } from "../../styles/helpers";
 
 /**
@@ -60,9 +61,7 @@ export const DataTable = ({ columns, rows, onRowClick, selectedId, emptyMessage 
 
         {/* Rows */}
         {sorted.length === 0 ? (
-          <div style={{ padding: 24, textAlign: "center", ...mono(14, "var(--text-muted)") }}>
-            {emptyMessage}
-          </div>
+          <EmptyState icon="list" message={emptyMessage} pad={24} />
         ) : (
           sorted.map((row, i) => (
             <div

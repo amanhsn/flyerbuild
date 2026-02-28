@@ -19,3 +19,4 @@ export { AssignmentModal } from "./AssignmentModal";
 export { BottomSheet } from "./BottomSheet";
 export { Skeleton, SkeletonKpiCard, SkeletonSurveyCard } from "./Skeleton";
 export { EmptyState } from "./EmptyState";
+export { SignatureModal } from "./SignatureModal";

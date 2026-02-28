@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLang } from "../../../i18n/LangContext";
 import { KpiCard } from "../../../components/shared";
+import { EmptyState } from "../../../components/shared/EmptyState";
 import { Icon } from "../../../icons/Icon";
 import { disp, mono } from "../../../styles/helpers";
 import { useIsMobile } from "../../../hooks/useIsMobile";
@@ -207,12 +208,7 @@ export const SubcoMonitor = () => {
                 isMobile={isMobile}
               />
             ) : (
-              <div style={{
-                padding: 40, textAlign: "center",
-                ...mono(14, "var(--text-muted)"),
-              }}>
-                Select a build to view details
-              </div>
+              <EmptyState icon="building" message="Select a build to view details" sub="Choose from the list on the left" />
             )}
           </div>
         )}
