@@ -1,3 +1,5 @@
+"use client"
+
 import { useRef, useCallback } from "react";
 
 export const BottomSheet = ({ open, onClose, title, children }) => {

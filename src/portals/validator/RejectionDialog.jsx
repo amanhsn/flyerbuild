@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { ReasonCodeSelect } from "../../components/shared/ReasonCodeSelect";
 import { TextArea } from "../../components/shared/Field";

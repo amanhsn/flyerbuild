@@ -1,3 +1,5 @@
+"use client"
+
 import { Field, ToggleButton, Checkbox } from "../../shared";
 import { useLang } from "../../../i18n/LangContext";
 

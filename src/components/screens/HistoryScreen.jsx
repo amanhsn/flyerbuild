@@ -1,3 +1,5 @@
+"use client"
+
 import { useMemo } from "react";
 import { useLang } from "../../i18n/LangContext";
 import { StatusBadge } from "../shared/StatusBadge";

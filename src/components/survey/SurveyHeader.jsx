@@ -1,10 +1,17 @@
+"use client"
+
+import { useState } from "react";
+import dynamic from "next/dynamic";
 import { Icon } from "../../icons/Icon";
 import { StatusBadge } from "../shared";
 import { useLang } from "../../i18n/LangContext";
 import { SECTIONS } from "../../data/sectionRegistry";
 
+const SurveyMiniMap = dynamic(() => import("./SurveyMiniMap"), { ssr: false });
+
 export const SurveyHeader = ({ survey, completedCount, onBack }) => {
   const { t } = useLang();
+  const [showMap, setShowMap] = useState(false);
   const addr = survey.address;
   const totalSections = SECTIONS.length;
 
@@ -27,16 +34,29 @@ export const SurveyHeader = ({ survey, completedCount, onBack }) => {
           <h2 className="font-display text-[26px] font-extrabold tracking-wide">{addr.street} {addr.number}</h2>
           <div className="font-mono text-sm text-text-secondary mt-[3px]">{addr.postal_code} {addr.city}</div>
           <div className="flex gap-4 mt-2.5 flex-wrap">
-            {[
-              ["nav", `${survey.distance_km} km`],
-              ["clock", survey.scheduled_time],
-              ["nav", `${addr.lat}, ${addr.lng}`],
-            ].map(([icon, val], i) => (
-              <div key={i} className="flex items-center gap-[5px]">
-                <Icon n={icon} size={12} color="var(--text-muted)" />
-                <span className="font-mono text-xs text-text-secondary">{val}</span>
-              </div>
-            ))}
+            <div className="flex items-center gap-[5px]">
+              <Icon n="nav" size={12} color="var(--text-muted)" />
+              <span className="font-mono text-xs text-text-secondary">{survey.distance_km} km</span>
+            </div>
+            <div className="flex items-center gap-[5px]">
+              <Icon n="clock" size={12} color="var(--text-muted)" />
+              <span className="font-mono text-xs text-text-secondary">{survey.scheduled_time}</span>
+            </div>
+            {addr?.lat && addr?.lng && (
+              <button
+                onClick={() => setShowMap(v => !v)}
+                className="lg:hidden flex items-center gap-[5px] bg-transparent border-none cursor-pointer p-0"
+              >
+                <Icon n="nav" size={12} color="var(--text-primary-accent)" />
+                <span className="font-mono text-xs text-text-primary-accent underline underline-offset-2">
+                  {showMap ? "Hide map" : "Show map"}
+                </span>
+              </button>
+            )}
+            <div className="hidden lg:flex items-center gap-[5px]">
+              <Icon n="nav" size={12} color="var(--text-muted)" />
+              <span className="font-mono text-xs text-text-secondary">{addr.lat}, {addr.lng}</span>
+            </div>
           </div>
         </div>
         <div className="text-right shrink-0">
@@ -46,6 +66,18 @@ export const SurveyHeader = ({ survey, completedCount, onBack }) => {
           <div className="font-mono text-xs text-text-muted">{t("completed")}</div>
         </div>
       </div>
+
+      {/* Mobile map toggle */}
+      {showMap && addr?.lat && addr?.lng && (
+        <div className="lg:hidden mt-3">
+          <SurveyMiniMap
+            lat={addr.lat}
+            lng={addr.lng}
+            label={`${addr.street} ${addr.number}`}
+            height={140}
+          />
+        </div>
+      )}
 
       {/* Progress bar */}
       <div className="h-[3px] bg-bg-overlay mt-3">

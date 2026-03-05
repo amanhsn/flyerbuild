@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { ReadOnlySurveyView } from "../../components/shared/ReadOnlySurveyView";
 import { RejectionDialog } from "./RejectionDialog";
@@ -118,7 +120,7 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      <ReadOnlySurveyView survey={survey} onBack={onBack} actionBar={actionBar} />
+      <ReadOnlySurveyView survey={survey} onBack={onBack} actionBar={actionBar} scrollable={true} />
     </div>
   );
 };

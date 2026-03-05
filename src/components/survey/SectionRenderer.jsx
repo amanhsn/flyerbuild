@@ -1,3 +1,5 @@
+"use client"
+
 import { SectionCard } from "../shared/SectionCard";
 import { useLang } from "../../i18n/LangContext";
 

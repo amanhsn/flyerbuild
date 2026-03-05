@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { Field } from "../../../components/shared";
 import { ToggleButton } from "../../../components/shared";
@@ -17,7 +19,7 @@ const BUILDING_TYPES = [
   { value: "apartment",     label: "Apartment" },
 ];
 
-export const CreateSurvey = ({ onSubmit, onCancel }) => {
+export const CreateSurvey = ({ onSubmit, onCancel, projectId }) => {
   const isMobile = useIsMobile();
   const surveyors = getUsersByRole("surveyor");
 
@@ -39,6 +41,7 @@ export const CreateSurvey = ({ onSubmit, onCancel }) => {
   const handleSubmit = () => {
     if (!canSubmit) return;
     onSubmit({
+      project_id: projectId || null,
       tsg_id: form.tsg_id.trim(),
       building_id: `BLD-${form.tsg_id.trim()}`,
       address: {
@@ -91,7 +94,9 @@ export const CreateSurvey = ({ onSubmit, onCancel }) => {
         >
           <Icon n="chevR" size={18} color="var(--text-secondary)" style={{ transform: "rotate(180deg)" }} />
         </button>
-        <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Create Survey</h1>
+        <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>
+          {projectId ? "Add Survey to Project" : "Create Survey"}
+        </h1>
       </div>
 
       <div className="flex flex-col gap-4" style={{ maxWidth: 600 }}>

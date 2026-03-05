@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { Field, TextArea, ToggleButton, Checkbox } from "../../shared";
 import { useLang } from "../../../i18n/LangContext";

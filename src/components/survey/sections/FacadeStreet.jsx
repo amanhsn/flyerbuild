@@ -1,3 +1,5 @@
+"use client"
+
 import { Field, Checkbox } from "../../shared";
 import { useLang } from "../../../i18n/LangContext";
 

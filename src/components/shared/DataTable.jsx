@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useMemo } from "react";
 import { EmptyState } from "./EmptyState";
 import { cn } from "../../lib/utils";

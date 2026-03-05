@@ -163,6 +163,7 @@ export function emptyAgreement() {
 // ---------------------------------------------------------------------------
 const survey1 = {
   id: 1,
+  project_id: "proj-001",
   tsg_id: "WERK-03",
   building_id: "BLD-WERK-003",
   address: {
@@ -271,6 +272,7 @@ const survey1 = {
 // ---------------------------------------------------------------------------
 const survey2 = {
   id: 2,
+  project_id: "proj-001",
   tsg_id: "WERK-07",
   building_id: "BLD-WERK-007",
   address: {
@@ -321,6 +323,7 @@ const survey2 = {
 // ---------------------------------------------------------------------------
 const survey3 = {
   id: 3,
+  project_id: "proj-001",
   tsg_id: "MEN-02",
   building_id: "BLD-MEN-002",
   address: {
@@ -383,6 +386,7 @@ const survey3 = {
 // ---------------------------------------------------------------------------
 const survey4 = {
   id: 4,
+  project_id: "proj-001",
   tsg_id: "WERK-11",
   building_id: "BLD-WERK-011",
   address: {
@@ -529,6 +533,7 @@ const survey4 = {
 // ---------------------------------------------------------------------------
 const survey5 = {
   id: 5,
+  project_id: "proj-001",
   tsg_id: "MEN-09",
   building_id: "BLD-MEN-009",
   address: {
@@ -656,6 +661,7 @@ const survey5 = {
 // ---------------------------------------------------------------------------
 const survey6 = {
   id: 6,
+  project_id: "proj-001",
   tsg_id: "WERK-15",
   building_id: "BLD-WERK-015",
   address: {
@@ -778,6 +784,7 @@ const survey6 = {
 // ---------------------------------------------------------------------------
 const survey7 = {
   id: 7,
+  project_id: "proj-002",
   tsg_id: "MEN-04",
   building_id: "BLD-MEN-004",
   mdu_group: { group_id: "GRP-MEN-004", is_main: true, linked_surveys: [{ tsg_id: "MEN-04B", id: 13 }] },
@@ -884,6 +891,7 @@ const survey7 = {
 // ---------------------------------------------------------------------------
 const survey8 = {
   id: 8,
+  project_id: "proj-002",
   tsg_id: "WERK-22",
   building_id: "BLD-WERK-022",
   address: {
@@ -934,6 +942,7 @@ const survey8 = {
 // ---------------------------------------------------------------------------
 const survey9 = {
   id: 9,
+  project_id: "proj-002",
   tsg_id: "MEN-11",
   building_id: "BLD-MEN-011",
   address: {
@@ -1101,6 +1110,7 @@ const survey9 = {
 // ---------------------------------------------------------------------------
 const survey10 = {
   id: 10,
+  project_id: "proj-003",
   tsg_id: "WERK-08",
   building_id: "BLD-WERK-008",
   address: {
@@ -1222,6 +1232,7 @@ const survey10 = {
 // ---------------------------------------------------------------------------
 const survey11 = {
   id: 11,
+  project_id: "proj-003",
   tsg_id: "MEN-06",
   building_id: "BLD-MEN-006",
   address: {
@@ -1377,6 +1388,7 @@ const survey11 = {
 // ---------------------------------------------------------------------------
 const survey12 = {
   id: 12,
+  project_id: "proj-003",
   tsg_id: "WERK-19",
   building_id: "BLD-WERK-019",
   address: {

@@ -1,3 +1,5 @@
+"use client"
+
 import { useLang } from "../../i18n/LangContext";
 
 export const FilterBar = ({ filter, setFilter }) => {

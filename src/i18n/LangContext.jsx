@@ -1,7 +1,9 @@
+"use client"
+
 import { createContext, useContext } from "react";
 import { TRANSLATIONS } from "./translations";
 
-export const LangCtx = createContext({ lang: "en", t: (k) => k });
+export const LangCtx = createContext({ lang: "en", setLang: () => {}, t: (k) => k, theme: "light", setTheme: () => {}, userRole: null, currentUser: null });
 export const useLang = () => useContext(LangCtx);
 
 export const LangToggle = ({ lang, setLang }) => {

@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { useLang } from "../../../i18n/LangContext";
 import { FileUploadZone } from "../../../components/shared";

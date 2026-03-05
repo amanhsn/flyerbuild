@@ -1,3 +1,5 @@
+"use client"
+
 import { Field } from "../../shared";
 import { useLang } from "../../../i18n/LangContext";
 

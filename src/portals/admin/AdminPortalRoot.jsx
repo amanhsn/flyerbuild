@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { useLang } from "../../i18n/LangContext";
 import { Sidebar } from "../../components/shell/Sidebar";
@@ -21,7 +23,10 @@ const ADMIN_NAV = [
   ["executive",   "dashboard",  "Executive"],
   ["create",      "plus",       "Create Survey"],
   ["project",     "clipboard",  "Project"],
-  ["performance", "star",       "Performance"],
+  ["performance", "star",       "Performance", [
+    ["perf-surveyor", "Surveyor Stats"],
+    ["perf-subco",    "Subcontractor Stats"],
+  ]],
   ["map",         "map",        "Map & Table"],
   ["approval",    "check",      "Approvals"],
   ["engineering", "settings",   "Engineering"],
@@ -72,7 +77,8 @@ export const AdminPortalRoot = ({ sidebarOpen, onSidebarClose, onMenuToggle }) =
         {activeTab === "executive" && <ExecutiveDashboard surveys={surveys} onCreateSurvey={() => setActiveTab("create")} />}
         {activeTab === "create" && <CreateSurvey onSubmit={addSurvey} onCancel={() => setActiveTab("executive")} />}
         {activeTab === "project" && <ProjectDashboard />}
-        {activeTab === "performance" && <PerformanceDashboard />}
+        {activeTab === "perf-surveyor" && <PerformanceDashboard view="surveyor" />}
+        {activeTab === "perf-subco" && <PerformanceDashboard view="subcontractor" />}
         {activeTab === "map" && <GisMapView />}
         {activeTab === "approval" && <ApprovalFlow />}
         {activeTab === "engineering" && <EngineeringGate />}

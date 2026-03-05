@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useMemo } from "react";
 import { useLang } from "../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../data/mockSurveys";

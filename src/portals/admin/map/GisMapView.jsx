@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useMemo, useEffect } from "react";
 import { MapContainer, TileLayer, CircleMarker, Tooltip, useMap } from "react-leaflet";
 import { useLang } from "../../../i18n/LangContext";

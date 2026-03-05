@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { DisputeBanner } from "../../../components/shared/DisputeBanner";
 import { EmptyState } from "../../../components/shared/EmptyState";

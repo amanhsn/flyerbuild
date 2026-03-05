@@ -1,15 +1,31 @@
+"use client"
+
+import dynamic from "next/dynamic";
 import { Icon } from "../../icons/Icon";
 import { StatusBadge, Accordion } from "../shared";
 import { useLang } from "../../i18n/LangContext";
 import { SECTIONS } from "../../data/sectionRegistry";
 import { cn } from "../../lib/utils";
 
+const SurveyMiniMap = dynamic(() => import("./SurveyMiniMap"), { ssr: false });
+
 export const SurveySidebar = ({ survey, visibleSections }) => {
   const { t } = useLang();
   const completedSet = new Set(survey.completed_sections);
+  const addr = survey.address;
 
   return (
     <div className="w-[280px] shrink-0 border-l border-border bg-bg-raised overflow-y-auto flex flex-col gap-3 p-4">
+      {/* Map */}
+      {addr?.lat && addr?.lng && (
+        <SurveyMiniMap
+          lat={addr.lat}
+          lng={addr.lng}
+          label={`${addr.street} ${addr.number}`}
+          height={160}
+        />
+      )}
+
       {/* Status */}
       <div className="px-3.5 py-3 rounded-md bg-bg-elevated border border-border">
         <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-2">

@@ -1,3 +1,5 @@
+"use client"
+
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { cn } from "../../lib/utils";
 

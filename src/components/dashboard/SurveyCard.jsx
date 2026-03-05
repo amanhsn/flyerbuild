@@ -1,3 +1,5 @@
+"use client"
+
 import { Icon } from "../../icons/Icon";
 import { StatusBadge, MiniProgress } from "../shared";
 import { SECTIONS } from "../../data/sectionRegistry";

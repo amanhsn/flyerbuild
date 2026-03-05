@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { useLang } from "../../i18n/LangContext";
 import { useSurveyForm } from "../../hooks/useSurveyForm";
@@ -23,6 +25,7 @@ export const SurveyView = ({ initialSurvey, onBack }) => {
   );
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mduBannerDismissed, setMduBannerDismissed] = useState(false);
   const [autoSaveStatus, setAutoSaveStatus] = useState(null); // null | "saving" | "saved"
   const autoSaveTimer = useRef(null);
@@ -158,8 +161,17 @@ export const SurveyView = ({ initialSurvey, onBack }) => {
         </div>
 
         {/* Sidebar — desktop only */}
-        <div className="survey-sidebar-desktop flex">
-          <SurveySidebar survey={survey} visibleSections={visibleSections} />
+        <div className="survey-sidebar-desktop flex relative">
+          <button
+            onClick={() => setSidebarOpen(o => !o)}
+            className="absolute -left-3 top-4 z-10 w-6 h-6 rounded-full bg-bg-elevated border border-border flex items-center justify-center cursor-pointer hover:bg-bg-overlay transition-colors"
+            title={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
+          >
+            <Icon n={sidebarOpen ? "chevron-right" : "chevron-left"} size={12} color="var(--text-muted)" />
+          </button>
+          {sidebarOpen && (
+            <SurveySidebar survey={survey} visibleSections={visibleSections} />
+          )}
         </div>
       </div>
     </div>

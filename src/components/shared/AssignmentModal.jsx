@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { getUsersByRole } from "../../data/mockUsers";
 import { TextArea } from "./Field";

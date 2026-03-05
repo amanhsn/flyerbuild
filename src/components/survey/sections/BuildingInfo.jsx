@@ -1,3 +1,5 @@
+"use client"
+
 import { Field, TextArea } from "../../shared";
 import { Icon } from "../../../icons/Icon";
 import { useLang } from "../../../i18n/LangContext";

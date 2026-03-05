@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { useLang } from "../../i18n/LangContext";
 import { Sidebar } from "../../components/shell/Sidebar";
@@ -23,7 +25,17 @@ export const SurveyorPortalRoot = ({ sidebarOpen, onSidebarClose }) => {
 
   return (
     <>
-      {!showSurveyView && (
+      {!isMobile && (
+        <Sidebar
+          active={navTab}
+          setActive={handleNav}
+          roleLabel="Surveyor"
+          open={sidebarOpen}
+          onClose={onSidebarClose}
+          collapsed={showSurveyView}
+        />
+      )}
+      {isMobile && !showSurveyView && (
         <Sidebar
           active={navTab}
           setActive={handleNav}

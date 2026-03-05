@@ -1,3 +1,5 @@
+"use client"
+
 import { useReducer, useCallback } from "react";
 import { HIDDEN_STATUSES, SAVE_DISABLED_STATUSES } from "../data/statusConfig";
 

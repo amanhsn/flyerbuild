@@ -1,3 +1,5 @@
+"use client"
+
 import { TextArea } from "../../shared";
 import { PhotoSlot } from "../../shared/PhotoSlot";
 import { useLang } from "../../../i18n/LangContext";

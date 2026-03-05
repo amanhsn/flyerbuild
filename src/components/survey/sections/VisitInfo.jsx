@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { Field, TextArea, ToggleButton } from "../../shared";
 import { Icon } from "../../../icons/Icon";

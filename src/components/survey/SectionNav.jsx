@@ -1,3 +1,5 @@
+"use client"
+
 import { Icon } from "../../icons/Icon";
 import { useLang } from "../../i18n/LangContext";
 import { cn } from "../../lib/utils";
@@ -27,11 +29,14 @@ const SHORT_KEYS = {
   statement_agreement: "short_agreement",
 };
 
-export const SectionNav = ({ sections, activeIndex, completedSections, onSelect }) => {
+export const SectionNav = ({ sections, activeIndex, completedSections, onSelect, sticky = false }) => {
   const { t } = useLang();
 
   return (
-    <div className="flex overflow-x-auto bg-bg-elevated border-b border-border shrink-0">
+    <div className={cn(
+      "flex overflow-x-auto bg-bg-elevated border-b border-border shrink-0",
+      sticky && "sticky top-0 z-10"
+    )}>
       {sections.map((s, i) => {
         const isActive = i === activeIndex;
         const isDone = completedSections.includes(s.key);

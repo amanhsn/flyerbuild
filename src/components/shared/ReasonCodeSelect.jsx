@@ -1,3 +1,5 @@
+"use client"
+
 import { useLang } from "../../i18n/LangContext";
 import { REJECTION_REASONS } from "../../data/rejectionReasons";
 
