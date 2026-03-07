@@ -30,7 +30,9 @@
       "mcp__ide__getDiagnostics",
       "Bash(echo CSS URL: $CSS_URL:*)",
       "Bash(head:*)",
-      "Bash(npx vitest:*)"
+      "Bash(npx vitest:*)",
+      "mcp__stitch__list_projects",
+      "mcp__claude_ai_Figma__create_design_system_rules"
     ]
   }
 }
