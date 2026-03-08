@@ -3,6 +3,7 @@
 import { Icon } from "../../icons/Icon";
 import { StatusBadge, MiniProgress } from "../shared";
 import { SECTIONS } from "../../data/sectionRegistry";
+import { getProjectForSurvey } from "../../data/mockProjects";
 
 export const SurveyCard = ({ survey, selected, onClick }) => {
   const addr = survey.address;
@@ -10,6 +11,7 @@ export const SurveyCard = ({ survey, selected, onClick }) => {
   const totalSections = SECTIONS.length;
   const isConflict = ["rework", "rejected"].includes(survey.status);
   const isDone = ["completed", "sent"].includes(survey.status);
+  const project = getProjectForSurvey(survey);
 
   return (
     <div
@@ -22,6 +24,11 @@ export const SurveyCard = ({ survey, selected, onClick }) => {
             {survey.priority && <Icon n="star" size={12} color="var(--text-primary-accent)" />}
             <StatusBadge status={survey.status} />
             <span className="font-mono text-xs text-text-muted">{survey.tsg_id}</span>
+            {project && (
+              <span className="font-mono text-[10px] text-primary bg-primary-glow border border-primary-dim px-1.5 py-[1px] rounded-sm whitespace-nowrap" style={{ background: "var(--primary-glow)", borderColor: "var(--primary-dim)", color: "var(--text-primary-accent)" }}>
+                {project.name}
+              </span>
+            )}
           </div>
           <div className="font-display text-[19px] font-bold tracking-wide">{addr.street} {addr.number}</div>
           <div className="font-mono text-sm text-text-secondary mt-0.5">{addr.postal_code} {addr.city}</div>

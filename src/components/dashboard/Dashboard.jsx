@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { useLang } from "../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../data/mockSurveys";
 import { STATUS_GROUPS } from "../../data/statusConfig";
+import { MOCK_PROJECTS } from "../../data/mockProjects";
 import { KpiRow } from "./KpiRow";
 import { SurveyCard } from "./SurveyCard";
 import { FilterBar } from "./FilterBar";
@@ -33,14 +34,20 @@ export const Dashboard = ({ onSelectSurvey, loading = false }) => {
   const { t } = useLang();
   const isMobile = useIsMobile();
   const [filter, setFilter] = useState("all");
+  const [projectFilter, setProjectFilter] = useState("all");
   const surveys = MOCK_SURVEYS;
 
   const filtered = useMemo(() => {
-    if (filter === "all") return surveys;
-    const group = STATUS_GROUPS[filter];
-    if (!group) return surveys;
-    return surveys.filter(s => group.includes(s.status));
-  }, [surveys, filter]);
+    let result = surveys;
+    if (projectFilter !== "all") {
+      result = result.filter(s => s.project_id === projectFilter);
+    }
+    if (filter !== "all") {
+      const group = STATUS_GROUPS[filter];
+      if (group) result = result.filter(s => group.includes(s.status));
+    }
+    return result;
+  }, [surveys, filter, projectFilter]);
 
   return (
     <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "16px" : "24px 28px" }}>
@@ -79,7 +86,20 @@ export const Dashboard = ({ onSelectSurvey, loading = false }) => {
           </div>
 
           {/* Filters */}
-          <FilterBar filter={filter} setFilter={setFilter} />
+          <div className="flex items-center gap-3 flex-wrap">
+            <FilterBar filter={filter} setFilter={setFilter} />
+            <select
+              value={projectFilter}
+              onChange={(e) => setProjectFilter(e.target.value)}
+              className="font-mono text-xs bg-bg-elevated border border-border rounded-md text-text-primary cursor-pointer"
+              style={{ padding: "6px 10px" }}
+            >
+              <option value="all">All Projects</option>
+              {MOCK_PROJECTS.map(p => (
+                <option key={p.id} value={p.id}>{p.name}</option>
+              ))}
+            </select>
+          </div>
 
           {/* Survey cards */}
           <div className="mt-3">

@@ -1,10 +1,13 @@
 "use client"
 
 import { useMemo } from "react";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { useLang } from "../../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../../data/mockSurveys";
 import { STATUSES } from "../../../data/statusConfig";
-import { KpiCard, ChartCard } from "../../../components/shared";
+import { KpiCard } from "../../../components/shared";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../../../components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "../../../components/ui/chart";
 import { Icon } from "../../../icons/Icon";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
@@ -25,11 +28,37 @@ export const ExecutiveDashboard = ({ surveys: surveysProp, onCreateSurvey }) => 
     return { total, completed, inProgress, pending, review, issues, byStatus };
   }, [surveys]);
 
+  // Status distribution for bar chart
   const statusChartData = Object.entries(stats.byStatus).map(([status, count]) => ({
-    label: STATUSES[status]?.label || status,
-    value: count,
-    color: STATUSES[status]?.color || "var(--text-muted)",
+    name: STATUSES[status]?.label || status,
+    count,
+    fill: STATUSES[status]?.hex || "#94a3b8",
   }));
+
+  const statusChartConfig = Object.fromEntries(
+    statusChartData.map(d => [d.name, { label: d.name, color: d.fill }])
+  );
+
+  // Weekly trend data
+  const weeklyData = [
+    { week: "W1", completed: 2, started: 3 },
+    { week: "W2", completed: 3, started: 4 },
+    { week: "W3", completed: 1, started: 5 },
+    { week: "W4", completed: 4, started: 2 },
+  ];
+  const weeklyConfig = {
+    completed: { label: "Completed", color: "var(--chart-3)" },
+    started: { label: "Started", color: "var(--chart-2)" },
+  };
+
+  // Pie data for funnel
+  const pieData = [
+    { name: "In Progress", value: stats.inProgress + stats.pending, fill: "var(--chart-1)" },
+    { name: "In Review", value: stats.review, fill: "var(--chart-2)" },
+    { name: "Completed", value: stats.completed, fill: "var(--chart-3)" },
+    { name: "Issues", value: stats.issues, fill: "var(--chart-5)" },
+  ].filter(d => d.value > 0);
+  const pieConfig = Object.fromEntries(pieData.map(d => [d.name, { label: d.name, color: d.fill }]));
 
   return (
     <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "20px 16px" : "24px 28px" }}>
@@ -62,42 +91,111 @@ export const ExecutiveDashboard = ({ surveys: surveysProp, onCreateSurvey }) => 
         <KpiCard label="Issues" value={stats.issues} color="var(--red)" total={stats.total} />
       </div>
 
-      {/* Status distribution chart */}
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16 }}>
-        <ChartCard title="Status Distribution" data={statusChartData} height={160} />
-        <ChartCard
-          title="Weekly Completion Trend"
-          data={[
-            { label: "W1", value: 2, color: "var(--green)" },
-            { label: "W2", value: 3, color: "var(--green)" },
-            { label: "W3", value: 1, color: "var(--green)" },
-            { label: "W4", value: 4, color: "var(--green)" },
-          ]}
-          height={160}
-        />
+      {/* Charts row */}
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16, marginBottom: 16 }}>
+        {/* Status Distribution */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Status Distribution</CardTitle>
+            <CardDescription>Survey count by current status</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ChartContainer config={statusChartConfig} className="h-[200px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={statusChartData} margin={{ top: 8, right: 8, bottom: 0, left: -20 }}>
+                  <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="name"
+                    tickLine={false}
+                    axisLine={false}
+                    tickMargin={8}
+                    tick={{ fontSize: 10, fill: "var(--text-muted)" }}
+                    interval={0}
+                    angle={isMobile ? -45 : 0}
+                    textAnchor={isMobile ? "end" : "middle"}
+                    height={isMobile ? 60 : 30}
+                  />
+                  <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "var(--text-muted)" }} width={30} />
+                  <ChartTooltip content={<ChartTooltipContent hideIndicator />} />
+                  <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+                    {statusChartData.map((entry, i) => (
+                      <Cell key={i} fill={entry.fill} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+
+        {/* Weekly Trend */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Weekly Completion Trend</CardTitle>
+            <CardDescription>Surveys completed vs started per week</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ChartContainer config={weeklyConfig} className="h-[200px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={weeklyData} margin={{ top: 8, right: 8, bottom: 0, left: -20 }}>
+                  <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 3" />
+                  <XAxis dataKey="week" tickLine={false} axisLine={false} tickMargin={8} tick={{ fontSize: 11, fill: "var(--text-muted)" }} />
+                  <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "var(--text-muted)" }} width={30} />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <ChartLegend content={<ChartLegendContent />} />
+                  <Bar dataKey="completed" fill="var(--color-completed)" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="started" fill="var(--color-started)" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Completion funnel */}
-      <div className="mt-6">
-        <div className="font-mono text-xs text-text-muted uppercase tracking-widest mb-3">
-          Workflow Funnel
-        </div>
-        <div className="items-end" style={{ display: isMobile ? "grid" : "flex", gridTemplateColumns: "1fr 1fr", gap: isMobile ? 8 : 4 }}>
-          {[
-            { label: "Survey", count: stats.inProgress + stats.pending, color: "var(--primary)" },
-            { label: "Validation", count: stats.review, color: "var(--blue)" },
-            { label: "Completed", count: stats.completed, color: "var(--green)" },
-            { label: "Issues", count: stats.issues, color: "var(--red)" },
-          ].map((stage, i) => (
-            <div key={i} className="flex-1 text-center bg-bg-raised border border-border rounded-md" style={{
-              padding: "12px 16px",
-            }}>
-              <div className="font-display text-2xl font-extrabold tracking-wide" style={{ color: stage.color }}>{stage.count}</div>
-              <div className="font-mono text-xs text-text-secondary mt-1">{stage.label}</div>
+      {/* Workflow Funnel — Pie + stages */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Workflow Funnel</CardTitle>
+          <CardDescription>Survey distribution across pipeline stages</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className={`flex ${isMobile ? "flex-col" : "items-center"} gap-6`}>
+            <ChartContainer config={pieConfig} className={`${isMobile ? "h-[180px] w-full" : "h-[180px] w-[180px]"} shrink-0`}>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+                  <Pie
+                    data={pieData}
+                    dataKey="value"
+                    nameKey="name"
+                    innerRadius={45}
+                    outerRadius={75}
+                    strokeWidth={2}
+                    stroke="var(--bg-raised)"
+                  >
+                    {pieData.map((entry, i) => (
+                      <Cell key={i} fill={entry.fill} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+            <div className="flex-1 grid gap-2" style={{ gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)" }}>
+              {[
+                { label: "Survey", count: stats.inProgress + stats.pending, color: "var(--chart-1)" },
+                { label: "Validation", count: stats.review, color: "var(--chart-2)" },
+                { label: "Completed", count: stats.completed, color: "var(--chart-3)" },
+                { label: "Issues", count: stats.issues, color: "var(--chart-5)" },
+              ].map((stage, i) => (
+                <div key={i} className="text-center bg-bg-elevated border border-border rounded-md" style={{ padding: "12px 8px" }}>
+                  <div className="font-display text-2xl font-extrabold tracking-wide" style={{ color: stage.color }}>{stage.count}</div>
+                  <div className="font-mono text-[10px] text-text-secondary mt-1 uppercase tracking-wider">{stage.label}</div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

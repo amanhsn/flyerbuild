@@ -11,7 +11,7 @@ import { useIsMobile } from "../../../hooks/useIsMobile";
 const FILTERS = ["all", "active", "completed", "archived"];
 
 function getProjectStats(project) {
-  const surveys = MOCK_SURVEYS.filter((s) => project.survey_ids.includes(s.id));
+  const surveys = MOCK_SURVEYS.filter((s) => s.project_id === project.id);
   const total = surveys.length;
   const completed = surveys.filter((s) => ["completed", "sent"].includes(s.status)).length;
   const inProgress = surveys.filter((s) => ["on_going", "visited"].includes(s.status)).length;
@@ -28,7 +28,7 @@ export const ProjectList = () => {
     return MOCK_PROJECTS.filter((p) => p.status === filter);
   }, [filter]);
 
-  const totalSurveys = MOCK_PROJECTS.reduce((sum, p) => sum + p.survey_ids.length, 0);
+  const totalSurveys = MOCK_SURVEYS.length;
   const activeProjects = MOCK_PROJECTS.filter((p) => p.status === "active").length;
   const allStats = MOCK_PROJECTS.map(getProjectStats);
   const totalCompleted = allStats.reduce((s, st) => s + st.completed, 0);

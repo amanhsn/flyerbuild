@@ -5,22 +5,14 @@ import { useLang } from "../../../i18n/LangContext";
 import { FileUploadZone } from "../../../components/shared";
 import { Icon } from "../../../icons/Icon";
 import { useIsMobile } from "../../../hooks/useIsMobile";
-
-const PAYMENT_CODES = [
-  { code: "PC-001", description: "Lead-in trench (per meter)", unitPrice: 45.00 },
-  { code: "PC-002", description: "Diamond drilling (per unit)", unitPrice: 85.00 },
-  { code: "PC-003", description: "Wall penetration (per unit)", unitPrice: 35.00 },
-  { code: "PC-004", description: "Cable duct installation (per meter)", unitPrice: 22.00 },
-  { code: "PC-005", description: "Fire retardant conduit (per unit)", unitPrice: 55.00 },
-  { code: "PC-006", description: "Floorbox installation (per unit)", unitPrice: 120.00 },
-];
+import { PRICING_REGISTRY } from "../../../data/pricingRegistry";
 
 const MOCK_MEETSTAAT = [
   { tsg_id: "WERK-08", subco: "FiberCo BVBA", status: "pending_review", uploadedAt: "2026-02-26", files: [{ name: "meetstaat_WERK-08.pdf" }] },
   { tsg_id: "MEN-09", subco: "TelNet BV", status: "approved", uploadedAt: "2026-02-24", files: [{ name: "meetstaat_MEN-09.pdf" }] },
 ];
 
-export const MeetstaaReview = () => {
+export const MeetstaaReview = ({ embedded = false }) => {
   const { t } = useLang();
   const isMobile = useIsMobile();
   const [selectedId, setSelectedId] = useState(null);
@@ -29,11 +21,15 @@ export const MeetstaaReview = () => {
   const selected = MOCK_MEETSTAAT.find(m => m.tsg_id === selectedId);
 
   return (
-    <div className="flex-1 overflow-y-auto" style={{ padding: isMobile ? "16px" : "24px 28px" }}>
-      <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Meetstaat & Financials</h1>
-      <p className="font-mono text-sm text-text-secondary mt-1 mb-6">
-        Review subcontractor return PDFs and reconcile payment items
-      </p>
+    <div className={embedded ? "" : "flex-1 overflow-y-auto"} style={embedded ? {} : { padding: isMobile ? "16px" : "24px 28px" }}>
+      {!embedded && (
+        <>
+          <h1 className={`font-display ${isMobile ? "text-[22px]" : "text-[28px]"} font-extrabold tracking-wide`}>Meetstaat & Financials</h1>
+          <p className="font-mono text-sm text-text-secondary mt-1 mb-6">
+            Review subcontractor return PDFs and reconcile payment items
+          </p>
+        </>
+      )}
 
       <div className="gap-5" style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
         {/* List */}
@@ -104,7 +100,7 @@ export const MeetstaaReview = () => {
                   Payment Code Line Items
                 </div>
                 <div className="border border-border rounded-lg overflow-hidden">
-                  {PAYMENT_CODES.map(pc => {
+                  {PRICING_REGISTRY.map(pc => {
                     const qty = lineItems[`${selected.tsg_id}-${pc.code}`] || 0;
                     return (
                       <div key={pc.code} className="flex items-center gap-3 border-b border-border bg-bg-raised" style={{
@@ -112,7 +108,7 @@ export const MeetstaaReview = () => {
                         flexWrap: isMobile ? "wrap" : "nowrap",
                       }}>
                         <span className="font-mono text-xs text-primary" style={{ width: 60 }}>{pc.code}</span>
-                        <span className="font-mono text-xs text-text-secondary" style={{ flex: isMobile ? "1 1 100%" : 1 }}>{pc.description}</span>
+                        <span className="font-mono text-xs text-text-secondary" style={{ flex: isMobile ? "1 1 100%" : 1 }}>{pc.label} (per {pc.unit})</span>
                         <span className="font-mono text-xs text-text-muted">{pc.unitPrice.toFixed(2)}</span>
                         <input
                           type="number"

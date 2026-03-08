@@ -47,7 +47,9 @@ export function getProjectById(id) {
 }
 
 export function getProjectSurveys(projectId, surveys) {
-  const project = getProjectById(projectId);
-  if (!project) return [];
-  return surveys.filter((s) => project.survey_ids.includes(s.id));
+  return surveys.filter((s) => s.project_id === projectId);
+}
+
+export function getProjectForSurvey(survey) {
+  return MOCK_PROJECTS.find((p) => p.id === survey.project_id) || null;
 }

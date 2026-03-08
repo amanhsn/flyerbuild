@@ -1,7 +1,7 @@
 "use client"
 
-import { MeetstaaReview } from "@/portals/admin/financials/MeetstaaReview"
+import { FinancialsHub } from "@/portals/admin/financials/FinancialsHub"
 
 export default function AdminFinancialsPage() {
-  return <MeetstaaReview />
+  return <FinancialsHub />
 }

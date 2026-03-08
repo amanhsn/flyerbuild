@@ -32,7 +32,9 @@
       "Bash(head:*)",
       "Bash(npx vitest:*)",
       "mcp__stitch__list_projects",
-      "mcp__claude_ai_Figma__create_design_system_rules"
+      "mcp__claude_ai_Figma__create_design_system_rules",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs"
     ]
   }
 }

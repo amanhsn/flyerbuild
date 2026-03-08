@@ -1,11 +1,13 @@
 "use client"
 
 import { useMemo } from "react";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Cell, RadialBar, RadialBarChart, PolarAngleAxis } from "recharts";
 import { useLang } from "../../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../../data/mockSurveys";
 import { MOCK_ASSIGNMENTS } from "../../../data/mockAssignments";
-import { DataTable } from "../../../components/shared/DataTable";
-import { KpiCard } from "../../../components/shared";
+import { DataTable, KpiCard } from "../../../components/shared";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../../../components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../../../components/ui/chart";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
 // ── Surveyor Stats ──────────────────────────────────────────────────────────
@@ -13,7 +15,7 @@ import { useIsMobile } from "../../../hooks/useIsMobile";
 const SurveyorStats = ({ isMobile }) => {
   const surveys = MOCK_SURVEYS;
 
-  const { rows, kpis } = useMemo(() => {
+  const { rows, kpis, chartData } = useMemo(() => {
     const bySurveyor = {};
     surveys.forEach(s => {
       const name = s.assigned_surveyor || "Unassigned";
@@ -41,6 +43,15 @@ const SurveyorStats = ({ isMobile }) => {
     const totalCompleted = rows.reduce((s, r) => s + r.completed, 0);
     const totalRework = rows.reduce((s, r) => s + r.rework, 0);
 
+    const chartData = rows
+      .filter(r => r.name !== "Unassigned")
+      .map(r => ({
+        name: r.name.split(" ")[0],
+        completed: r.completed,
+        remaining: r.assigned - r.completed,
+        rework: r.rework,
+      }));
+
     return {
       rows,
       kpis: {
@@ -49,8 +60,15 @@ const SurveyorStats = ({ isMobile }) => {
         totalCompleted,
         avgRework: totalAssigned > 0 ? `${Math.round((totalRework / totalAssigned) * 100)}%` : "0%",
       },
+      chartData,
     };
   }, [surveys]);
+
+  const chartConfig = {
+    completed: { label: "Completed", color: "var(--chart-3)" },
+    remaining: { label: "Remaining", color: "var(--chart-1)" },
+    rework: { label: "Rework", color: "var(--chart-5)" },
+  };
 
   const columns = [
     { key: "name", label: "Surveyor", width: "180px", render: r => (
@@ -81,6 +99,30 @@ const SurveyorStats = ({ isMobile }) => {
         <KpiCard label="Total Completed" value={kpis.totalCompleted} color="var(--green)" />
         <KpiCard label="Avg Rework Rate" value={kpis.avgRework} color="var(--red)" />
       </div>
+
+      {/* Stacked bar chart per surveyor */}
+      <Card className="mb-4">
+        <CardHeader>
+          <CardTitle>Surveyor Workload</CardTitle>
+          <CardDescription>Completed, remaining, and rework per surveyor</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ChartContainer config={chartConfig} className="h-[200px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: -20 }}>
+                <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 3" />
+                <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={8} tick={{ fontSize: 11, fill: "var(--text-muted)" }} />
+                <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "var(--text-muted)" }} width={30} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Bar dataKey="completed" stackId="a" fill="var(--color-completed)" radius={[0, 0, 0, 0]} />
+                <Bar dataKey="remaining" stackId="a" fill="var(--color-remaining)" radius={[0, 0, 0, 0]} />
+                <Bar dataKey="rework" fill="var(--color-rework)" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+        </CardContent>
+      </Card>
+
       <DataTable columns={isMobile ? mobileColumns : columns} rows={rows} />
     </>
   );
@@ -93,7 +135,6 @@ const SubcontractorStats = ({ isMobile }) => {
   const assignments = MOCK_ASSIGNMENTS;
 
   const { rows, kpis } = useMemo(() => {
-    // Aggregate from surveys (assigned_subcontractor)
     const bySubco = {};
     surveys.forEach(s => {
       const name = s.assigned_subcontractor;
@@ -102,9 +143,7 @@ const SubcontractorStats = ({ isMobile }) => {
       bySubco[name].assigned++;
     });
 
-    // Augment with assignments mock data
     assignments.forEach(a => {
-      // Use a generic subco name since assignments don't have subco name
       const name = "FiberCo BVBA";
       if (!bySubco[name]) bySubco[name] = { assigned: 0, completed: 0, inProgress: 0, disputed: 0 };
       if (a.status === "completed") bySubco[name].completed++;
@@ -112,7 +151,6 @@ const SubcontractorStats = ({ isMobile }) => {
       if (a.status === "disputed") bySubco[name].disputed++;
     });
 
-    // Add a second subco for demo purposes
     if (!bySubco["TelNet NV"]) {
       bySubco["TelNet NV"] = { assigned: 3, completed: 1, inProgress: 1, disputed: 1 };
     }
@@ -130,6 +168,9 @@ const SubcontractorStats = ({ isMobile }) => {
       disputeRate: (d.completed + d.inProgress + d.disputed) > 0
         ? `${Math.round((d.disputed / (d.completed + d.inProgress + d.disputed)) * 100)}%`
         : "0%",
+      completionPct: (d.completed + d.inProgress + d.disputed) > 0
+        ? Math.round((d.completed / (d.completed + d.inProgress + d.disputed)) * 100)
+        : 0,
     }));
 
     const totalAssigned = rows.reduce((s, r) => s + r.assigned, 0);
@@ -146,6 +187,8 @@ const SubcontractorStats = ({ isMobile }) => {
       },
     };
   }, [surveys, assignments]);
+
+  const gaugeConfig = { completion: { label: "Completion", color: "var(--chart-3)" } };
 
   const columns = [
     { key: "name", label: "Subcontractor", width: "180px", render: r => (
@@ -175,6 +218,46 @@ const SubcontractorStats = ({ isMobile }) => {
         <KpiCard label="Total Completed" value={kpis.totalCompleted} color="var(--green)" />
         <KpiCard label="Total Disputed" value={kpis.totalDisputed} color="var(--red)" />
       </div>
+
+      {/* Completion gauges per subcontractor */}
+      <Card className="mb-4">
+        <CardHeader>
+          <CardTitle>Completion Progress</CardTitle>
+          <CardDescription>Per-subcontractor completion rate</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-2"}`}>
+            {rows.map((r) => (
+              <div key={r.id} className="flex items-center gap-4">
+                <ChartContainer config={gaugeConfig} className="h-[80px] w-[80px] shrink-0">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadialBarChart
+                      innerRadius="70%"
+                      outerRadius="100%"
+                      data={[{ value: r.completionPct, fill: "var(--color-completion)" }]}
+                      startAngle={90}
+                      endAngle={-270}
+                    >
+                      <PolarAngleAxis type="number" domain={[0, 100]} tick={false} angleAxisId={0} />
+                      <RadialBar dataKey="value" background={{ fill: "var(--border)" }} cornerRadius={4} angleAxisId={0} />
+                    </RadialBarChart>
+                  </ResponsiveContainer>
+                </ChartContainer>
+                <div>
+                  <div className="font-mono text-sm font-semibold text-text-primary">{r.name}</div>
+                  <div className="font-mono text-xs text-text-secondary">
+                    {r.completed} / {r.completed + r.inProgress + r.disputed} completed
+                  </div>
+                  <div className="font-display text-lg font-extrabold" style={{ color: r.completionPct >= 60 ? "var(--chart-3)" : "var(--chart-5)" }}>
+                    {r.completionPct}%
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
       <DataTable columns={isMobile ? mobileColumns : columns} rows={rows} />
     </>
   );

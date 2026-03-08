@@ -34,16 +34,16 @@ const ALL_SECTIONS = [
 
 export function emptyPhotos() {
   return {
-    facade: [],
-    letterbox: [],
+    photo_facade: {},
+    photo_letterbox: {},
     floorplan: null,
-    bordje_syndic: [],
-    fire_department: [],
-    underground: [],
-    facade_distribution: [],
-    technical_room: [],
-    cable_trajectory: [],
-    miscellaneous: [],
+    bordje_syndic: {},
+    fire_department: {},
+    underground_intro: {},
+    facade_distribution: {},
+    technical_room: {},
+    cable_trajectory: {},
+    photo_misc: {},
   };
 }
 
@@ -636,6 +636,18 @@ const survey5 = {
     co_flex_cost: 1,
     floorbox_cost: 0,
   },
+  actual_quantities: {
+    cost_lead_in_trench: 7,
+    diamond_drilling_cost: 1,
+    wall_penetration_cost: 2,
+    cable_ducts_60x100_cost: 0,
+    cable_ducts_12x20_cost: 3,
+    cable_ducts_40x40_cost: 0,
+    cable_ducts_60x40_cost: 0,
+    fire_retardant_conduit_cost: 0,
+    co_flex_cost: 1,
+    floorbox_cost: 0,
+  },
   photos: emptyPhotos(),
   engineering_plans: [],
   agreement: {
@@ -1064,6 +1076,18 @@ const survey9 = {
     co_flex_cost: 2,
     floorbox_cost: 1,
   },
+  actual_quantities: {
+    cost_lead_in_trench: 10,
+    diamond_drilling_cost: 2,
+    wall_penetration_cost: 2,
+    cable_ducts_60x100_cost: 0,
+    cable_ducts_12x20_cost: 5,
+    cable_ducts_40x40_cost: 3,
+    cable_ducts_60x40_cost: 0,
+    fire_retardant_conduit_cost: 1,
+    co_flex_cost: 3,
+    floorbox_cost: 1,
+  },
   photos: emptyPhotos(),
   engineering_plans: [],
   agreement: {
@@ -1097,12 +1121,12 @@ const survey9 = {
     "statement_agreement",
   ],
   rework_remarks: "",
-  validated_by: null,
-  validated_at: null,
+  validated_by: "Sofie Mertens",
+  validated_at: "2026-02-24T11:00:00",
   completed_by: null,
   completed_at: null,
-  assigned_subcontractor: null,
-  assigned_subcontractor_date: null,
+  assigned_subcontractor: "TelNet BV",
+  assigned_subcontractor_date: "2026-02-25T09:00:00",
 };
 
 // ---------------------------------------------------------------------------
@@ -1207,6 +1231,18 @@ const survey10 = {
     co_flex_cost: 0,
     floorbox_cost: 0,
   },
+  actual_quantities: {
+    cost_lead_in_trench: 6,
+    diamond_drilling_cost: 1,
+    wall_penetration_cost: 1,
+    cable_ducts_60x100_cost: 0,
+    cable_ducts_12x20_cost: 2,
+    cable_ducts_40x40_cost: 0,
+    cable_ducts_60x40_cost: 0,
+    fire_retardant_conduit_cost: 0,
+    co_flex_cost: 0,
+    floorbox_cost: 0,
+  },
   photos: emptyPhotos(),
   engineering_plans: [],
   agreement: {
@@ -1223,8 +1259,8 @@ const survey10 = {
   validated_at: "2026-02-14T10:00:00",
   completed_by: null,
   completed_at: null,
-  assigned_subcontractor: null,
-  assigned_subcontractor_date: null,
+  assigned_subcontractor: "FiberCo BVBA",
+  assigned_subcontractor_date: "2026-02-16T08:00:00",
 };
 
 // ---------------------------------------------------------------------------

@@ -4,6 +4,8 @@ import {
   PenLine, Star, Info, Layers, Flag, Globe, Building, ClipboardList,
   Calendar, Phone, Mail, Shield, Zap, Eye, FileText, Upload, Trash2,
   Home, Settings, LayoutDashboard, Moon, Sun,
+  Undo2, Palette, Minus, Type, ImagePlus, Maximize2,
+  Circle, Square, Triangle, Diamond, ChevronLeft,
 } from "lucide-react";
 
 const ICON_MAP = {
@@ -45,6 +47,17 @@ const ICON_MAP = {
   dashboard: LayoutDashboard,
   moon: Moon,
   sun: Sun,
+  undo: Undo2,
+  palette: Palette,
+  minus: Minus,
+  type: Type,
+  imagePlus: ImagePlus,
+  maximize: Maximize2,
+  circle: Circle,
+  rect: Square,
+  triangle: Triangle,
+  diamond: Diamond,
+  chevL: ChevronLeft,
 };
 
 export const Icon = ({ n, size = 18, color = "currentColor", style: s, className }) => {

@@ -6,6 +6,7 @@ import { Icon } from "../../icons/Icon";
 import { StatusBadge } from "../shared";
 import { useLang } from "../../i18n/LangContext";
 import { SECTIONS } from "../../data/sectionRegistry";
+import { getProjectForSurvey } from "../../data/mockProjects";
 
 const SurveyMiniMap = dynamic(() => import("./SurveyMiniMap"), { ssr: false });
 
@@ -14,6 +15,7 @@ export const SurveyHeader = ({ survey, completedCount, onBack }) => {
   const [showMap, setShowMap] = useState(false);
   const addr = survey.address;
   const totalSections = SECTIONS.length;
+  const project = getProjectForSurvey(survey);
 
   return (
     <div className="bg-bg-elevated border-b border-border shrink-0 pt-3.5 px-6 pb-0">
@@ -29,6 +31,11 @@ export const SurveyHeader = ({ survey, completedCount, onBack }) => {
             <span className="font-mono text-xs text-text-muted">{survey.tsg_id}</span>
             {survey.building_id && (
               <span className="font-mono text-xs text-text-muted">· {survey.building_id}</span>
+            )}
+            {project && (
+              <span className="font-mono text-[10px] px-1.5 py-[1px] rounded-sm whitespace-nowrap" style={{ background: "var(--primary-glow)", border: "1px solid var(--primary-dim)", color: "var(--text-primary-accent)" }}>
+                {project.name}
+              </span>
             )}
           </div>
           <h2 className="font-display text-[26px] font-extrabold tracking-wide">{addr.street} {addr.number}</h2>

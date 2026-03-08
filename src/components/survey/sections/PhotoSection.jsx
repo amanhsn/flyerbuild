@@ -1,8 +1,12 @@
 "use client"
 
+import { useState, useCallback } from "react";
 import { TextArea } from "../../shared";
 import { PhotoSlot } from "../../shared/PhotoSlot";
+import { PhotoGallery } from "../../shared/PhotoGallery";
+import { AnnotationEditor } from "../../shared/AnnotationEditor";
 import { useLang } from "../../../i18n/LangContext";
+import { readFileAsBase64, compressImage } from "../../../lib/imageUtils";
 
 
 const SECTION_CONFIG = {
@@ -83,6 +87,9 @@ const SECTION_CONFIG = {
 export const PhotoSection = ({ survey, setField, disabled, sectionKey }) => {
   const { t } = useLang();
   const config = SECTION_CONFIG[sectionKey];
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [activeSlot, setActiveSlot] = useState(null);
 
   if (!config) {
     return (
@@ -93,6 +100,57 @@ export const PhotoSection = ({ survey, setField, disabled, sectionKey }) => {
   }
 
   const photos = survey.photos?.[sectionKey] || {};
+
+  const handleUpload = useCallback(async (slotKey, file) => {
+    const raw = await readFileAsBase64(file);
+    const compressed = await compressImage(raw);
+    setField(`photos.${sectionKey}.${slotKey}`, {
+      original: compressed,
+      annotations: [],
+      composite: compressed,
+      timestamp: new Date().toISOString(),
+    });
+  }, [sectionKey, setField]);
+
+  const handleDelete = useCallback((slotKey) => {
+    setField(`photos.${sectionKey}.${slotKey}`, undefined);
+    setGalleryOpen(false);
+    setEditorOpen(false);
+  }, [sectionKey, setField]);
+
+  const handleSlotClick = useCallback((slotKey) => {
+    setActiveSlot(slotKey);
+    setGalleryOpen(true);
+  }, []);
+
+  const handleAnnotate = useCallback((slotKey) => {
+    setActiveSlot(slotKey);
+    setGalleryOpen(false);
+    setEditorOpen(true);
+  }, []);
+
+  const handleAnnotationSave = useCallback(({ annotations, composite }) => {
+    if (!activeSlot) return;
+    const existing = photos[activeSlot] || {};
+    setField(`photos.${sectionKey}.${activeSlot}`, {
+      ...existing,
+      annotations,
+      composite,
+      timestamp: new Date().toISOString(),
+    });
+    setEditorOpen(false);
+  }, [activeSlot, photos, sectionKey, setField]);
+
+  // Build filled slots list for gallery
+  const filledSlots = config.slots
+    .filter(({ key }) => photos[key]?.composite)
+    .map(({ key, label }) => ({
+      key,
+      label,
+      imageData: photos[key].composite,
+    }));
+
+  const activePhotoData = activeSlot && photos[activeSlot];
 
   return (
     <div className="flex flex-col gap-4">
@@ -107,12 +165,12 @@ export const PhotoSection = ({ survey, setField, disabled, sectionKey }) => {
             key={key}
             label={label}
             required={required}
-            filled={!!photos[key]}
-            onClick={() => {
-              if (!disabled) {
-                /* trigger photo capture / selection for this slot */
-              }
-            }}
+            filled={!!photos[key]?.composite}
+            imageData={photos[key]?.composite}
+            disabled={disabled}
+            onUpload={(file) => handleUpload(key, file)}
+            onClick={() => handleSlotClick(key)}
+            onDelete={() => handleDelete(key)}
           />
         ))}
       </div>
@@ -126,6 +184,27 @@ export const PhotoSection = ({ survey, setField, disabled, sectionKey }) => {
         placeholder="Add remarks for this photo section..."
         rows={2}
       />
+
+      {/* Photo Gallery Modal */}
+      {galleryOpen && filledSlots.length > 0 && (
+        <PhotoGallery
+          slots={filledSlots}
+          activeSlotKey={activeSlot}
+          onClose={() => setGalleryOpen(false)}
+          onAnnotate={handleAnnotate}
+          onDelete={handleDelete}
+        />
+      )}
+
+      {/* Annotation Editor Modal */}
+      {editorOpen && activePhotoData && (
+        <AnnotationEditor
+          photoBase64={activePhotoData.original || activePhotoData.composite}
+          annotations={activePhotoData.annotations || []}
+          onSave={handleAnnotationSave}
+          onCancel={() => setEditorOpen(false)}
+        />
+      )}
     </div>
   );
 };

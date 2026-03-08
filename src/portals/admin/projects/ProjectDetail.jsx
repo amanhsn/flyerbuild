@@ -20,7 +20,7 @@ export const ProjectDetail = ({ projectId }) => {
   const project = getProjectById(projectId);
 
   const [surveys, setSurveys] = useState(() =>
-    project ? MOCK_SURVEYS.filter((s) => project.survey_ids.includes(s.id)) : []
+    project ? MOCK_SURVEYS.filter((s) => s.project_id === project.id) : []
   );
   const [view, setView] = useState("list");
   const [selected, setSelected] = useState(new Set());
