@@ -45,7 +45,7 @@ describe("SurveyCard", () => {
         <SurveyCard survey={mockSurvey} selected={false} onClick={() => {}} />
       </TestProviders>
     )
-    expect(screen.getByText("On Going")).toBeInTheDocument()
+    expect(screen.getByText("In Progress")).toBeInTheDocument()
   })
 
   it("calls onClick when clicked", () => {

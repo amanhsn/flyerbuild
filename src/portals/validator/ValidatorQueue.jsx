@@ -7,6 +7,8 @@ import { KpiCard, StatusBadge, EmptyState } from "../../components/shared";
 import { Icon } from "../../icons/Icon";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { MOCK_PROJECTS, getProjectForSurvey } from "../../data/mockProjects";
+import { ValidatorTableView } from "./ValidatorTableView";
+import { SurveyDrawer } from "./SurveyDrawer";
 
 const ValidatorMap = dynamic(() => import("./ValidatorMap"), { ssr: false });
 
@@ -21,8 +23,9 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
   const { t } = useLang();
   const isMobile = useIsMobile();
   const [projectFilter, setProjectFilter] = useState("all");
-  const [view, setView] = useState("list");
+  const [view, setView] = useState("table");
   const [selectedId, setSelectedId] = useState(null);
+  const [drawerSurvey, setDrawerSurvey] = useState(null);
 
   const filtered = useMemo(() => {
     let result = surveys;
@@ -56,7 +59,7 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
         {/* KPIs */}
         <div className="mb-5" style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(140px, 1fr))", gap: isMobile ? 8 : 12 }}>
           <KpiCard label="Queue Depth" value={queueDepth} color="var(--primary)" total={total} />
-          <KpiCard label="Approved" value={approved} color="var(--green)" total={total} />
+          <KpiCard label="Approved" value={approved} color="var(--dark-green)" total={total} />
           <KpiCard label="Rejected" value={rejected} color="var(--red)" total={total} />
           <KpiCard label="Approval Rate" value={`${approvalRate}%`} color="var(--blue)" />
         </div>
@@ -75,24 +78,32 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
                 </button>
               ))}
             </div>
-            <select
-              value={projectFilter}
-              onChange={(e) => setProjectFilter(e.target.value)}
-              className="font-mono text-xs bg-bg-elevated border border-border rounded-md text-text-primary cursor-pointer"
-              style={{ padding: "6px 10px" }}
-            >
-              <option value="all">All Projects</option>
-              {MOCK_PROJECTS.map(p => (
-                <option key={p.id} value={p.id}>{p.name}</option>
-              ))}
-            </select>
+            {view !== "table" && (
+              <select
+                value={projectFilter}
+                onChange={(e) => setProjectFilter(e.target.value)}
+                className="font-mono text-xs bg-bg-elevated border border-border rounded-md text-text-primary cursor-pointer"
+                style={{ padding: "6px 10px" }}
+              >
+                <option value="all">All Projects</option>
+                {MOCK_PROJECTS.map(p => (
+                  <option key={p.id} value={p.id}>{p.name}</option>
+                ))}
+              </select>
+            )}
           </div>
           <div className="flex gap-1">
             <button className={`filter-btn${view === "list" ? " active" : ""}`} onClick={() => setView("list")}>
               <Icon n="list" size={13} color={view === "list" ? "#fff" : "var(--text-muted)"} />
+              <span className="ml-1">List</span>
+            </button>
+            <button className={`filter-btn${view === "table" ? " active" : ""}`} onClick={() => setView("table")}>
+              <Icon n="grid" size={13} color={view === "table" ? "#fff" : "var(--text-muted)"} />
+              <span className="ml-1">Table</span>
             </button>
             <button className={`filter-btn${view === "map" ? " active" : ""}`} onClick={() => setView("map")}>
               <Icon n="map" size={13} color={view === "map" ? "#fff" : "var(--text-muted)"} />
+              <span className="ml-1">Map</span>
             </button>
           </div>
         </div>
@@ -100,36 +111,46 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
 
       {/* Content */}
       <div className="flex-1 overflow-hidden" style={{ padding: isMobile ? "0 16px 16px" : "0 28px 28px" }}>
-        {view === "list" ? (
+        {view === "table" ? (
+          <ValidatorTableView
+            surveys={filtered}
+            onSelectSurvey={onSelectSurvey}
+            onOpenDrawer={(s) => setDrawerSurvey(s)}
+          />
+        ) : view === "list" ? (
           <div className="flex flex-col gap-2 overflow-y-auto h-full">
-            {filtered.map(s => (
-              <div
-                key={s.id}
-                onClick={() => onSelectSurvey(s)}
-                className="survey-card fade-up cursor-pointer"
-              >
-                <div className="flex items-center gap-2.5">
-                  <StatusBadge status={s.status} />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <div className="font-display text-base font-bold tracking-wide">{s.address.street} {s.address.number}</div>
-                      {(() => { const p = getProjectForSurvey(s); return p ? (
-                        <span className="font-mono text-[10px] px-1.5 py-[1px] rounded-sm whitespace-nowrap" style={{ background: "var(--primary-glow)", border: "1px solid var(--primary-dim)", color: "var(--text-primary-accent)" }}>
-                          {p.name}
-                        </span>
-                      ) : null; })()}
+            {filtered.map(s => {
+              const isValidated = ["completed", "sent"].includes(s.status);
+              return (
+                <div
+                  key={s.id}
+                  onClick={() => onSelectSurvey(s)}
+                  className="survey-card fade-up cursor-pointer"
+                  style={{ borderLeft: isValidated ? "3px solid var(--dark-green)" : undefined }}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <StatusBadge status={s.status} />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <div className="font-display text-base font-bold tracking-wide">{s.address.street} {s.address.number}</div>
+                        {(() => { const p = getProjectForSurvey(s); return p ? (
+                          <span className="font-mono text-[10px] px-1.5 py-[1px] rounded-sm whitespace-nowrap" style={{ background: "var(--primary-glow)", border: "1px solid var(--primary-dim)", color: "var(--text-primary-accent)" }}>
+                            {p.name}
+                          </span>
+                        ) : null; })()}
+                      </div>
+                      <div className="font-mono text-xs text-text-secondary mt-0.5">
+                        {s.tsg_id} · {s.address.postal_code} {s.address.city}
+                      </div>
                     </div>
-                    <div className="font-mono text-xs text-text-secondary mt-0.5">
-                      {s.tsg_id} · {s.address.postal_code} {s.address.city}
+                    <div className="font-mono text-xs text-text-muted">
+                      {s.completed_sections?.length || 0} sections
                     </div>
+                    <Icon n="chevR" size={14} color="var(--text-muted)" />
                   </div>
-                  <div className="font-mono text-xs text-text-muted">
-                    {s.completed_sections?.length || 0} sections
-                  </div>
-                  <Icon n="chevR" size={14} color="var(--text-muted)" />
                 </div>
-              </div>
-            ))}
+              );
+            })}
             {filtered.length === 0 && (
               <EmptyState icon="list" message="No surveys match this filter." sub="Try adjusting your filters" />
             )}
@@ -234,6 +255,15 @@ export const ValidatorQueue = ({ surveys, filter, setFilter, onSelectSurvey }) =
           </div>
         )}
       </div>
+
+      {/* Slide-in Drawer for table view */}
+      {drawerSurvey && (
+        <SurveyDrawer
+          survey={drawerSurvey}
+          onClose={() => setDrawerSurvey(null)}
+          onOpenFull={(s) => { setDrawerSurvey(null); onSelectSurvey(s); }}
+        />
+      )}
     </div>
   );
 };

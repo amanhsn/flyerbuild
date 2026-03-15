@@ -6,6 +6,7 @@ import {
   Home, Settings, LayoutDashboard, Moon, Sun,
   Undo2, Palette, Minus, Type, ImagePlus, Maximize2,
   Circle, Square, Triangle, Diamond, ChevronLeft,
+  Search, LayoutGrid, Table2, ArrowLeft, ArrowRight,
 } from "lucide-react";
 
 const ICON_MAP = {
@@ -58,6 +59,11 @@ const ICON_MAP = {
   triangle: Triangle,
   diamond: Diamond,
   chevL: ChevronLeft,
+  search: Search,
+  grid: LayoutGrid,
+  table: Table2,
+  arrowL: ArrowLeft,
+  arrowR: ArrowRight,
 };
 
 export const Icon = ({ n, size = 18, color = "currentColor", style: s, className }) => {

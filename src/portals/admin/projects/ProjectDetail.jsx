@@ -26,6 +26,8 @@ export const ProjectDetail = ({ projectId }) => {
   const [selected, setSelected] = useState(new Set());
   const [assignModal, setAssignModal] = useState(null); // null | { survey } | { bulk: true }
   const [selectedId, setSelectedId] = useState(null);
+  const [preoUploads, setPreoUploads] = useState({}); // surveyId -> filename
+  const preoInputRef = { current: null };
 
   if (!project) {
     return (
@@ -94,7 +96,47 @@ export const ProjectDetail = ({ projectId }) => {
     { key: "status", label: "Status", width: "120px", render: (r) => <StatusBadge status={r.status} /> },
     { key: "address", label: "Address", render: (r) => `${r.address.street} ${r.address.number}` },
     { key: "city", label: "City", width: "90px", render: (r) => r.address.city },
-    { key: "surveyor", label: "Surveyor", width: "130px", render: (r) => r.assigned_surveyor || "--" },
+    { key: "surveyor", label: "Surveyor", width: "120px", render: (r) => r.assigned_surveyor || "--" },
+    {
+      key: "priority",
+      label: "Prio",
+      width: "50px",
+      render: (r) => r.priority ? <Icon n="star" size={12} color="var(--text-primary-accent)" /> : "--",
+    },
+    {
+      key: "preo",
+      label: "Pre-O",
+      width: "80px",
+      render: (r) => {
+        const uploaded = preoUploads[r.id];
+        if (uploaded) {
+          return (
+            <span className="font-mono text-[10px] text-text-green flex items-center gap-1">
+              <Icon n="check" size={10} color="var(--dark-green)" />
+              PDF
+            </span>
+          );
+        }
+        return (
+          <label
+            onClick={(e) => e.stopPropagation()}
+            className="font-mono text-[10px] text-text-primary-accent cursor-pointer underline underline-offset-2"
+          >
+            Upload
+            <input
+              type="file"
+              accept=".pdf"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) setPreoUploads(prev => ({ ...prev, [r.id]: file.name }));
+                e.target.value = "";
+              }}
+            />
+          </label>
+        );
+      },
+    },
     {
       key: "assign",
       label: "",
@@ -164,7 +206,7 @@ export const ProjectDetail = ({ projectId }) => {
               Map
             </button>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             {selected.size > 0 && (
               <button
                 className="toggle-btn primary active flex items-center gap-1.5"
@@ -175,6 +217,23 @@ export const ProjectDetail = ({ projectId }) => {
                 Assign Selected ({selected.size})
               </button>
             )}
+            <label className="toggle-btn primary flex items-center gap-1.5 cursor-pointer" style={{ padding: "6px 14px" }}>
+              <Icon n="upload" size={14} color="var(--primary)" />
+              Upload Priority List
+              <input
+                type="file"
+                accept=".xlsx,.xls,.csv"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    // Mock: mark all surveys as priority for now
+                    setSurveys(prev => prev.map(s => ({ ...s, priority: true })));
+                  }
+                  e.target.value = "";
+                }}
+              />
+            </label>
             <button
               className="toggle-btn primary active flex items-center gap-1.5"
               style={{ padding: "6px 14px" }}

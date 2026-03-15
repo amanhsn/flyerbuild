@@ -21,6 +21,7 @@ export const CreateProject = () => {
   const [metadata, setMetadata] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState(null);
+  const [shapeFile, setShapeFile] = useState(null);
 
   const set = (key) => (v) => setForm((f) => ({ ...f, [key]: v }));
 
@@ -137,6 +138,48 @@ export const CreateProject = () => {
               className="hidden"
             />
           </div>
+        </div>
+
+        {/* Shapefile upload */}
+        <div>
+          <div className="font-mono text-xs text-text-muted uppercase tracking-[.08em] mb-2">
+            Upload Polygon / Shapefile (Project Boundary)
+          </div>
+          <div
+            className="rounded-lg p-6 text-center transition-all border-2 border-dashed border-border bg-bg-overlay cursor-pointer hover:border-primary"
+            onClick={() => document.getElementById("shapefile-input")?.click()}
+          >
+            <Icon n="map" size={24} color="var(--text-muted)" />
+            <div className="font-mono text-sm text-text-secondary mt-2">
+              {shapeFile ? shapeFile.name : "Drop .shp or .zip shapefile bundle"}
+            </div>
+            <div className="font-mono text-[10px] text-text-muted mt-1">
+              Defines MRO cluster boundaries as a map overlay
+            </div>
+            <input
+              id="shapefile-input"
+              type="file"
+              accept=".shp,.zip"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) setShapeFile(f);
+              }}
+              className="hidden"
+            />
+          </div>
+          {shapeFile && (
+            <div className="flex items-center gap-2 mt-2 px-3 py-2 bg-bg-elevated border border-border rounded-md">
+              <Icon n="file" size={14} color="var(--dark-green)" />
+              <span className="font-mono text-xs text-text-primary flex-1">{shapeFile.name}</span>
+              <span className="font-mono text-[10px] text-text-muted">{(shapeFile.size / 1024).toFixed(1)} KB</span>
+              <button
+                onClick={() => setShapeFile(null)}
+                className="bg-transparent border-none cursor-pointer p-0"
+              >
+                <Icon n="x" size={12} color="var(--text-muted)" />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Address preview */}

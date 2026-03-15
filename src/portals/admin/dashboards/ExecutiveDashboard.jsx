@@ -152,6 +152,43 @@ export const ExecutiveDashboard = ({ surveys: surveysProp, onCreateSurvey }) => 
         </Card>
       </div>
 
+      {/* Status Distribution by Subcontractor — Stacked Bar */}
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16, marginBottom: 16 }}>
+        <Card>
+          <CardHeader>
+            <CardTitle>Status by Subcontractor</CardTitle>
+            <CardDescription>Survey status breakdown per assigned subcontractor</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <SubcontractorStatusChart surveys={surveys} isMobile={isMobile} />
+          </CardContent>
+        </Card>
+
+        {/* Approval Progress per Subcontractor — Horizontal Bar */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Approval Progress per Subcontractor</CardTitle>
+            <CardDescription>% of surveys approved out of total assigned</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <SubcontractorApprovalChart surveys={surveys} />
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Priority Distribution */}
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16, marginBottom: 16 }}>
+        <Card>
+          <CardHeader>
+            <CardTitle>Priority Distribution</CardTitle>
+            <CardDescription>Surveys by priority level</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <PriorityChart surveys={surveys} />
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Workflow Funnel — Pie + stages */}
       <Card>
         <CardHeader>
@@ -197,5 +234,122 @@ export const ExecutiveDashboard = ({ surveys: surveysProp, onCreateSurvey }) => 
         </CardContent>
       </Card>
     </div>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// Subcontractor Status Chart — stacked bar
+// ---------------------------------------------------------------------------
+const SubcontractorStatusChart = ({ surveys, isMobile }) => {
+  const data = useMemo(() => {
+    const bySubco = {};
+    surveys.forEach(s => {
+      const subco = s.assigned_subcontractor || "Unassigned";
+      if (!bySubco[subco]) bySubco[subco] = {};
+      bySubco[subco][s.status] = (bySubco[subco][s.status] || 0) + 1;
+    });
+    return Object.entries(bySubco).map(([name, statuses]) => ({ name, ...statuses }));
+  }, [surveys]);
+
+  const statusKeys = [...new Set(surveys.map(s => s.status))];
+  const chartConfig = Object.fromEntries(
+    statusKeys.map(k => [k, { label: STATUSES[k]?.label || k, color: STATUSES[k]?.hex || "#94a3b8" }])
+  );
+
+  return (
+    <ChartContainer config={chartConfig} className="h-[220px] w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: -20 }}>
+          <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 3" />
+          <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "var(--text-muted)" }} />
+          <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "var(--text-muted)" }} width={30} />
+          <ChartTooltip content={<ChartTooltipContent />} />
+          {statusKeys.map(k => (
+            <Bar key={k} dataKey={k} stackId="a" fill={STATUSES[k]?.hex || "#94a3b8"} radius={0} />
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartContainer>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// Subcontractor Approval Chart — horizontal bar
+// ---------------------------------------------------------------------------
+const SubcontractorApprovalChart = ({ surveys }) => {
+  const data = useMemo(() => {
+    const bySubco = {};
+    surveys.forEach(s => {
+      const subco = s.assigned_subcontractor || "Unassigned";
+      if (!bySubco[subco]) bySubco[subco] = { total: 0, approved: 0 };
+      bySubco[subco].total++;
+      if (["completed", "sent"].includes(s.status)) bySubco[subco].approved++;
+    });
+    return Object.entries(bySubco)
+      .map(([name, d]) => ({
+        name,
+        approved: d.total > 0 ? Math.round((d.approved / d.total) * 100) : 0,
+        remainder: d.total > 0 ? 100 - Math.round((d.approved / d.total) * 100) : 100,
+      }))
+      .sort((a, b) => b.approved - a.approved);
+  }, [surveys]);
+
+  const chartConfig = {
+    approved: { label: "Approved %", color: "#1a6e3c" },
+    remainder: { label: "Remaining %", color: "var(--bg-overlay)" },
+  };
+
+  return (
+    <ChartContainer config={chartConfig} className="h-[220px] w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data} layout="vertical" margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
+          <CartesianGrid horizontal={false} stroke="var(--border)" strokeDasharray="3 3" />
+          <XAxis type="number" domain={[0, 100]} tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "var(--text-muted)" }} tickFormatter={(v) => `${v}%`} />
+          <YAxis type="category" dataKey="name" tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "var(--text-muted)" }} width={90} />
+          <ChartTooltip content={<ChartTooltipContent />} />
+          <Bar dataKey="approved" stackId="a" fill="#1a6e3c" radius={[0, 4, 4, 0]} />
+          <Bar dataKey="remainder" stackId="a" fill="var(--bg-overlay)" radius={[0, 4, 4, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartContainer>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// Priority Distribution Chart — donut
+// ---------------------------------------------------------------------------
+const PriorityChart = ({ surveys }) => {
+  const data = useMemo(() => {
+    const priority = surveys.filter(s => s.priority).length;
+    const normal = surveys.length - priority;
+    return [
+      { name: "Priority", value: priority, fill: "#c0392b" },
+      { name: "Normal", value: normal, fill: "var(--bg-overlay)" },
+    ].filter(d => d.value > 0);
+  }, [surveys]);
+
+  const chartConfig = Object.fromEntries(data.map(d => [d.name, { label: d.name, color: d.fill }]));
+
+  return (
+    <ChartContainer config={chartConfig} className="h-[180px] w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            innerRadius={45}
+            outerRadius={75}
+            strokeWidth={2}
+            stroke="var(--bg-raised)"
+          >
+            {data.map((entry, i) => (
+              <Cell key={i} fill={entry.fill} />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartContainer>
   );
 };

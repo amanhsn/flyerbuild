@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { MOCK_PROJECTS, PROJECT_STATUSES } from "../../../data/mockProjects";
 import { MOCK_SURVEYS } from "../../../data/mockSurveys";
-import { KpiCard } from "../../../components/shared";
+import { KpiCard, AssignmentModal } from "../../../components/shared";
 import { Icon } from "../../../icons/Icon";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
@@ -22,6 +22,7 @@ export const ProjectList = () => {
   const router = useRouter();
   const isMobile = useIsMobile();
   const [filter, setFilter] = useState("all");
+  const [assignProject, setAssignProject] = useState(null); // project to assign surveyor to
 
   const filtered = useMemo(() => {
     if (filter === "all") return MOCK_PROJECTS;
@@ -134,9 +135,22 @@ export const ProjectList = () => {
                 />
               </div>
 
-              {/* Date */}
-              <div className="font-mono text-xs text-text-muted">
-                Created {project.created_at}
+              {/* Date + Assign */}
+              <div className="flex items-center justify-between">
+                <div className="font-mono text-xs text-text-muted">
+                  Created {project.created_at}
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setAssignProject(project);
+                  }}
+                  className="flex items-center gap-1 px-2 py-1 rounded-md bg-transparent border border-border text-text-muted cursor-pointer transition-all hover:border-primary-dim hover:text-text-primary-accent hover:bg-primary-glow"
+                  title={`Assign surveyor to all surveys in ${project.name}`}
+                >
+                  <Icon n="user" size={12} color="currentColor" />
+                  <span className="font-mono text-[10px]">Assign</span>
+                </button>
               </div>
             </div>
           );
@@ -148,6 +162,20 @@ export const ProjectList = () => {
           <Icon n="clipboard" size={32} color="var(--text-muted)" />
           <div className="font-mono text-sm mt-3">No projects found</div>
         </div>
+      )}
+
+      {assignProject && (
+        <AssignmentModal
+          title="Assign Surveyor to Project"
+          subtitle={`${assignProject.name} — ${getProjectStats(assignProject).total} surveys`}
+          role="surveyor"
+          currentValue=""
+          onCancel={() => setAssignProject(null)}
+          onSubmit={(userName, notes) => {
+            // In a real app, this would bulk-assign all surveys in this project
+            setAssignProject(null);
+          }}
+        />
       )}
     </div>
   );

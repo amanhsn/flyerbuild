@@ -6,6 +6,7 @@ import { Icon } from "../../icons/Icon";
 import { StatusBadge } from "../shared";
 import { useLang } from "../../i18n/LangContext";
 import { SECTIONS } from "../../data/sectionRegistry";
+import { STATUSES } from "../../data/statusConfig";
 import { getProjectForSurvey } from "../../data/mockProjects";
 
 const SurveyMiniMap = dynamic(() => import("./SurveyMiniMap"), { ssr: false });
@@ -27,7 +28,7 @@ export const SurveyHeader = ({ survey, completedCount, onBack }) => {
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-[5px] flex-wrap">
-            <StatusBadge status={survey.status} />
+            <StatusBadge status={survey.status} variant="surveyor" size="md" />
             <span className="font-mono text-xs text-text-muted">{survey.tsg_id}</span>
             {survey.building_id && (
               <span className="font-mono text-xs text-text-muted">· {survey.building_id}</span>
@@ -38,6 +39,11 @@ export const SurveyHeader = ({ survey, completedCount, onBack }) => {
               </span>
             )}
           </div>
+          {STATUSES[survey.status]?.description && (
+            <p className="font-mono text-xs mt-1 mb-1" style={{ color: STATUSES[survey.status]?.color }}>
+              {STATUSES[survey.status].description}
+            </p>
+          )}
           <h2 className="font-display text-[26px] font-extrabold tracking-wide">{addr.street} {addr.number}</h2>
           <div className="font-mono text-sm text-text-secondary mt-[3px]">{addr.postal_code} {addr.city}</div>
           <div className="flex gap-4 mt-2.5 flex-wrap">

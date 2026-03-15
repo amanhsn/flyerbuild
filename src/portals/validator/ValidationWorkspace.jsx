@@ -8,7 +8,9 @@ import { useLang } from "../../i18n/LangContext";
 import { getMissingSectionFields, SECTIONS } from "../../data/sectionRegistry";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
-export const ValidationWorkspace = ({ survey, onBack }) => {
+export const ValidationWorkspace = ({
+  survey, onBack, onPrev, onNext, prevAddress, nextAddress, queuePosition,
+}) => {
   const { t } = useLang();
   const isMobile = useIsMobile();
   const [showRejectDialog, setShowRejectDialog] = useState(false);
@@ -36,6 +38,9 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
     setActionTaken("rejected");
     setShowRejectDialog(false);
   };
+
+  // Build section validation state — which sections are validated
+  const validatedSections = survey.completed_sections || [];
 
   const actionBar = (
     <div className="sticky bottom-0 border-t border-border flex flex-col gap-2" style={{
@@ -73,11 +78,11 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
       {actionTaken && (
         <div className="text-center rounded-md" style={{
           padding: "12px 16px",
-          background: actionTaken === "approved" ? "var(--green-glow)" : "var(--red-glow)",
-          border: `1px solid ${actionTaken === "approved" ? "var(--green-dim)" : "var(--red-dim)"}`,
+          background: actionTaken === "approved" ? "var(--dark-green-glow)" : "var(--red-glow)",
+          border: `1px solid ${actionTaken === "approved" ? "var(--dark-green-dim)" : "var(--red-dim)"}`,
         }}>
-          <span className={`font-mono text-sm ${actionTaken === "approved" ? "text-text-green" : "text-text-red"}`}>
-            Survey {actionTaken === "approved" ? "Approved" : "Rejected"} ✓
+          <span className="font-mono text-sm" style={{ color: actionTaken === "approved" ? "var(--dark-green)" : "var(--text-red)" }}>
+            Survey {actionTaken === "approved" ? "Approved" : "Rejected"}
           </span>
         </div>
       )}
@@ -89,7 +94,7 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
             className="cta-btn secondary shrink-0"
             onClick={onBack}
           >
-            ← Back
+            Back
           </button>
           <div className="flex-1" />
           <button
@@ -118,9 +123,50 @@ export const ValidationWorkspace = ({ survey, onBack }) => {
     </div>
   );
 
+  // Previous/Next address navigation bar
+  const navBar = (
+    <div className="flex items-center justify-between px-6 py-2 border-b border-border bg-bg-elevated shrink-0">
+      <button
+        disabled={!onPrev}
+        onClick={onPrev}
+        className="flex items-center gap-1.5 bg-transparent border-none cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed p-1 group"
+        title={prevAddress ? `${prevAddress.street} ${prevAddress.number}` : undefined}
+      >
+        <Icon n="arrowL" size={14} color="var(--text-secondary)" />
+        <span className="font-mono text-xs text-text-secondary group-hover:text-text-primary transition-colors">
+          Previous
+        </span>
+      </button>
+
+      <span className="font-mono text-[10px] text-text-muted">
+        {queuePosition}
+      </span>
+
+      <button
+        disabled={!onNext}
+        onClick={onNext}
+        className="flex items-center gap-1.5 bg-transparent border-none cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed p-1 group"
+        title={nextAddress ? `${nextAddress.street} ${nextAddress.number}` : undefined}
+      >
+        <span className="font-mono text-xs text-text-secondary group-hover:text-text-primary transition-colors">
+          Next
+        </span>
+        <Icon n="arrowR" size={14} color="var(--text-secondary)" />
+      </button>
+    </div>
+  );
+
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      <ReadOnlySurveyView survey={survey} onBack={onBack} actionBar={actionBar} scrollable={true} />
+      {navBar}
+      <ReadOnlySurveyView
+        survey={survey}
+        onBack={onBack}
+        actionBar={actionBar}
+        scrollable={true}
+        collapsible={true}
+        validatedSections={validatedSections}
+      />
     </div>
   );
 };

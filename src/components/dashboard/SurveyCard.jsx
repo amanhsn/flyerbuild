@@ -22,7 +22,6 @@ export const SurveyCard = ({ survey, selected, onClick }) => {
         <div className="flex-1 min-w-0">
           <div className="flex items-center flex-wrap mb-1.5" style={{ gap: 7 }}>
             {survey.priority && <Icon n="star" size={12} color="var(--text-primary-accent)" />}
-            <StatusBadge status={survey.status} />
             <span className="font-mono text-xs text-text-muted">{survey.tsg_id}</span>
             {project && (
               <span className="font-mono text-[10px] text-primary bg-primary-glow border border-primary-dim px-1.5 py-[1px] rounded-sm whitespace-nowrap" style={{ background: "var(--primary-glow)", borderColor: "var(--primary-dim)", color: "var(--text-primary-accent)" }}>
@@ -33,7 +32,10 @@ export const SurveyCard = ({ survey, selected, onClick }) => {
           <div className="font-display text-[19px] font-bold tracking-wide">{addr.street} {addr.number}</div>
           <div className="font-mono text-sm text-text-secondary mt-0.5">{addr.postal_code} {addr.city}</div>
         </div>
-        <Icon n="chevR" size={16} color="var(--text-muted)" style={{ flexShrink: 0, marginTop: 4 }} />
+        <div className="flex flex-col items-end gap-1.5 shrink-0">
+          <StatusBadge status={survey.status} variant="surveyor" />
+          <Icon n="chevR" size={16} color="var(--text-muted)" />
+        </div>
       </div>
       <div className="flex items-center border-t border-border" style={{
         gap: 14, marginTop: 13,

@@ -1,10 +1,8 @@
 "use client"
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useLang } from "../../i18n/LangContext";
 import { MOCK_SURVEYS } from "../../data/mockSurveys";
-import { KpiCard, StatusBadge, ReadOnlySurveyView } from "../../components/shared";
-import { Icon } from "../../icons/Icon";
 import { ValidatorQueue } from "./ValidatorQueue";
 import { ValidationWorkspace } from "./ValidationWorkspace";
 
@@ -19,11 +17,26 @@ export const ValidatorPortalRoot = () => {
     [surveys]
   );
 
+  const currentIndex = selectedSurvey ? queueSurveys.findIndex(s => s.id === selectedSurvey.id) : -1;
+
+  const handlePrev = useCallback(() => {
+    if (currentIndex > 0) setSelectedSurvey(queueSurveys[currentIndex - 1]);
+  }, [currentIndex, queueSurveys]);
+
+  const handleNext = useCallback(() => {
+    if (currentIndex < queueSurveys.length - 1) setSelectedSurvey(queueSurveys[currentIndex + 1]);
+  }, [currentIndex, queueSurveys]);
+
   if (selectedSurvey) {
     return (
       <ValidationWorkspace
         survey={selectedSurvey}
         onBack={() => setSelectedSurvey(null)}
+        onPrev={currentIndex > 0 ? handlePrev : null}
+        onNext={currentIndex < queueSurveys.length - 1 ? handleNext : null}
+        prevAddress={currentIndex > 0 ? queueSurveys[currentIndex - 1]?.address : null}
+        nextAddress={currentIndex < queueSurveys.length - 1 ? queueSurveys[currentIndex + 1]?.address : null}
+        queuePosition={`${currentIndex + 1} of ${queueSurveys.length}`}
       />
     );
   }

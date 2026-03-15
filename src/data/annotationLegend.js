@@ -18,6 +18,7 @@ export const ANNOTATION_LEGEND_ITEMS = [
 
 export const SHAPE_TOOLS = [
   { key: "freehand", label: "Freehand", icon: "pen" },
+  { key: "arrow", label: "Arrow", icon: "arrowR" },
   { key: "line", label: "Line", icon: "minus" },
   { key: "dashedLine", label: "Dashed", icon: "minus" },
   { key: "text", label: "Text", icon: "type" },
@@ -25,6 +26,7 @@ export const SHAPE_TOOLS = [
   { key: "rect", label: "Rect", icon: "rect" },
   { key: "triangle", label: "Triangle", icon: "triangle" },
   { key: "diamond", label: "Diamond", icon: "diamond" },
+  { key: "eraser", label: "Eraser", icon: "x" },
 ];
 
 export const COLOR_PRESETS = [

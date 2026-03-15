@@ -29,7 +29,7 @@ const SHORT_KEYS = {
   statement_agreement: "short_agreement",
 };
 
-export const SectionNav = ({ sections, activeIndex, completedSections, onSelect, sticky = false }) => {
+export const SectionNav = ({ sections, activeIndex, completedSections, reworkSections = [], onSelect, sticky = false }) => {
   const { t } = useLang();
 
   return (
@@ -40,19 +40,25 @@ export const SectionNav = ({ sections, activeIndex, completedSections, onSelect,
       {sections.map((s, i) => {
         const isActive = i === activeIndex;
         const isDone = completedSections.includes(s.key);
+        const needsRework = reworkSections.includes(s.key);
         return (
           <button
             key={s.key}
             onClick={() => onSelect(i)}
             className={cn(
               "shrink-0 py-2.5 px-[13px] bg-transparent border-none cursor-pointer flex items-center gap-[5px] transition-all font-mono text-xs font-semibold tracking-wider uppercase",
-              isActive ? "text-text-primary-accent" : isDone ? "text-text-green" : "text-text-muted"
+              needsRework
+                ? "text-text-red"
+                : isActive ? "text-text-primary-accent" : isDone ? "text-text-green" : "text-text-muted"
             )}
             style={{
-              borderBottom: isActive ? "2px solid var(--primary)" : "2px solid transparent",
+              borderBottom: isActive
+                ? needsRework ? "2px solid var(--red)" : "2px solid var(--primary)"
+                : needsRework ? "2px solid var(--red-dim)" : "2px solid transparent",
             }}
           >
-            {isDone && <Icon n="check" size={10} color="var(--text-green)" />}
+            {needsRework && <Icon n="alert" size={10} color="var(--text-red)" />}
+            {!needsRework && isDone && <Icon n="check" size={10} color="var(--text-green)" />}
             {t(SHORT_KEYS[s.key] || s.key)}
           </button>
         );

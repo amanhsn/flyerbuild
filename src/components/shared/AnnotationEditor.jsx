@@ -117,6 +117,26 @@ function renderAnnotation(ctx, ann, w, h) {
         ctx.fillText(txt, pts[0].x, pts[0].y);
       }
       break;
+    case "arrow": {
+      if (pts.length >= 2) {
+        const x0 = pts[0].x, y0 = pts[0].y;
+        const x1 = pts[pts.length - 1].x, y1 = pts[pts.length - 1].y;
+        const angle = Math.atan2(y1 - y0, x1 - x0);
+        const headLen = Math.max(10, (ann.lineWidth || DEFAULT_LINE_WIDTH) * 4);
+        ctx.beginPath();
+        ctx.moveTo(x0, y0);
+        ctx.lineTo(x1, y1);
+        ctx.stroke();
+        // Arrowhead
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x1 - headLen * Math.cos(angle - Math.PI / 6), y1 - headLen * Math.sin(angle - Math.PI / 6));
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x1 - headLen * Math.cos(angle + Math.PI / 6), y1 - headLen * Math.sin(angle + Math.PI / 6));
+        ctx.stroke();
+      }
+      break;
+    }
     default:
       break;
   }
@@ -136,16 +156,18 @@ function redrawAll(canvas, annotations, dims) {
   return ctx;
 }
 
-export const AnnotationEditor = ({ photoBase64, annotations: initialAnnotations = [], onSave, onCancel }) => {
+export const AnnotationEditor = ({ photoBase64, annotations: initialAnnotations = [], onSave, onCancel, layerName = "surveyor", showToggle = false }) => {
   const isMobile = useIsMobile();
   const bgCanvasRef = useRef(null);
   const overlayRef = useRef(null);
   const wrapRef = useRef(null);
   const [annotations, setAnnotations] = useState(initialAnnotations);
+  const [redoStack, setRedoStack] = useState([]);
   const [activeTool, setActiveTool] = useState(null);
   const [legendItem, setLegendItem] = useState(null);
   const [color, setColor] = useState(DEFAULT_COLOR);
   const [lineWidth, setLineWidth] = useState(DEFAULT_LINE_WIDTH);
+  const [showAnnotations, setShowAnnotations] = useState(true);
   const drawing = useRef(false);
   const currentPoints = useRef([]);
   const dragStart = useRef(null);
@@ -203,8 +225,8 @@ export const AnnotationEditor = ({ photoBase64, annotations: initialAnnotations 
   // Redraw annotations when they change
   useEffect(() => {
     if (!ready) return;
-    redrawAll(overlayRef.current, annotations, dims);
-  }, [annotations, dims, ready]);
+    redrawAll(overlayRef.current, showAnnotations ? annotations : [], dims);
+  }, [annotations, dims, ready, showAnnotations]);
 
   const pt = useCallback((e) => {
     const r = overlayRef.current.getBoundingClientRect();
@@ -253,6 +275,25 @@ export const AnnotationEditor = ({ photoBase64, annotations: initialAnnotations 
 
     if (tool === "text") {
       setTextInput(p);
+      return;
+    }
+
+    // Eraser: find and remove the closest annotation
+    if (tool === "eraser") {
+      const threshold = 0.03; // 3% of canvas size
+      const anns = annotationsRef.current;
+      let closestIdx = -1;
+      let closestDist = Infinity;
+      anns.forEach((ann, idx) => {
+        (ann.points || []).forEach(ap => {
+          if (!ap) return;
+          const dist = Math.hypot(ap.x - p.x, ap.y - p.y);
+          if (dist < closestDist) { closestDist = dist; closestIdx = idx; }
+        });
+      });
+      if (closestIdx >= 0 && closestDist < threshold) {
+        setAnnotations(prev => prev.filter((_, i) => i !== closestIdx));
+      }
       return;
     }
 
@@ -349,7 +390,7 @@ export const AnnotationEditor = ({ photoBase64, annotations: initialAnnotations 
           lineWidth: curLineWidth,
         }]);
       }
-    } else if (["line", "dashedLine", "circle", "rect", "triangle", "diamond"].includes(tool) && dragStart.current) {
+    } else if (["line", "dashedLine", "circle", "rect", "triangle", "diamond", "arrow"].includes(tool) && dragStart.current) {
       setAnnotations(prev => [...prev, {
         type: tool,
         points: [dragStart.current, p],
@@ -377,12 +418,27 @@ export const AnnotationEditor = ({ photoBase64, annotations: initialAnnotations 
   }, [textInput]);
 
   const handleUndo = useCallback(() => {
-    setAnnotations(prev => prev.slice(0, -1));
+    setAnnotations(prev => {
+      if (prev.length === 0) return prev;
+      const removed = prev[prev.length - 1];
+      setRedoStack(rs => [...rs, removed]);
+      return prev.slice(0, -1);
+    });
+  }, []);
+
+  const handleRedo = useCallback(() => {
+    setRedoStack(rs => {
+      if (rs.length === 0) return rs;
+      const restored = rs[rs.length - 1];
+      setAnnotations(prev => [...prev, restored]);
+      return rs.slice(0, -1);
+    });
   }, []);
 
   const handleClear = useCallback(() => {
+    setRedoStack(annotations);
     setAnnotations([]);
-  }, []);
+  }, [annotations]);
 
   const handleSave = useCallback(() => {
     const bg = bgCanvasRef.current;
@@ -396,7 +452,7 @@ export const AnnotationEditor = ({ photoBase64, annotations: initialAnnotations 
     ctx.drawImage(bg, 0, 0);
     ctx.drawImage(overlay, 0, 0);
     const composite = out.toDataURL("image/png");
-    onSave({ annotations, composite });
+    onSave({ annotations, composite, layer: layerName });
   }, [annotations, onSave]);
 
   const selectTool = (key) => {
@@ -523,6 +579,27 @@ export const AnnotationEditor = ({ photoBase64, annotations: initialAnnotations 
               <Icon n="undo" size={13} color="var(--text-secondary)" />
               {!isMobile && "Undo"}
             </button>
+            <button
+              onClick={handleRedo}
+              disabled={redoStack.length === 0}
+              className="flex items-center gap-1 py-1 px-2 bg-bg-elevated border border-border rounded-sm text-xs font-mono shrink-0 cursor-pointer disabled:opacity-40"
+              style={{ transform: "scaleX(-1)" }}
+              title="Redo"
+            >
+              <Icon n="undo" size={13} color="var(--text-secondary)" />
+            </button>
+            {showToggle && (
+              <button
+                onClick={() => setShowAnnotations(v => !v)}
+                className={cn(
+                  "flex items-center gap-1 py-1 px-2 border rounded-sm text-xs font-mono shrink-0 cursor-pointer",
+                  showAnnotations ? "bg-primary-glow border-primary text-primary" : "bg-bg-elevated border-border text-text-secondary"
+                )}
+              >
+                <Icon n="eye" size={13} color={showAnnotations ? "var(--primary)" : "var(--text-secondary)"} />
+                {!isMobile && "Annotations"}
+              </button>
+            )}
             <button
               onClick={handleClear}
               disabled={annotations.length === 0}
