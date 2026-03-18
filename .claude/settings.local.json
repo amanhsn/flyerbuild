@@ -35,7 +35,12 @@
       "mcp__claude_ai_Figma__create_design_system_rules",
       "mcp__plugin_context7_context7__resolve-library-id",
       "mcp__plugin_context7_context7__query-docs",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(find /Users/vyro/survey -type f \\\\\\(-name App.jsx -o -name sectionRegistry.js -o -name *.enum.js -o -name *status* -o -name *role* \\\\\\))",
+      "WebFetch(domain:)",
+      "Bash(brew list:*)",
+      "Bash(npm list:*)",
+      "Bash(node:*)"
     ]
   }
 }

@@ -47,6 +47,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "globals": "^16.5.0",
     "jsdom": "^28.1.0",
+    "puppeteer": "^24.39.1",
     "tailwindcss": "^4.2.1",
     "vitest": "^4.0.18"
   }
